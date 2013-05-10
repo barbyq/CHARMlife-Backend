@@ -1,0 +1,197 @@
+/*RESET*/
+ html, body, div, span, applet, object, iframe,
+ h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+ a, abbr, acronym, address, big, cite, code,
+ del, dfn, em, img, ins, kbd, q, s, samp,
+ small, strike, strong, sub, sup, tt, var,
+ b, u, i, center,
+ dl, dt, dd, ol, ul, li,
+ fieldset, form, label, legend,
+ table, caption, tbody, tfoot, thead, tr, th, td,
+ article, aside, canvas, details, embed, 
+ figure, figcaption, footer, header, hgroup, 
+ menu, nav, output, ruby, section, summary,
+ time, mark, audio, video {
+ 	margin: 0;
+ 	padding: 0;
+ 	border: 0;
+ 	font-size: 100%;
+ 	font: inherit;
+ 	vertical-align: baseline;
+ }
+ /* HTML5 display-role reset for older browsers */
+ article, aside, details, figcaption, figure, 
+ footer, header, hgroup, menu, nav, section {
+ 	display: block;
+ }
+ 
+ ol, ul {
+ 	list-style: none;
+ }
+ blockquote, q {
+ 	quotes: none;
+ }
+ blockquote:before, blockquote:after,
+ q:before, q:after {
+ 	content: '';
+ 	content: none;
+ }
+ table {
+ 	border-collapse: collapse;
+ 	border-spacing: 0;
+ }
+ br.clear { clear: both; }
+ strong {
+ 	font-weight: 500;
+ }
+
+/*MY STYLES*/
+/*Colors*/
+$clearColor : #e8e7e9;
+$mainNavColor : #322437;
+$headerColor : #595460;
+$fontMainNavColor: #9a96aa;
+$green : #58b058;
+$red : red;
+
+$contextHTML : 1000px;
+$contextFont : 16px;
+
+@mixin rounded($size){
+	-webkit-border-radius: $size;
+	-o-border-radius: $size;
+	border-radius: $size;
+} 
+
+@mixin shadow($list){
+	-webkit-box-shadow: $list;
+	-o-box-shadow: $list;
+	box-shadow: $list;
+} 
+
+body{
+	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial; 	
+	font-size: 1em;
+	font-weight: 300;
+	background-color: #283037;
+}
+
+.login{
+	tr:first-child{
+		td{
+			text-align: center;
+		}
+	}
+	tr:nth-child(4){
+		td{
+			padding-bottom: 10px;
+			padding-right: 10px;
+		}
+	}
+	td:first-child{
+		font-weight: 500;
+		text-align: right;
+	}
+	td{
+		padding-top: 10px;
+		text-align: center;
+		img{
+			border: none;
+			box-shadow: none;
+			float: none;
+		}
+	}
+}
+
+.paneldeportes{
+	width: 256px;
+	height: 450px;
+}
+
+#mainNav{
+	width: percentage(170px/$contextHTML);
+	background-color: $mainNavColor;
+	float: left;
+	min-height: 720px;
+	a{	
+		color: $fontMainNavColor;
+		text-decoration: none;
+	}
+	a:hover{
+		color: white;
+	};
+	.toplogo{
+		margin-top: 10px;
+		display: block;
+		text-align: center;
+	}
+
+	ul{
+		padding: 20px;	
+
+		ul{
+			padding: 0px;
+			padding-left: 20px;
+			font-size: 14px;
+
+			a{
+				color: lighten($fontMainNavColor, 30%);
+			}
+		}
+	}
+
+}
+
+.topNav{
+	width: percentage(830px/$contextHTML);
+	height: 50px;
+	background-color: $headerColor;
+	float: right;
+	color: lighten($fontMainNavColor, 20%);
+	a{
+		color: lighten($fontMainNavColor, 30%);
+		text-decoration: none;
+		font-size: 13px;
+
+	}
+	a:hover{
+		color: white;
+	};
+	p{
+		text-align: right;
+		margin-top: 6px;
+		margin-right: 30px;
+		line-height: 14px;
+	}
+	span{
+		font-weight: bold;
+	}
+}
+#main{
+	background-color: $clearColor;
+	width: percentage(830px/$contextHTML);
+	//max-height: 670px;
+	min-height: 670px;
+	float: right;
+	padding-bottom: 20px;
+	//overflow: scroll;
+	table{
+		margin: 0 auto;
+		letter-spacing: -1.3px;
+		text-align: center;
+		td:nth-child(2){
+			text-align: left;
+		}
+		td{
+			border: 1px solid lighten($fontMainNavColor, 30%);
+			padding: 5px;
+		}
+		th{
+			font-weight: 400;
+		}
+	}
+	p{
+		margin: 0 auto;
+		//padding: 10px;
+	}
+}
