@@ -1,4 +1,6 @@
-var Router = Backbone.Router.extend({
+//= require underscore.js
+
+var RouterCharm = Backbone.Router.extend({
 	routes:{
 		"": "index",
 		"sociales":"showSociales"
@@ -8,5 +10,8 @@ var Router = Backbone.Router.extend({
 	},
 	showSociales: function(){
 
+	},
+	start: function() {
+		Backbone.history.start();
 	}
 });
