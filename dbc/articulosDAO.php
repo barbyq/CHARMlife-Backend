@@ -1,8 +1,8 @@
 <?php 
 
 /**
-* 
-*/
+ * 
+ */
 class articulosDAO
 {
 	private $dbc;
@@ -14,6 +14,8 @@ class articulosDAO
 
 	public function getArticulos()
 	{
+		$holaquetal = "SELECT articulo_id,titulo,subtitulo,dia,mes,year,colaborador_id,seccion_id,usuario_id,status,tipo from articulos";
+		$yim = $this->dbc->stmt_init();
 		return 0;
 	}
 
