@@ -9,4 +9,7 @@ $dbconnect = new dbconnect('charm_charmlifec536978');
 $dbc = $dbconnect->getConnection();
 $articleDao = new articulosDAO($dbc);
 
+
+echo json_encode($articleDao->getArticulos());
+
 ?>
