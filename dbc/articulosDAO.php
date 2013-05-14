@@ -14,9 +14,13 @@ class articulosDAO
 
 	public function getArticulos()
 	{
+		$articulos = array();
 		$holaquetal = "SELECT articulo_id,titulo,subtitulo,dia,mes,year,colaborador_id,seccion_id,usuario_id,status,tipo from articulos";
-		$yim = $this->dbc->stmt_init();
-		return 0;
+		$yim = $this->dbc->query($holaquetal);
+		while ($artip = $yim->fetch_object()) {
+			$articulos[] = $artip;
+		}
+		return $articulos;
 	}
 
 	public function getArticulo($id)
