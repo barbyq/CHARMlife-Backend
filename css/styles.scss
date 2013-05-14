@@ -121,9 +121,15 @@ body{
 		color: white;
 	};
 	.toplogo{
-		margin-top: 10px;
 		display: block;
 		text-align: center;
+		background-color: white;
+		height: 50px;
+		img{
+			width: 115px;
+			position: relative;
+			top: 7px;
+		}
 	}
 
 	ul{

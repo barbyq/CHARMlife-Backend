@@ -1,3 +1,4 @@
+var arrayMes = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
 /*PORTADAS */
 var PortadaView = Backbone.View.extend({
 	initialize: function(){
@@ -6,7 +7,7 @@ var PortadaView = Backbone.View.extend({
 	render: function(){
 		var context = this;
 		var attributes = this.model.toJSON();
-		$.get('/proyectoDigital/templates/portadaView.handlebars', function(data){
+		$.get('templates/portadaView.handlebars', function(data){
 			template = Handlebars.compile(data);
 			context.$el.html(template(attributes));
 		});
@@ -20,7 +21,7 @@ var PortadaFullView = Backbone.View.extend({
 	render: function(){
 		var context = this;
 		var attributes = this.model.toJSON();
-		$.get('/proyectoDigital/templates/portadaFullView.handlebars', function(data){
+		$.get('templates/portadaFullView.handlebars', function(data){
 			template = Handlebars.compile(data);
 			context.$el.html(template(attributes));
 		});
@@ -33,12 +34,12 @@ var PortadaFullView = Backbone.View.extend({
 var PortadaAddView = Backbone.View.extend({
 	render: function(){
 		var context = this;
-		$.get('/proyectoDigital/templates/portadaEdit.handlebars', function(data){
+		$.get('templates/portadaEdit.handlebars', function(data){
 			template = Handlebars.compile(data);
 			context.$el.html(template);
 
 			var year = new Date().getFullYear();
-			for (j = 2006; j <= year; j++){
+			for (j = 2012; j <= year; j++){
 				$('#ano_select').append('<option>' + j +'</option>');	
 			}
 
@@ -111,7 +112,7 @@ var PortadaEditView = Backbone.View.extend({
 	render: function(){
 		var context = this;
 		var attributes = this.model.toJSON();
-		$.get('/proyectoDigital/templates/portadaEdit.handlebars', function(data){
+		$.get('templates/portadaEdit.handlebars', function(data){
 			template = Handlebars.compile(data);
 			context.$el.html(template(attributes));
 

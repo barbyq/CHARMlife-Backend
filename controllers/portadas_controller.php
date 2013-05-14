@@ -6,7 +6,7 @@
 	include '../dbc/utilities.php';
 	include '../dbc/portadasDAO.php';
 
-	$dbconnect = new dbconnect('players_playersofl237456');
+	$dbconnect = new dbconnect('charm_charmlifec536978');
 	$dbc = $dbconnect->getConnection();
 	$portadasDAO = new portadasDAO($dbc);
 

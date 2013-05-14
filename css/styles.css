@@ -84,9 +84,14 @@ body {
   #mainNav a:hover {
     color: white; }
   #mainNav .toplogo {
-    margin-top: 10px;
     display: block;
-    text-align: center; }
+    text-align: center;
+    background-color: white;
+    height: 50px; }
+    #mainNav .toplogo img {
+      width: 115px;
+      position: relative;
+      top: 7px; }
   #mainNav ul {
     padding: 20px; }
     #mainNav ul ul {

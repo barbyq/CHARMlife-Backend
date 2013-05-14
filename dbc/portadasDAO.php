@@ -23,11 +23,11 @@ class portadasDAO{
 	}
 
 	public function getPortadas(){
-		$q = "SELECT portadas_id as 'id', mes, year, img, img_thumb, edicion FROM portadas ORDER BY plaza_id, year DESC, mes DESC";
+		$q = "SELECT portadas_id as 'id', mes, year, img, img_thumb, edicion FROM portadas ORDER BY plaza_id, year, mes";
 		$array = array();
 		$r = $this->dbc-> query($q);
 		while ($obj = $r->fetch_object()) {
-			//$obj->mes_ = getMes($obj->mes);
+			$obj->mes_ = getMes($obj->mes);
 			$array[] = $obj;
 		}
 		return $array;
@@ -55,8 +55,8 @@ class portadasDAO{
 	}
 
 	public function insertPortada($obj){
-		$edicion = getEdicion($obj->mes, $obj->year);
-		$q = "INSERT INTO portadas (mes, year, img, img_thumb,edicion) VALUES (?, ?, ?, ?, ?,?)";
+		$edicion = $this->getEdicion($obj->mes, $obj->year);
+		$q = "INSERT INTO portadas (mes, year, img, img_thumb,edicion) VALUES (?, ?, ?, ?, ?)";
 		$stmt = $this->dbc->stmt_init();
  		if($stmt->prepare($q)) {
  			$stmt->bind_param('ssssi', $obj->mes, $obj->year, $obj->img, $obj->img_thumb,$edicion);
