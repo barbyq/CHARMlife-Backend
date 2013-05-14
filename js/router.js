@@ -6,6 +6,7 @@ var RouterCharm = Backbone.Router.extend({
 	routes:{
 		"": "index",
 		"sociales":"showSociales",
+		"portadas":"showPortadas",
 		"articulos":"showArticulos"
 	}, 
 	initialize: function(){
@@ -13,6 +14,9 @@ var RouterCharm = Backbone.Router.extend({
 	},
 	showSociales: function(){
 
+	},
+	showPortadas: function(){
+		
 	},
 	showArticulos: function () {
 		$('#main').empty();
