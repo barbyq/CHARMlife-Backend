@@ -1,39 +1,53 @@
 <?php
 class portadasDAO{
 	private $dbc;
+	public $first_ed_month = 3;
+	public $first_ed_year = 2012;
+
 	public function  __construct($connection)
 	{
 		$this->dbc = $connection;
 	}
 
+	public function getEdicion($mes, $year){
+		$string1 = $this->first_ed_year . '-' . $this->first_ed_month . '-1';
+		$string2 = $year . '-'. $mes . '-1';
+		$date1 = new DateTime($string1);
+		$date2 = new DateTime($string2);
+		$interval = $date1->diff($date2);
+		$years = $interval->y;
+		$total = $years*12;
+		$months = $interval->m;
+		$total = $total+$months;
+		return $total+1;
+	}
+
 	public function getPortadas(){
-		$q = "SELECT portadas_id as 'id', plaza_id,  mes, year, img, img_thumb FROM portadas ORDER BY plaza_id, year DESC, mes DESC";
+		$q = "SELECT portadas_id as 'id', mes, year, img, img_thumb, edicion FROM portadas ORDER BY plaza_id, year DESC, mes DESC";
 		$array = array();
 		$r = $this->dbc-> query($q);
 		while ($obj = $r->fetch_object()) {
-			$obj->mes_ = getMes($obj->mes);
-			$obj->plaza = getPlaza($obj->plaza_id);
+			//$obj->mes_ = getMes($obj->mes);
 			$array[] = $obj;
 		}
 		return $array;
 	}
 
 	public function getPortada($id){
-		$q = "SELECT portadas_id as 'id', plaza_id,  mes, year, img, img_thumb FROM portadas WHERE portada_id = ?";
+		$q = "SELECT portadas_id as 'id', mes, year, img, img_thumb, edicion FROM portadas WHERE portada_id = ?";
 		$stmt = $this->dbc->stmt_init();
 		$obj = new stdClass;
 		if($stmt->prepare($q)) {
  			$stmt->bind_param('i', $id);
  			$stmt->execute();
- 			$stmt->bind_result($portada_id, $plaza_id, $mes, $year, $img, $img_thumb);
+ 			$stmt->bind_result($portada_id, $mes, $year, $img, $img_thumb, $edicion);
  			while($stmt->fetch()){
  				$obj->portada_id = $portada_id;
- 				$obj->plaza_id = $plaza_id;
- 				$obj->plaza = getPlaza($obj->plaza_id);
  				$obj->mes = $mes;
  				$obj->year = $year;
  				$obj->img = $img;
  				$obj->img_thumb = $img_thumb;
+ 				$obj->edicion = $edicion;
  			}
  			$stmt->close();
  		}
@@ -41,26 +55,11 @@ class portadasDAO{
 	}
 
 	public function insertPortada($obj){
-		$edit = 0;
-		$obtenteredicion = "SELECT max(edicion) from portadas where plaza_id = ?";
-		$estat = $this->dbc->stmt_init();
-		$parseado = (int)$obj->plaza_id;
-		if ($estat->prepare($obtenteredicion)) {
-			$estat->bind_param('i',$parseado);
-			$estat->execute();
-			$estat->bind_result($edition);
-			while ($estat->fetch()) {
-				$edit = (int)$edition;
-			}
-		}
-		$estat->close();
-
-		$proximo = $edit + 1;
-
-		$q = "INSERT INTO portadas (plaza_id, mes, year, img, img_thumb,edicion) VALUES (?, ?, ?, ?, ?,?)";
+		$edicion = getEdicion($obj->mes, $obj->year);
+		$q = "INSERT INTO portadas (mes, year, img, img_thumb,edicion) VALUES (?, ?, ?, ?, ?,?)";
 		$stmt = $this->dbc->stmt_init();
  		if($stmt->prepare($q)) {
- 			$stmt->bind_param('sssssi', $obj->plaza_id, $obj->mes, $obj->year, $obj->img, $obj->img_thumb,$proximo);
+ 			$stmt->bind_param('ssssi', $obj->mes, $obj->year, $obj->img, $obj->img_thumb,$edicion);
  			$stmt->execute();
  		}
  		$id = $this->dbc->insert_id;
@@ -71,7 +70,7 @@ class portadasDAO{
 		$q = "UPDATE portadas SET plaza_id = ?, mes = ?, year = ?, img = ?, img_thumb = ? WHERE portadas_id = ?";
 		$stmt = $this->dbc->stmt_init();
 		if($stmt->prepare($q)) {
-			$stmt->bind_param('ssssss', $obj->plaza_id, $obj->mes, $obj->year, $obj->img, $obj->img_thumb, $obj->id);
+			$stmt->bind_param('ssssss', $obj->mes, $obj->year, $obj->img, $obj->img_thumb, $obj->id);
 			$stmt->execute();
 		}
 		$stmt->close();
@@ -87,7 +86,7 @@ class portadasDAO{
 		}
 		$stmt->close();
 	}
-
+/*
 	public function showyears($plaza)
 	{
 		$arreglo = array();
@@ -243,7 +242,7 @@ class portadasDAO{
 			$estatutote->execute();
 		}
 		$estatutote->close();
-	}
+	}*/
 
 }
 ?>
