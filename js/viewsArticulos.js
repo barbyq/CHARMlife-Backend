@@ -45,7 +45,7 @@ var TablaArticulos = Backbone.View.extend({
 	  this.addAll();
 	  return this;
 	}
-});
+
 
 var RegisterArticulo = Backbone.View.extend({
 	id:'registroArticulo',
