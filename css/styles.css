@@ -84,20 +84,9 @@ body {
   #mainNav a:hover {
     color: white; }
   #mainNav .toplogo {
-<<<<<<< HEAD
     margin-top: 10px;
     display: block;
     text-align: center; }
-=======
-    display: block;
-    text-align: center;
-    background-color: white;
-    height: 50px; }
-    #mainNav .toplogo img {
-      width: 115px;
-      position: relative;
-      top: 7px; }
->>>>>>> fa70429724534506fcc2dd055b92cbe44aaa4eec
   #mainNav ul {
     padding: 20px; }
     #mainNav ul ul {
@@ -149,11 +138,7 @@ body {
 
 .colab_edit {
   padding: 20px;
-<<<<<<< HEAD
   border: 3px solid #d8b4df;
-=======
-  border: 3px solid #ebebee;
->>>>>>> fa70429724534506fcc2dd055b92cbe44aaa4eec
   -webkit-border-radius: 5px;
   -o-border-radius: 5px;
   border-radius: 5px;
@@ -164,11 +149,7 @@ body {
   margin: 0 auto;
   margin-top: 20px;
   text-shadow: 1px 1px 1px white;
-<<<<<<< HEAD
   background-color: #ecd9f1;
-=======
-  background-color: white;
->>>>>>> fa70429724534506fcc2dd055b92cbe44aaa4eec
   position: relative; }
   .colab_edit h1 {
     font-weight: bold;
@@ -230,7 +211,6 @@ body {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#CCB0CF', endColorstr='#C756E2'); }
   .natural:active {
     color: #FFFFFF;
-<<<<<<< HEAD
     background: -webkit-gradient(linear, left top, left bottom, from(#fffefe), to(#fcc5c5));
     background: -moz-linear-gradient(top, #fffefe, #fcc5c5);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFEFE', endColorstr='#FCC5C5'); }
@@ -260,11 +240,6 @@ body {
     filter: alpha(opacity=1);
     -moz-opacity: 0.01;
     opacity: 0.01; }
-=======
-    background: -webkit-gradient(linear, left top, left bottom, from(#f47a20), to(#faa51a));
-    background: -moz-linear-gradient(top, #f47a20, #faa51a);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f47a20', endColorstr='#faa51a'); }
->>>>>>> fa70429724534506fcc2dd055b92cbe44aaa4eec
 
 .articulos_main {
   width: 900px; }

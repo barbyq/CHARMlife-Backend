@@ -8,5 +8,5 @@ include '../dbc/colaboradoresDAO.php';
 $dbconnect = new dbconnect('charm_charmlifec536978');
 $dbc = $dbconnect->getConnection();
 $colabsDao = new colaboradoresDAO($dbc);
-echo json_encode($colabsDao->getColaboradoresNombres());
+echo json_encode($colabsDao->getColaboradores());
 ?>

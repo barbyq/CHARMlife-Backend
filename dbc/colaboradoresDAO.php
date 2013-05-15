@@ -13,8 +13,8 @@ class colaboradoresDAO{
 		$r = $this->dbc-> query($q);
 		while ($obj = $r->fetch_object()) {
 			/*Get Secciones del Colaborador*/
-			$obj->plaza = getPlaza($obj->plaza_id);
-			$obj->secciones = $this->getSeccionesColaborador($obj->id);
+			// $obj->plaza = getPlaza($obj->plaza_id);
+			// $obj->secciones = $this->getSeccionesColaborador($obj->id);
 			$array[] = $obj;
 		}
 		return $array;

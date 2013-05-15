@@ -45,7 +45,7 @@ var TablaArticulos = Backbone.View.extend({
 	  this.addAll();
 	  return this;
 	}
-
+});
 
 var RegisterArticulo = Backbone.View.extend({
 	id:'registroArticulo',
@@ -94,16 +94,17 @@ var RegisterArticulo = Backbone.View.extend({
 	  var $colaboradoresDOM = $("<select id='colabs'></select>");
 
 	    $.post('controllers/colaboradores_controller.php',{receiver:true},function(response) {
+	    	console.log(response);
 		  	for (var i = 0; i < response.length; i++) {
 		  		var nombre = response[i]['nombre'];
-		  		var id = response[i]['colaborador_id'];
+		  		var id = response[i]['id'];
 		  		console.log(nombre);
 		  		console.log(id);
 		  		$colaboradoresDOM.append('<option value="'+id+'">'+nombre+'</option>');
 		  	};
 		  	$('#colaboradoreselect').html($colaboradoresDOM);
 		  	$('select').chosen();
-		  },'json');
+		  },'json').fail(function(e) { console.log(e); });
 
 	    $.post('controllers/secciones_controller.php',function  (response) {
 	    	console.log(response);
