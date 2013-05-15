@@ -1,0 +1,103 @@
+<h3>Registrar Articulo</h3>
+<br/>
+
+<table> 
+    <tr>
+        <td colspan="2">
+            <img id="imagenprincipali" src="img/ImagenPrinciDefault.png" height="300px" width="300px">
+            <span class="file-wrapper" style="">
+            <input type="file" name="photo" id="photo" />
+             <span id="kokokokoko" class="button">Browse...</span>
+            </span>
+        </td>
+        <td colspan="2">
+            <img id="tom" src="img/Tomneil.png" height="150px" width="150px">
+            <span class="file-wrapper" style="">
+              <input type="file" name="photogenic" id="photo" />
+              <span id="tomneil" class="button">Browse...</span>
+            </span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>Titulo<p>
+            <input id="tairel" placeholder="Titulo" type="text" style="width:150px"/>
+        </td>
+        <td>
+            <p>Plaza</p>
+            <select name="letra" class="plaza" style="width:110px">
+                <option value="0">Corporativo</option>
+                <option value="1">Torreon</option> 
+                <option value="2">Monterrey</option> 
+                <option value="3">Chihuahua</option> 
+                <option value="4">Leon</option> 
+                <option value="5">Queretaro</option>
+            </select>
+        </td>
+        <td>
+            <p>Status</p>
+            <select id="statuus" style="width:200px">
+                <option value="1">Borrador/Esperar Review</option>
+                <option value="2">En Espera</option>
+                <option value="0">Publicar</option>
+            </select>
+        </td>
+        <td>
+            <p>Medio</p>
+            <select id="midia">
+            <option value="0">Impreso</option>
+            <option value="1">Digital</option>
+            </select>   
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>Subtitulo</p>
+            <input type="text" id="subtitulo" style="width:150px" placeholder="Subtitulo">
+        </td>
+        <td>
+            <p>Tags (Separados por coma)</p>
+            <input type="text" id="ditags" placeholder="Tags">
+        </td>
+        <td>
+            <p>Tipo</p>
+            <select id="taipin">
+            <option value="0">Articulo</option>
+            <option value="1">Galeria</option>
+            <option value="2">Video</option>
+            </select>
+        </td>
+        <td>
+            <div id="videito" style="display:none;">
+                <input type="text" id="subirvideourl">
+                <p id="Direccionvid">Dame url del video...</p>
+            </div>
+            <div id="fechagaleria" style="display:block;">
+                <input type="text" id="fechagaleriaevento">
+                <p>Fecha</p>
+            </div>
+
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <p>Colaborador</p>
+            <div id="colaboradoreselect">
+            </div>
+        </td>
+        <td colspan="2">
+            <p align="center">Secciones</p>
+            <div id="seccioneselect" align="center">
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div align="center" style="font-family: 'Roboto Condensed', 'Arial Narrow', Arial, sans-serif;
+  font-weight: 300;">
+<p>Contenido</p>
+<textarea id="areaeditor" style="width:700px;height:250px"></textarea>
+</div>
+
+<br/>
+<button class="boton-charm natural">Registrar</button>
