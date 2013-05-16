@@ -138,7 +138,7 @@ body {
 
 .colab_edit {
   padding: 20px;
-  border: 3px solid #d8b4df;
+  border: 3px solid #ebebee;
   -webkit-border-radius: 5px;
   -o-border-radius: 5px;
   border-radius: 5px;
@@ -149,7 +149,7 @@ body {
   margin: 0 auto;
   margin-top: 20px;
   text-shadow: 1px 1px 1px white;
-  background-color: #ecd9f1;
+  background-color: white;
   position: relative; }
   .colab_edit h1 {
     font-weight: bold;

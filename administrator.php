@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 	<title>CHARMlife Administrador</title>	
+	<meta charset="utf-8">
 	<link rel="stylesheet" href="css/vendor/bootstrap.css">
 	<link rel="stylesheet" href="css/noocupload.css">
 	<link rel="stylesheet" type="text/css" href="js/library/chosen.css">
@@ -19,7 +20,7 @@
 	<script type="text/javascript" src="js/router.js"></script>
 	<script type="text/javascript" src="js/library/jquery.ocupload-1.1.2.js"></script>
 </head>
-<meta charset="utf-8">
+
 <link rel="stylesheet" type="text/css" href="css/styles.css">
 <body>
 	<script type="text/javascript">
