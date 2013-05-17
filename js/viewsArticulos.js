@@ -53,6 +53,8 @@ var RegisterArticulo = Backbone.View.extend({
 	initialize:function  () {
 	  	this.iditemporalizador = generaidtexto();
 	},cambiosListener:function  () {
+		var contextootravez = this;
+		console.log(contextootravez.iditemporalizador);
 		$('#yojoyojei').css('display','none');
 	  $('#taipin').change(function  () {
 	    var tipodearticulo = $(this).val();
@@ -62,7 +64,7 @@ var RegisterArticulo = Backbone.View.extend({
 	    }else{
 	    	if (tipodearticulo == '1') {
 	    		console.log("smn");
-	    		 ActivarVinculacion(this.iditemporalizador);
+	    		 ActivarVinculacion(contextootravez.iditemporalizador);
                setTimeout(function() {
                   ActivarSubida();
                 },2000);
@@ -143,17 +145,19 @@ function generaidtexto () {
     return text;
 }
 
-function ActivarVinculacion (jojojo) {
-  	$.post('TemporalGalerias/index.php',{temporary:jojojo},function(searmochido) {
-  		console.log(searmochido);
+function ActivarVinculacion(jojojo) {	
+   $.post('TemporalGalerias/Recibidor.php',{temporaral:jojojo},function(searmochido) {
+  	 	console.log(searmochido);
+  	 	console.log("lo mande aca chido");
     }).fail(function(e) {
-      console.log(e);
-    });
-  	$.post('TemporalGalerias/index.php',{temporary:jojojo},function(searmochido) {
-  		console.log(searmochido);
+       console.log(e);
+     });
+     $.post('TemporalGalerias/Recibidor.php',{temporaral:jojojo},function(searmochido) {
+  	 	console.log(searmochido);
+  	 	console.log("lo mande aca chido");
     }).fail(function(e) {
-      console.log(e);
-    });
+       console.log(e);
+     });
 }
 
 function ActivarSubida () {
