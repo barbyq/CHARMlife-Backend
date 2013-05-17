@@ -71,8 +71,7 @@ var RegisterArticulo = Backbone.View.extend({
 	    	}else{
 	    		$('#yojoyojei').css('display','none');
 	    		$('#videito').css('display','none');	
-	    	}
-	    	
+	    	}	    	
 	    }
 	  });
 	},
@@ -127,7 +126,7 @@ var RegisterArticulo = Backbone.View.extend({
 	},
 	render:function() {
 		var contexto = this;
-		$.get('views/RegistrarArticulo.handlebars',function(response) {
+		$.get('views/RegistrarArticulo.handlebars',function  (response) {
 		  contexto.$el.html(response);
 		});
 	  return this;
