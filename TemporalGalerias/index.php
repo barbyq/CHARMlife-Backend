@@ -13,8 +13,8 @@ session_start();
 error_reporting(E_ALL | E_STRICT);
 require('UploadHandler.php');
 
-if (isset($_POST['temporary'])) {
-	$_SESSION['id'] = $_POST['temporary']; 
+if (isset($_POST['temporaral'])) {
+	$_SESSION['id'] = $_POST['temporaral']; 
 }
 $upload_handler = new UploadHandler();
 ?>
