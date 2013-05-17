@@ -50,9 +50,23 @@ var TablaArticulos = Backbone.View.extend({
 var RegisterArticulo = Backbone.View.extend({
 	id:'registroArticulo',
 	className:'colab_edit articulos_main',
+	events:{
+		"click .registro":"registrar"
+	},
 	initialize:function  () {
 	  	this.iditemporalizador = generaidtexto();
-	},cambiosListener:function  () {
+	},registrar:function  () {
+	  var nicE = new nicEditors.findEditor('areaeditor');
+	  var cotent = nicE.getContent();
+	  var holo = $('#registroArticulo :input').serializeArray();
+	  holo.push({name:'contenido',value:cotent});
+	  $.post('controllers/articulos_controller.php',holo,function  (response) {
+	  	console.log(response);
+	  }).fail(function  (response) {
+	    console.log(response);
+	  });
+	},
+	cambiosListener:function  () {
 		var contextootravez = this;
 		console.log(contextootravez.iditemporalizador);
 		$('#yojoyojei').css('display','none');
@@ -105,7 +119,9 @@ var RegisterArticulo = Backbone.View.extend({
 			}
 		});
 	},loadColadsandSections:function() {
-	  var $colaboradoresDOM = $("<select id='colabs'></select>");
+		$('#fechagaleriaevento').datepicker();
+
+	  var $colaboradoresDOM = $("<select name='colaboradores' id='colabs'></select>");
 	    $.post('controllers/colaboradores_controller.php',{receiver:true},function(response) {
 		  	for (var i = 0; i < response.length; i++) {
 		  		var nombre = response[i]['nombre'];
@@ -115,7 +131,7 @@ var RegisterArticulo = Backbone.View.extend({
 		  	$('#colaboradoreselect').html($colaboradoresDOM);
 		  	$('select').chosen();
 		  },'json').fail(function(e) { console.log(e); });
-	    var $seccionesDOM = $('<select id="seccions"></select>');
+	    var $seccionesDOM = $('<select name="secciones" id="seccions"></select>');
 	    $.post('controllers/secciones_controller.php',{receiver:true},function(response) {
 	    	for (var i = 0; i < response.length; i++) {
 		    	var secnombre = response[i]['nombre'];

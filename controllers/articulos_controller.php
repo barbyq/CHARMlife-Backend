@@ -15,7 +15,35 @@ if (isset($_POST['receiver'])) {
 }
 
 if (isset($_POST['registro'])) {
-	
+	$titulo = $_POST['titulo'];
+	$plaza = $_POST['plaza'];
+	$status = $_POST['status'];
+	$medio = $_POST['medio'];
+	$subtitulo = $_POST['subtitulo'];
+	$tags = $_POST['tags'];
+	$tipo = $_POST['tipo'];
+	$video = $_POST['videourl'];
+	$fecha = $_POST['fechaevento'];
+	$colaborador = $_POST['colaboradores'];
+	$seccion = $_POST['secciones'];
+	$contenido = $_POST['contenido'];
+
+	$articulo = new stdClass;
+	$articulo->titulo = $titulo;
+	$articulo->status = $status;
+	$articulo->tipo = $tipo;
+	$articulo->colaborador_id = $colaborador;
+	$articulo->contenido = $contenido;
+	$articulo->plaza = $plaza;
+	$articulo->medio = $medio;
+	$articulo->user = $user;
+	$articulo->fechagaleria = $fechaparagaleria;
+	// $articulo->dia = date('d');
+	// $articulo->mes = date('m');
+	// $articulo->year = date('Y');
+	$articulo->seccion = $seccion;
+	$articulo->subtitulo = $subtitle;
+
 }elseif (isset($receiver) && $receiver=="imagenprinci") {
 	$generado = $_POST['generado'];
 	print_r($_FILES['imagenprincipali']["type"]);

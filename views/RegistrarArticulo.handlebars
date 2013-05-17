@@ -21,11 +21,11 @@
     <tr>
         <td>
             <p>Titulo<p>
-            <input id="tairel" placeholder="Titulo" type="text" style="width:150px"/>
+            <input id="tairel" name="titulo" placeholder="Titulo" type="text" style="width:150px"/>
         </td>
         <td>
             <p>Plaza</p>
-            <select name="letra" class="plaza" style="width:110px">
+            <select name="plaza" class="plaza" style="width:110px">
                 <option value="0">Corporativo</option>
                 <option value="1">Torreon</option> 
                 <option value="2">Monterrey</option> 
@@ -36,7 +36,7 @@
         </td>
         <td>
             <p>Status</p>
-            <select id="statuus" style="width:200px">
+            <select name="status" id="statuus" style="width:200px">
                 <option value="1">Borrador/Esperar Review</option>
                 <option value="2">En Espera</option>
                 <option value="0">Publicar</option>
@@ -44,7 +44,7 @@
         </td>
         <td>
             <p>Medio</p>
-            <select id="midia">
+            <select name="medio" id="midia">
             <option value="0">Impreso</option>
             <option value="1">Digital</option>
             </select>   
@@ -53,15 +53,15 @@
     <tr>
         <td>
             <p>Subtitulo</p>
-            <input type="text" id="subtitulo" style="width:150px" placeholder="Subtitulo">
+            <input type="text" name="subtitulo" id="subtitulo" style="width:150px" placeholder="Subtitulo">
         </td>
         <td>
             <p>Tags (Separados por coma)</p>
-            <input type="text" id="ditags" placeholder="Tags">
+            <input type="text" name="tags" id="ditags" placeholder="Tags">
         </td>
         <td>
             <p>Tipo</p>
-            <select id="taipin">
+            <select id="taipin" name="tipo">
             <option value="0">Articulo</option>
             <option value="1">Galeria</option>
             <option value="2">Video</option>
@@ -69,11 +69,11 @@
         </td>
         <td>
             <div id="videito" style="display:none;">
-                <input type="text" id="subirvideourl">
+                <input type="text" name="videourl" id="subirvideourl">
                 <p id="Direccionvid">Dame url del video...</p>
             </div>
             <div id="fechagaleria" style="display:block;">
-                <input type="text" id="fechagaleriaevento">
+                <input type="text" name="fechaevento" id="fechagaleriaevento">
                 <p>Fecha</p>
             </div>
 
@@ -101,7 +101,7 @@
 
 <br/>
 
-<button class="boton-charm natural">Registrar</button>
+<button class="boton-charm registro natural">Registrar</button>
 <br/>
 <br/>
 <br/>

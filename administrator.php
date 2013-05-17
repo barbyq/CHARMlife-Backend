@@ -7,8 +7,12 @@
 	<link rel="stylesheet" href="css/noocupload.css">
 	<link rel="stylesheet" type="text/css" href="js/library/chosen.css">
 	<link rel="stylesheet" href="css/vendor/jquery.fileupload-ui.css">
+	<link rel="stylesheet" href="css/custom-theme/jquery-ui-1.9.2.custom.min.css">
 	<script type="text/javascript" src="js/library/jquery-1.8.3.js"></script>
 	<script type="text/javascript" src="js/library/ajaxfileupload.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
+		<script src="js/library/jquery-ui-1.9.2.custom.min.js"></script>
+	<script type="text/javascript" src="http://blueimp.github.com/jQuery-File-Upload/js/vendor/jquery.ui.widget.js"></script>
 	<script src="js/library/nicEdit.js" type="text/javascript"></script>
 	<script type="text/javascript" src="js/library/handlebars-1.0.rc.1.js"></script>
 	<script type="text/javascript" src="js/library/underscore.js"></script>
