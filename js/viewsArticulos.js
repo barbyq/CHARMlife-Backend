@@ -54,13 +54,15 @@ var RegisterArticulo = Backbone.View.extend({
 	initialize:function  () {
 	  	this.iditemporalizador = generaidtexto();
 	},registrar:function  () {
+	  var contexto = this;
 	  var nicE = new nicEditors.findEditor('areaeditor');
 	  var cotent = nicE.getContent();
 	  var holo = $('#registroArticulo :input').serializeArray();
-	  holo.push({name:'contenido',value:cotent});
+	  var protegido = escape(cotent);
+	  holo.push({name:'contenido',value:protegido});
 	  holo.push({name:'registro',value:true});
 	  holo.push({name:"userId",value:UserId});
-
+	  holo.push({name:'temporal',value:contexto.iditemporalizador})
 	  $.post('controllers/articulos_controller.php',holo,function  (response) {
 	  	console.log(response);
 	  }).fail(function  (response) {

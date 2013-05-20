@@ -4,7 +4,7 @@ ini_set('display_errors', '1');
 
 include '../dbc/dbconnect.php';
 include '../dbc/articulosDAO.php';
-
+include 'utilities.php';
 
  $dbconnect = new dbconnect('charm_charmlifec536978');
  $dbc = $dbconnect->getConnection();
@@ -28,6 +28,7 @@ if (isset($_POST['registro'])) {
 	$colaborador = $_POST['colaboradores'];
 	$seccion = $_POST['secciones'];
 	$contenido = $_POST['contenido'];
+	$temporaldir = $_POST['temporal'];
 
 	$articulo = new stdClass;
 	$articulo->titulo = $titulo;
@@ -50,7 +51,43 @@ if (isset($_POST['registro'])) {
 	}
 	$articulo->seccion = $seccion;
 	$articulo->subtitulo = $subtitulo;
-	print_r($articulo);
+
+	$idgenerado = $articleDao->insertArticulo($articulo);
+	$articleDao->insertArticuloTags(strtolower($tags),$idgenerado);
+
+	if ($tipo=="1") {
+		$fuente = "../TemporalGalerias/".$temporaldir."/files/";
+		$destino = "../Galerias/".$idgenerado."/";
+		recurse_copy($fuente,$destino);
+		if (is_dir("../TemporalGalerias/".$temporaldir)) {
+			rmdir_recurse("../TemporalGalerias/".$temporaldir);
+		}
+	}elseif ($tipo=="2") {
+		 $articleDao->registervideourl($video,$idgenerado);
+	}
+
+	$dbconnect->closeConnection();
+
+	if (is_dir('../TemporalImagenes/'.$temporaldir)) {
+		mkdir('../Imagenes/'.$idgenerado);
+		recurse_copy('../TemporalImagenes/'.$temporaldir,'../Imagenes/'.$idgenerado);
+		rmdir_recurse('../TemporalImagenes/'.$temporaldir);
+		$escaneo = scandir('../Imagenes/'.$idgenerado);
+		$tipo = substr($escaneo[2],strlen($escaneo[2]) - 3);
+		print_r($tipo);
+		rename('../Imagenes/'.$idgenerado.'/'.$escaneo[2],'../Imagenes/'.$idgenerado.'/'.$idgenerado.'.'.$tipo);
+	}
+
+	if (is_dir('../TemporalThumbnails/'.$temporaldir)) {
+		mkdir('../Thumbnails/'.$idgenerado);
+		recurse_copy('../TemporalThumbnails/'.$temporaldir,'../Thumbnails/'.$idgenerado);
+		rmdir_recurse('../TemporalThumbnails/'.$temporaldir);
+		$escaneo = scandir('../Thumbnails/'.$idgenerado);
+		$tipo = substr($escaneo[2],strlen($escaneo[2]) - 3);
+		print_r($tipo);
+		rename('../Thumbnails/'.$idgenerado.'/'.$escaneo[2],'../Thumbnails/'.$idgenerado.'/'.$idgenerado.'.'.$tipo);
+	}
+
 }elseif (isset($receiver) && $receiver=="imagenprinci") {
 	$generado = $_POST['generado'];
 	print_r($_FILES['imagenprincipali']["type"]);
