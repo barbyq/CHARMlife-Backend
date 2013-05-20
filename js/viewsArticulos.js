@@ -9,7 +9,6 @@ var FilaArticulo = Backbone.View.extend({
 	}else{
 		stete = "En Espera";
 	}
-
 	var taip = 0;
 	if (this.model.get('tipo') == 0) {
 		taip = "Articulo";
@@ -18,7 +17,6 @@ var FilaArticulo = Backbone.View.extend({
 	}else{
 		taip = "Video";
 	}
-
 	 var eichi = '<td>'+this.model.get('articulo_id')+'</td><td>'+this.model.get('titulo')+'</td><td>'+this.model.get('dia')+'</td><td>'+this.model.get('mes')+'</td><td>'+this.model.get('year')+'</td><td>'+stete+'</td><td>'+taip+'</td><td>'+this.model.get('colaborador_id')+'</td><td>'+this.model.get('usuario_id')+'</td><td>'+this.model.get('seccion_id')+'</td><td><a id="'+this.model.get('articulo_id')+'" class="ver">Ver</a></td><td><a id="'+this.model.get('articulo_id')+'" class="editar">Editar</a></td><td><a id="'+this.model.get('articulo_id')+'" class="borrar">Borrar</a></td>';
 	 this.$el.html(eichi);
 	 return this;
@@ -60,6 +58,9 @@ var RegisterArticulo = Backbone.View.extend({
 	  var cotent = nicE.getContent();
 	  var holo = $('#registroArticulo :input').serializeArray();
 	  holo.push({name:'contenido',value:cotent});
+	  holo.push({name:'registro',value:true});
+	  holo.push({name:"userId",value:UserId});
+
 	  $.post('controllers/articulos_controller.php',holo,function  (response) {
 	  	console.log(response);
 	  }).fail(function  (response) {
@@ -93,7 +94,7 @@ var RegisterArticulo = Backbone.View.extend({
 	},
 	initUploaders:function  () {
 		var contexto = this;
-	  	var desubidita = $('#kokokokoko').upload({
+	  	var desubidita = $('#UploadImagen').upload({
 			name: 'imagenprincipali',
             action: 'controllers/articulos_controller.php',
             enctype: 'multipart/form-data',
@@ -106,7 +107,7 @@ var RegisterArticulo = Backbone.View.extend({
 			}
 		});
 
-		var tom = $('#tomneil').upload({
+		var tom = $('#UploadThumbnail').upload({
 			name:'tomneil',
 			action:'controllers/articulos_controller.php',
 			enctype: 'multipart/form-data',

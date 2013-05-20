@@ -23,6 +23,7 @@ if (isset($_POST['registro'])) {
 	$tags = $_POST['tags'];
 	$tipo = $_POST['tipo'];
 	$video = $_POST['videourl'];
+	$user = $_POST['userId'];
 	$fecha = $_POST['fechaevento'];
 	$colaborador = $_POST['colaboradores'];
 	$seccion = $_POST['secciones'];
@@ -37,13 +38,19 @@ if (isset($_POST['registro'])) {
 	$articulo->plaza = $plaza;
 	$articulo->medio = $medio;
 	$articulo->user = $user;
-	$articulo->fechagaleria = $fechaparagaleria;
-	// $articulo->dia = date('d');
-	// $articulo->mes = date('m');
-	// $articulo->year = date('Y');
+	if (strlen($fecha) == 0) {
+		$articulo->mes = date('m');
+		$articulo->dia = date('d');
+		$articulo->year = date('Y');			
+	}else{
+		$fechaexplotada = explode("/",$fecha);
+		$articulo->mes = $fechaexplotada[0];
+		$articulo->dia = $fechaexplotada[1];
+		$articulo->year = $fechaexplotada[2];
+	}
 	$articulo->seccion = $seccion;
-	$articulo->subtitulo = $subtitle;
-
+	$articulo->subtitulo = $subtitulo;
+	print_r($articulo);
 }elseif (isset($receiver) && $receiver=="imagenprinci") {
 	$generado = $_POST['generado'];
 	print_r($_FILES['imagenprincipali']["type"]);
