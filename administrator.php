@@ -13,6 +13,9 @@
 	<link rel="stylesheet" type="text/css" href="js/library/chosen.css">
 	<link rel="stylesheet" href="css/vendor/jquery.fileupload-ui.css">
 	<link rel="stylesheet" href="css/custom-theme/jquery-ui-1.9.2.custom.min.css">
+	<script type="text/javascript" src="js/library/jwplayer.flash.swf"></script>
+	<script type="text/javascript" src="js/library/jwplayer.html5.js"></script>
+	<script type="text/javascript" src="js/library/jwplayer.js"></script>
 	<script type="text/javascript" src="js/library/jquery-1.8.3.js"></script>
 	<script type="text/javascript" src="http://blueimp.github.com/jQuery-File-Upload/js/vendor/jquery.ui.widget.js"></script>
 	<script src="js/library/jquery-ui-1.9.2.custom.min.js"></script>

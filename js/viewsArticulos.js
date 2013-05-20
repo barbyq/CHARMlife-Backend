@@ -1,5 +1,12 @@
 var FilaArticulo = Backbone.View.extend({
 	tagName:'tr',
+	events:{
+		"click .ver":"verarticulo"
+	},verarticulo:function(e) {
+	  	var elemento = $(e.currentTarget);
+		var id = elemento.attr('id');
+		CharmRouter.navigate("articulo/"+id, {trigger:true});
+	},
 	render:function() {
 	var stete = 0;
 	if (this.model.get('status') == 0) {
@@ -45,6 +52,51 @@ var TablaArticulos = Backbone.View.extend({
 	}
 });
 
+var ViewArticulo = Backbone.View.extend({
+	className:"colab_edit articulos_main",
+	cargaTexto:function  () {
+		var protegido = this.model.get("contenido");
+		var contenido = unescape(protegido);
+	  $('#holi').html(contenido);
+	},cargaImagenes:function  () {
+		var contextotote = this;
+	  		$.post('controllers/articulos_controller.php',{receiver:'dameimagenes',articuloid:this.model.get('articulo_id')},function(response) {
+			console.log(response);
+				if (typeof response['imagenprincipal'] != "undefined") {
+					$('#imagenprincipalota').attr('src','Imagenes/'+contextotote.model.get('articulo_id')+'/'+response['imagenprincipal']+"?timestamp=" + new Date().getTime());
+				}
+				if (typeof response['thumbnail'] != "undefined") {
+					$('#tomota').attr('src','Thumbnails/'+contextotote.model.get('articulo_id')+'/'+response['thumbnail']+"?timestamp=" + new Date().getTime());	    
+				}	
+			
+				if (contextotote.model.get('tipo') == 1) {
+			    $('#contenidomostrar').html();
+				}else if (contextotote.model.get('tipo') == 2) {
+					$.post('controllers/articulos_controller.php',{receiver:'damevideo',idvide:contextotote.model.get('articulo_id')},function(response) {
+						console.log(response);
+						jwplayer('contenidomostrar').setup({
+						'flashplayer': 'js/library/jwplayer.flash.swf',
+						'id': 'playerID',
+					    'width': '480',
+					    'height': '360',
+					    'file': response,
+					    'controlbar': 'bottom'
+					  	});
+					});
+				}
+		},'json').fail(function(e) { console.log(e);});
+	},
+	render:function  () {
+		var contexo = this;
+		$.get("templates/ViewArticulo.handlebars",function  (response) {
+		  var temp = Handlebars.compile(response);
+		  var eichtiemel = temp(contexo.model.toJSON());
+		  contexo.$el.html(eichtiemel);
+		});
+	  return this;
+	}
+});
+
 var RegisterArticulo = Backbone.View.extend({
 	id:'registroArticulo',
 	className:'colab_edit articulos_main',
@@ -62,7 +114,7 @@ var RegisterArticulo = Backbone.View.extend({
 	  holo.push({name:'contenido',value:protegido});
 	  holo.push({name:'registro',value:true});
 	  holo.push({name:"userId",value:UserId});
-	  holo.push({name:'temporal',value:contexto.iditemporalizador})
+	  holo.push({name:'temporal',value:contexto.iditemporalizador});
 	  $.post('controllers/articulos_controller.php',holo,function  (response) {
 	  	console.log(response);
 	  }).fail(function  (response) {

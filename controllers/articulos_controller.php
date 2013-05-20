@@ -16,7 +16,6 @@ if (isset($_POST['receiver'])) {
 
 if (isset($_POST['registro'])) {
 	$titulo = $_POST['titulo'];
-	$plaza = $_POST['plaza'];
 	$status = $_POST['status'];
 	$medio = $_POST['medio'];
 	$subtitulo = $_POST['subtitulo'];
@@ -36,7 +35,6 @@ if (isset($_POST['registro'])) {
 	$articulo->tipo = $tipo;
 	$articulo->colaborador_id = $colaborador;
 	$articulo->contenido = $contenido;
-	$articulo->plaza = $plaza;
 	$articulo->medio = $medio;
 	$articulo->user = $user;
 	if (strlen($fecha) == 0) {
@@ -52,6 +50,7 @@ if (isset($_POST['registro'])) {
 	$articulo->seccion = $seccion;
 	$articulo->subtitulo = $subtitulo;
 
+	print_r($articulo);
 	$idgenerado = $articleDao->insertArticulo($articulo);
 	$articleDao->insertArticuloTags(strtolower($tags),$idgenerado);
 
@@ -63,6 +62,7 @@ if (isset($_POST['registro'])) {
 			rmdir_recurse("../TemporalGalerias/".$temporaldir);
 		}
 	}elseif ($tipo=="2") {
+		echo "que onda";
 		 $articleDao->registervideourl($video,$idgenerado);
 	}
 
@@ -88,7 +88,24 @@ if (isset($_POST['registro'])) {
 		rename('../Thumbnails/'.$idgenerado.'/'.$escaneo[2],'../Thumbnails/'.$idgenerado.'/'.$idgenerado.'.'.$tipo);
 	}
 
-}elseif (isset($receiver) && $receiver=="imagenprinci") {
+}elseif (isset($receiver) && $receiver == "dameimagenes") {
+	$articulo = $_POST['articuloid'];
+	$jsonlocation = new stdClass;
+
+	if (is_dir('../Imagenes/'.$articulo)) {
+		$imagenprincipal = scandir('../Imagenes/'.$articulo);
+		$jsonlocation->imagenprincipal = $imagenprincipal[2];
+	}
+	if (is_dir('../Thumbnails/'.$articulo)) {
+		$tomneil = scandir('../Thumbnails/'.$articulo);
+		$jsonlocation->thumbnail = $tomneil[2];
+	}
+	echo json_encode($jsonlocation);
+}elseif (isset($receiver) && $receiver == "damevideo") {
+	$video = $_POST['idvide'];
+	echo $articleDao->dameurlvid($video);
+}
+elseif (isset($receiver) && $receiver=="imagenprinci") {
 	$generado = $_POST['generado'];
 	print_r($_FILES['imagenprincipali']["type"]);
 	if (is_dir('../TemporalImagenes/'.$generado)) {
@@ -125,7 +142,11 @@ if (isset($_POST['registro'])) {
 			move_uploaded_file($_FILES['tomneil']['tmp_name'],'../TemporalThumbnails/'.$generacion.'/'.$generacion.'.png');
 		}
 	}
-}else{
+}elseif (isset($receiver) && $receiver == "damearticulo") {
+	$idadar = $_POST['idarticulo'];
+	echo json_encode($articleDao->getArticulo($idadar));
+}
+else{
 	echo json_encode($articleDao->getArticulos());
 }
 ?>

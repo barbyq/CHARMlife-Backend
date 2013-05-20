@@ -9,6 +9,7 @@ var RouterCharm = Backbone.Router.extend({
 	routes:{
 		"": "index",
 		"sociales":"showSociales",
+		"articulo/:id":"showArticulo",
 		"articulos":"showArticulos",
 		"articulos/add":"registrararticulo",
 		"portadas":"showPortadas",
@@ -64,6 +65,17 @@ var RouterCharm = Backbone.Router.extend({
 		$.post('controllers/portadas_controller.php', {delete: id}, function(data) {
   			context.navigate("portadas", {trigger: true, replace: true});
 		});
+	},showArticulo:function  (id) {
+	  $('#main').empty();
+	  $.post("controllers/articulos_controller.php",{receiver:"damearticulo",idarticulo:id},function  (response) {
+	    var articulover = new Articulo(response);
+	    var vista = new ViewArticulo({model:articulover});
+	    $('#main').html(vista.render().el);
+	    setTimeout(function  () {
+	      vista.cargaTexto();
+	      vista.cargaImagenes();
+	    }, 1000);
+	  },'json');
 	},
 	showArticulos: function () {
 		$('#main').empty();

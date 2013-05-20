@@ -12,20 +12,43 @@ class articulosDAO
 		$this->dbc = $con;
 	}
 
+
+	public function getArticulo($id)
+	{
+		$busq = "SELECT articulos.articulo_id, articulos.titulo, articulos.dia,articulos.mes,articulos.year,articulos.status,articulos.tipo, articulos.contenido, CONCAT(colaboradores.nombre,' ',colaboradores.apellido) as 'colaborador_id',usuarios.nombre as 'usuario_id', secciones.nombre as 'seccion_id', articulos.subtitulo from articulos join colaboradores on articulos.colaborador_id = colaboradores.colaborador_id join usuarios on articulos.usuario_id = usuarios.usuario_id join secciones on articulos.seccion_id = secciones.seccion_id where articulo_id = ?";
+		$ye = $this->dbc->stmt_init();
+		$articulo = new stdClass;
+		if ($ye->prepare($busq)) {
+			$ye->bind_param('i',$id);
+			$ye->execute();
+			$ye->bind_result($articulo_id,$titulo,$dia,$mes,$year,$status,$tipo,$contenido,$colaborador,$usuario_id,$seccion_id,$subtitulo);
+			while ($ye->fetch()) {
+				$articulo->articulo_id = $articulo_id;
+				$articulo->titulo = $titulo;
+				$articulo->subtitulo = $subtitulo;
+				$articulo->dia = $dia;
+				$articulo->mes = $mes;
+				$articulo->year = $year;
+				$articulo->status = $status;
+				$articulo->tipo = $tipo;
+				$articulo->contenido = $contenido;
+				$articulo->colaborador_id = $colaborador;
+				$articulo->usuario_id = $usuario_id;
+				$articulo->seccion_id = $seccion_id;
+			}
+		}
+		return $articulo;
+	}
+
 	public function getArticulos()
 	{
 		$articulos = array();
-		$holaquetal = "SELECT articulos.articulo_id, articulos.titulo, articulos.dia,articulos.mes,articulos.year,articulos.status,articulos.tipo, CONCAT(colaboradores.nombre,' ',colaboradores.apellido) as 'colaborador_id',usuarios.nombre as 'usuario_id', secciones.nombre as 'seccion_id', articulos.contenido, articulos.subtitulo from articulos join colaboradores on articulos.colaborador_id = colaboradores.colaborador_id join usuarios on articulos.usuario_id = usuarios.usuario_id join secciones on articulos.seccion_id = secciones.seccion_id";
+		$holaquetal = "SELECT articulos.articulo_id, articulos.titulo, articulos.dia,articulos.mes,articulos.year,articulos.status,articulos.tipo, CONCAT(colaboradores.nombre,' ',colaboradores.apellido) as 'colaborador_id',usuarios.nombre as 'usuario_id', secciones.nombre as 'seccion_id', articulos.subtitulo from articulos join colaboradores on articulos.colaborador_id = colaboradores.colaborador_id join usuarios on articulos.usuario_id = usuarios.usuario_id join secciones on articulos.seccion_id = secciones.seccion_id";
 		$yim = $this->dbc->query($holaquetal);
 		while ($artip = $yim->fetch_object()) {
 			$articulos[] = $artip;
 		}
 		return $articulos;
-	}
-
-	public function getArticulo($id)
-	{
-		return 0;
 	}
 
 	public function insertArticulo($articulo)
@@ -77,6 +100,22 @@ class articulosDAO
 			$estatt->bind_param('si',$vidi,$idi);
 			$estatt->execute();
 		}
+	}
+	
+	public function dameurlvid($vidi)
+	{
+		$url = "";
+		$kecosa = "SELECT video_url from articulo_media where articulo_id = ?";
+		$estat = $this->dbc->stmt_init();
+		if ($estat->prepare($kecosa)) {
+			$estat->bind_param('i',$vidi);
+			$estat->execute();
+			$estat->bind_result($coshi);
+			while ($estat->fetch()) {
+				$url = $coshi;
+			}
+		}
+		return $url;
 	}
 }
  ?>
