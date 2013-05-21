@@ -96,7 +96,16 @@ var RouterCharm = Backbone.Router.extend({
 	    $('select').chosen();
 	  }, 1000);
 	},editarArticulo:function  (id) {
-	 	$('#main').empty();
+	 	$.post("controllers/articulos_controller.php",{receiver:"damearticulo",idarticulo:id},function  (response) {
+	 		console.log(response);
+	 		var articuloeditable = new Articulo(response);
+	 		var editarVista = new EditarArticulo({model:articuloeditable});
+	 		$('#main').html(editarVista.render().el);
+	 		setTimeout(function  () {
+	 		  editarVista.loadStuff();
+	 		  editarVista.loadColabs();
+	 		}, 1000);
+	 	},'json');
 	},
 	start: function() {
 		Backbone.history.start();

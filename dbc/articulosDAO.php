@@ -79,6 +79,22 @@ class articulosDAO
 		}		
 	}
 
+	public function getArticuloTags($id)
+	{
+		$tagsotes = array();
+		$stto = "SELECT tag FROM tags where articulo_id = ?";
+		$exe = $this->dbc->stmt_init();
+		if ($exe->prepare($stto)) {
+			$exe->bind_param('i',$id);
+			$exe->execute();
+			$exe->bind_result($tag);
+			while ($exe->fetch()) {
+				$tagsotes[] = $tag;			
+			}		
+		}
+		return $tagsotes;
+	}
+
 	public function insertArticuloTags($tags,$articuloidi)
 	{
 		$arregloidsinsertados = array();

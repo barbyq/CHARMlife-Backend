@@ -124,8 +124,29 @@ if (isset($_POST['registro'])) {
 }elseif (isset($receiver) && $receiver == "damevideo") {
 	$video = $_POST['idvide'];
 	echo $articleDao->dameurlvid($video);
-}
-elseif (isset($receiver) && $receiver=="imagenprinci") {
+}elseif (isset($receiver) && $receiver == "contenido") {
+	$id = $_POST['articulo'];
+	$tags = $articleDao->getArticuloTags($id);
+
+	$imagenes = new stdClass;
+
+	if (is_dir('../Imagenes/'.$id)) {
+		$imagenprincipal = scandir('../Imagenes/'.$id);
+		$imagenes->imagen = $imagenprincipal[2];
+	}
+	if (is_dir('../Thumbnails/'.$id)) {
+		$tomneil = scandir('../Thumbnails/'.$id);
+		$imagenes->thumbnail = $tomneil[2];
+	}
+
+	$video = $articleDao->dameurlvid($id);
+
+	$jsoncontenido = new stdClass;
+	$jsoncontenido->tags = $tags;
+	$jsoncontenido->imagenes = $imagenes;
+	$jsoncontenido->videourl = $video;
+	echo json_encode($jsoncontenido);
+}elseif (isset($receiver) && $receiver=="imagenprinci") {
 	$generado = $_POST['generado'];
 	print_r($_FILES['imagenprincipali']["type"]);
 	if (is_dir('../TemporalImagenes/'.$generado)) {
@@ -165,8 +186,74 @@ elseif (isset($receiver) && $receiver=="imagenprinci") {
 }elseif (isset($receiver) && $receiver == "damearticulo") {
 	$idadar = $_POST['idarticulo'];
 	echo json_encode($articleDao->getArticulo($idadar));
-}
-else{
+}elseif (isset($receiver) && $receiver == "updateprincipal") {
+	$idamodificar = $_POST['id'];
+	if (is_dir("../Imagenes/".$idamodificar)) {
+		rmdir_recurse("../Imagenes/".$idamodificar);
+		mkdir("../Imagenes/".$idamodificar);
+		if ($_FILES['principal']['type'] == 'image/jpeg') {
+			move_uploaded_file($_FILES['principal']['tmp_name'],"../Imagenes/".$idamodificar."/".$idamodificar.".jpg");
+		}elseif ($_FILES['principal']['type'] == 'image/png') {
+			move_uploaded_file($_FILES['principal']['tmp_name'],"../Imagenes/".$idamodificar."/".$idamodificar.".png");
+		}
+	}else{
+		mkdir("../Imagenes/".$idamodificar);
+		if ($_FILES['principal']['type'] == 'image/jpeg') {
+			move_uploaded_file($_FILES['principal']['tmp_name'],"../Imagenes/".$idamodificar."/".$idamodificar.".jpg");
+		}elseif ($_FILES['principal']['type'] == 'image/png') {
+			move_uploaded_file($_FILES['principal']['tmp_name'],"../Imagenes/".$idamodificar."/".$idamodificar.".png");
+		}
+	}
+}elseif (isset($receiver) && $receiver == "updatethumbnail") {
+	$cosha = $_POST['id'];
+	if (is_dir("../Thumbnails/".$cosha)) {
+		rmdir_recurse("../Thumbnails/".$cosha);
+		mkdir("../Thumbnails/".$cosha);
+		if ($_FILES['thumbnail']['type'] == 'image/jpeg') {
+			move_uploaded_file($_FILES['thumbnail']['tmp_name'],"../Thumbnails/".$cosha."/".$cosha.".jpg");
+		}elseif ($_FILES['thumbnail']['type'] == 'image/png') {
+			move_uploaded_file($_FILES['thumbnail']['tmp_name'],"../Thumbnails/".$cosha."/".$cosha.".png");
+		}
+	}else{
+		mkdir("../Thumbnails/".$cosha);
+		if ($_FILES['thumbnail']['type'] == 'image/jpeg') {
+			move_uploaded_file($_FILES['thumbnail']['tmp_name'],"../Thumbnails/".$cosha."/".$cosha.".jpg");
+		}elseif ($_FILES['thumbnail']['type'] == 'image/png') {
+			move_uploaded_file($_FILES['thumbnail']['tmp_name'],"../Thumbnails/".$cosha."/".$cosha.".png");
+		}
+	}	
+}elseif (isset($receiver) && $receiver == "update") {
+	$id = $_POST['articulo_id'];
+
+	$art = new stdClass;
+	$art->articulo_id = $id;
+	$art->titulo = $_POST['titulo'];
+	$art->subtitulo = $_POST['subtitulo'];
+	$art->contenido = $_POST['contenido'];
+	$art->status = $_POST['status'];
+	$art->medio = $_POST['medio'];
+	$art->tags = $_POST['tags'];
+	$art->tipo = $_POST['tipo'];
+	$art->colaborador_id = $_POST['colaboradores'];
+	$art->seccion_id = $_POST['secciones'];
+	$art->video = $_POST['video'];	
+	if (strlen($fecha) == 0) {
+			$arti->mes = date('m');
+			$arti->dia = date('d');
+			$arti->year = date('Y');			
+		}else{
+		$fechaexplotada = explode("/",$_POST['fecha']);
+		$arti->mes = $fechaexplotada[0];
+		$arti->dia = $fechaexplotada[1];
+		$arti->year = $fechaexplotada[2];
+	}
+
+	if ($art->tipo == "2") {
+		$articleDao->updateVideoUrl($arti);
+	}
+	$articleDao->updateArticulo($arti);
+	$articleDao->updateTags($arti);
+}else{
 	echo json_encode($articleDao->getArticulos());
 }
 ?>
