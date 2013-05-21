@@ -69,9 +69,14 @@ class articulosDAO
 		
 	}
 
-	public function deleteArticulo()
+	public function deleteArticulo($id)
 	{
-		
+		$deleti = "DELETE FROM articulos where articulo_id = ?";
+		$sky = $this->dbc->stmt_init();
+		if ($sky->prepare($deleti)) {
+			$sky->bind_param("i",$id);			
+			$sky->execute();
+		}		
 	}
 
 	public function insertArticuloTags($tags,$articuloidi)
@@ -92,6 +97,16 @@ class articulosDAO
 		}
 	}
 
+	public function deleteArticuloTags($id)
+	{
+		$k = "DELETE FROM tags where articulo_id = ?";
+		$h = $this->dbc->stmt_init();
+		if ($h->prepare($k)) {
+			$h->bind_param("i",$id);
+			$h->execute();
+		}
+	}
+
 	public function registervideourl($vidi,$idi)
 	{
 		$cosa = "INSERT INTO articulo_media(video_url,articulo_id) values(?,?)";
@@ -99,6 +114,16 @@ class articulosDAO
 		if ($estatt->prepare($cosa)) {
 			$estatt->bind_param('si',$vidi,$idi);
 			$estatt->execute();
+		}
+	}
+
+	public function deleteArticuloMedia($id)
+	{
+		$e = "DELETE FROM articulo_media where articulo_id = ?";
+		$s = $this->dbc->stmt_init();
+		if ($s->prepare($e)) {
+			$s->bind_param("i",$id);
+			$s->execute();
 		}
 	}
 	

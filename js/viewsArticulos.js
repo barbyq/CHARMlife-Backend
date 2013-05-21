@@ -1,13 +1,29 @@
 var FilaArticulo = Backbone.View.extend({
 	tagName:'tr',
 	events:{
-		"click .ver":"verarticulo"
+		"click .ver":"verarticulo",
+		"click .editar":"editarArticulo",
+		"click .borrar":"borrarArticulo"
 	},verarticulo:function(e) {
 	  	var elemento = $(e.currentTarget);
 		var id = elemento.attr('id');
 		CharmRouter.navigate("articulo/"+id, {trigger:true});
-	},
-	render:function() {
+	},editarArticulo:function(e) {
+	   	var elemento = $(e.currentTarget);
+		var id = elemento.attr('id');
+		CharmRouter.navigate("articulo/"+id+"/edit", {trigger:true});
+	},borrarArticulo:function  (e) {
+	   	var elemento = $(e.currentTarget);
+		var id = elemento.attr('id');
+		console.log(id);
+		if (confirm("¿Seguro que lo quieres borrar?")) {
+			$.post('controllers/articulos_controller.php',{receiver:"borrar",idarticulo:id},function  (response) {
+		 	 console.log(response);
+			}).fail(function  (e) {
+			  console.log(e);
+			});
+		};
+	},render:function() {
 	var stete = 0;
 	if (this.model.get('status') == 0) {
 		stete = "Publicado";
@@ -115,8 +131,10 @@ var RegisterArticulo = Backbone.View.extend({
 	  holo.push({name:'registro',value:true});
 	  holo.push({name:"userId",value:UserId});
 	  holo.push({name:'temporal',value:contexto.iditemporalizador});
+
 	  $.post('controllers/articulos_controller.php',holo,function  (response) {
-	  	console.log(response);
+	  	alert("Guardado con exito");
+	  	CharmRouter.navigate("articulos", {trigger:true});
 	  }).fail(function  (response) {
 	    console.log(response);
 	  });

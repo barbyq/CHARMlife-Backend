@@ -50,6 +50,9 @@
 	$(document).ready(function() {
 		CharmRouter = new RouterCharm();
 		CharmRouter.start();
+		$('#gifi').hide();
+        $('#gifi').ajaxStart(function() { $(this).show(); }); 
+        $('#gifi').ajaxComplete(function() { $(this).hide(); });
 	});
 	</script>
 	<nav id="mainNav">
@@ -62,6 +65,7 @@
 			<li><a href="#colaboradores">Colaboradores</a></li>
 			<li><a href="#">Usuarios</a></li>
 			<li><a href="#Config">Configuraciones</a></li>
+			<img id="gifi" src="img/loading.gif">
 		</ul>
 	</nav>
 

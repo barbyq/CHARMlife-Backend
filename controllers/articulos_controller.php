@@ -88,6 +88,26 @@ if (isset($_POST['registro'])) {
 		rename('../Thumbnails/'.$idgenerado.'/'.$escaneo[2],'../Thumbnails/'.$idgenerado.'/'.$idgenerado.'.'.$tipo);
 	}
 
+}elseif (isset($receiver) && $receiver == "borrar") {
+	$id = $_POST['idarticulo'];
+	$articulo = $articleDao->getArticulo($id);
+
+	if ($articulo->tipo == "1") {
+		if (is_dir("../Galerias/".$id)) {
+			rmdir_recurse('../Galerias/'.$id);	
+		}
+	}elseif ($articulo->tipo == "2") {
+		$articleDao->deleteArticuloMedia($articulo->articulo_id);
+	}
+
+	if (is_dir("../Imagenes/".$id)) {
+		rmdir_recurse('../Imagenes/'.$id);
+	}
+	if (is_dir("../Thumbnails/".$id)) {
+		rmdir_recurse("../Thumbnails/".$id);
+	}
+	$articleDao->deleteArticulo($id);
+	$articleDao->deleteArticuloTags($id);
 }elseif (isset($receiver) && $receiver == "dameimagenes") {
 	$articulo = $_POST['articuloid'];
 	$jsonlocation = new stdClass;

@@ -12,9 +12,9 @@ var RouterCharm = Backbone.Router.extend({
 		"articulo/:id":"showArticulo",
 		"articulos":"showArticulos",
 		"articulos/add":"registrararticulo",
+		"articulo/:id/edit":"editarArticulo",
 		"portadas":"showPortadas",
 		"portadas/add":"addPortadas",
-		"articulos":"showArticulos",
 		"portadas/:id": "showPortada", 
 		"portadas/:id/edit":"editPortadas",
 		"portadas/:id/delete": "deletePortadas"
@@ -85,7 +85,6 @@ var RouterCharm = Backbone.Router.extend({
 		var tablaArticulos = new TablaArticulos({collection:articulos});
 		$('#main').append(tablaArticulos.render().el);
 		articulos.fetch();
-
 	},registrararticulo:function() {
 	  var registro = new RegisterArticulo();
 	  $('#main').html(registro.render().el);
@@ -96,6 +95,8 @@ var RouterCharm = Backbone.Router.extend({
 	    registro.cambiosListener();
 	    $('select').chosen();
 	  }, 1000);
+	},editarArticulo:function  (id) {
+	 	$('#main').empty();
 	},
 	start: function() {
 		Backbone.history.start();
