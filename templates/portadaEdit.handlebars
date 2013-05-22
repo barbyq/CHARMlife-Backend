@@ -1,0 +1,42 @@
+<form action="controllers/portadas_controller.php" method="post" class="colab_edit">
+	<table>
+		<tr>
+			<td colspan="2">Portada:</td>
+		</tr>
+		<tr>
+			<td>Mes y Año:</td>
+			<td><select id="mes_select" name="mes" style="width: 120px;"></select>
+			<select id="ano_select" name="year" style="width:70px;"></select></td>
+		</tr>
+		<tr>
+			<td>Portada Grande:</td>
+			<td>
+				<img src="{{#if id}}upload/portadas/{{id}}/{{img}}{{else}}img/profile.png{{/if}}" class="uploadPortada"  />
+				<input type="button" value="Browse..." class="uploadPortada" >
+			</td>
+		</tr>
+		<tr>
+			<td>Portada Thumbnail:</td>
+			<td>
+				<img src="{{#if id}}upload/portadas/{{id}}/{{img_thumb}}{{else}}img/profile.png{{/if}}" class="uploadPortadasThumb"/>
+				<input type="button" value="Browse..." class="uploadPortadasThumb">
+			</td>
+		</tr>
+		
+	</table>
+	<input type="hidden" value="" name="imgs" class="imgs_array">
+	<input type="hidden" value="" name="imgs_mob" class="imgsmob_array">
+
+
+	{{#if id}}
+		<input type="hidden" name="id" value="{{id}}"/>
+		<input type="hidden" name="img" value="{{img}}"/>
+		<input type="hidden" name="img_thumb" value="{{img_thumb}}"/>
+	{{/if}}
+
+	<input type="hidden" name="action" value="{{#if id}}edit{{else}}add{{/if}}"/>
+	<p class="controls">
+		<input type="submit" value="Guardar"/>
+		<a href="#portadas" class="button">Cancelar</a>
+	</p>
+</form>
