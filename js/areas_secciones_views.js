@@ -6,7 +6,7 @@ var AreaView = Backbone.View.extend({
 	render: function(){
 		var context = this;
 		var attributes = this.model.toJSON();
-		$.get('/proyectoDigital/templates/areaView.handlebars', function(data){
+		$.get('templates/areaView.handlebars', function(data){
 			template = Handlebars.compile(data);
 			context.$el.html(template(attributes));
 		});
@@ -19,7 +19,7 @@ var AreaAddView = Backbone.View.extend({
 	render: function(){
 		console.log("AreaAddView");
 		var context = this;
-		$.get('/proyectoDigital/templates/areaEdit.handlebars', function(data){
+		$.get('templates/areaEdit.handlebars', function(data){
 			/*Handlebars.registerHelper('ifeq', function (a, b, options) {
       			if (a == b) { return options.fn(this); }
     		});*/
@@ -35,7 +35,7 @@ var AreaEditView = Backbone.View.extend({
 		console.log("AreaEditView");
 		var context = this;
 		var attributes = this.model.toJSON();
-		$.get('/proyectoDigital/templates/areaEdit.handlebars', function(data){
+		$.get('templates/areaEdit.handlebars', function(data){
 			/*Handlebars.registerHelper('ifeq', function (a, b, options) {
       			if (a == b) { return options.fn(this); }
     		});*/
@@ -78,7 +78,7 @@ var SeccionView = Backbone.View.extend({
 	render: function(){
 		var context = this;
 		var attributes = this.model.toJSON();
-		$.get('/proyectoDigital/templates/seccionView.handlebars', function(data){
+		$.get('templates/seccionView.handlebars', function(data){
 			template = Handlebars.compile(data);
 			context.$el.html(template(attributes));
 		});
@@ -94,7 +94,7 @@ var SeccionAddView = Backbone.View.extend({
 		var areaList = new AreaList();
 		areaList.fetch({async: false});
 
-		$.get('/proyectoDigital/templates/seccionEdit.handlebars', function(data){
+		$.get('/templates/seccionEdit.handlebars', function(data){
 			template = Handlebars.compile(data);
 			context.$el.html(template);
 
@@ -117,7 +117,7 @@ var SeccionEditView = Backbone.View.extend({
 		areaList.fetch({async: false});
 
 
-		$.get('/proyectoDigital/templates/seccionEdit.handlebars', function(data){
+		$.get('/templates/seccionEdit.handlebars', function(data){
 			template = Handlebars.compile(data);
 			context.$el.html(template(attributes));
 
