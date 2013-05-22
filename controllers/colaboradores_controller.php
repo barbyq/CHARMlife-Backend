@@ -3,7 +3,7 @@
 	ini_set('display_errors', '1');
 
 	include '../dbc/dbconnect.php';
-	include '../utilities.php';
+	include '../dbc/utilities.php';
 	include '../dbc/colaboradoresDAO.php';
 	$dbconnect = new dbconnect('charm_charmlifec536978');
 	$dbc = $dbconnect->getConnection();
@@ -48,7 +48,7 @@
 					}
 				}
 			}
-			header("Location: /proyectoDigital/administrator.php#colaboradores");
+			header("Location: /charmAdmin/administrator.php#colaboradores");
 		}
 		if ($action == 'edit'){
 			if (!empty($obj->imgs)){
@@ -68,7 +68,7 @@
 			foreach ($obj->secciones as $seccion){
 				$colaboradoresDAO->insertColaboradorSecciones($seccion, $obj->id);				
 			}
-			header("Location: /proyectoDigital/administrator.php#colaboradores/" . $obj->id);
+			header("Location: /charmAdmin/administrator.php#colaboradores/" . $obj->id);
 		}
 		
 	}else if(isset($_POST['delete'])){

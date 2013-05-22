@@ -1,4 +1,3 @@
-
 <?php
 class colaboradoresDAO{
 	private $dbc;
@@ -8,7 +7,7 @@ class colaboradoresDAO{
 	}
 	
 	public function getColaboradores(){
-		$q = "SELECT colaborador_id as 'id', CONCAT(colaboradores.nombre, ' ' ,colaboradores.apellido) as 'nombre', giro, twitter, tipo, medio, imagen, descripcion, link_extra, plaza_id FROM colaboradores ORDER BY colaboradores.apellido DESC";
+		$q = "SELECT colaborador_id as 'id', CONCAT(colaboradores.nombre, ' ' ,colaboradores.apellido) as 'nombrec', colaboradores.nombre , colaboradores.apellido, giro, twitter, tipo, medio, imagen, descripcion, link_extra, plaza_id FROM colaboradores ORDER BY colaboradores.apellido DESC";
 		$array = array();
 		$r = $this->dbc-> query($q);
 		while ($obj = $r->fetch_object()) {
