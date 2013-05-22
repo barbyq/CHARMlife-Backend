@@ -1,0 +1,10 @@
+<td>{{nombre}} {{apellido}}</td>
+<td>{{giro}}</td>
+<td>{{#ifeq tipo 0}}Persona{{/ifeq}}{{#ifeq tipo 1}}Empresa{{/ifeq}}</td>
+<td>{{#ifeq medio 0}}Digital{{/ifeq}}{{#ifeq medio 1}}Impreso{{/ifeq}}</td>
+<td>
+	{{#each secciones}}
+			 <span class="seccion">{{seccion}}</span>	
+	{{/each}}
+</td>
+<td><a href="#colaboradores/{{id}}">Ver</a></td>

@@ -31,6 +31,8 @@
 	<script type="text/javascript" src="js/viewsArticulos.js"></script>
 	<script type="text/javascript" src="js/viewsUsuarios.js"></script>
 	<script type="text/javascript" src="js/portadas_views.js"></script>
+	<script type="text/javascript" src="js/colaboradores_views.js"></script>
+	<script type="text/javascript" src="js/areas_secciones_views.js"></script>
 	<script type="text/javascript" src="js/router.js"></script>
 	<script type="text/javascript" src="js/library/jquery.ui.widget.js"></script>
 	<script type="text/javascript" src="js/library/tmpl.min.js"></script>
@@ -66,6 +68,9 @@
 			<li><a href="#colaboradores">Colaboradores</a></li>
 			<li><a href="#usuarios">Usuarios</a></li>
 			<li><a href="#Config">Configuraciones</a></li>
+			<li><a href="#secciones">Secciones</a></li>
+			<li><a href="#areas">Areas</a></li>
+
 			<img id="gifi" src="img/loading.gif">
 		</ul>
 	</nav>
