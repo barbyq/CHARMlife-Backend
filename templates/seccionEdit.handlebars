@@ -1,0 +1,24 @@
+<form action="controllers/secciones_controller.php" method="post" class="colab_edit">
+	<table>
+		<tr>
+			<td colspan="2"><strong>Secciones:</strong></td>
+		</tr>
+		<tr>
+			<td>Nombre: </td>
+			<td><input type="text" name="nombre" value="{{#if nombre}}{{nombre}}{{/if}}"/></td>
+		</tr>
+		<tr>
+			<td>Area: </td>
+			<td><select  style="width: 150px;" name="area_id" id="areasSelect">
+			</select>
+			</td>
+		</tr>
+	</table>
+	{{#if id}}<input type="hidden" name="id" value="{{id}}">{{/if}}
+	<input type="hidden" name="action" value="{{#if id}}edit{{else}}add{{/if}}">
+
+	<p class="controls">
+		<input type="submit" value="Guardar"/>
+		<a href="#secciones" class="button">Cancelar</a>
+	</p>
+</form>
