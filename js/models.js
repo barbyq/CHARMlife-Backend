@@ -3,6 +3,10 @@ var Social = Backbone.Model.extend({ });
 
 var Portada = Backbone.Model.extend({ });
 
+var Usuario = Backbone.Model.extend({
+	idAttribute:"usuario_id"
+});
+
 var Articulo = Backbone.Model.extend({
 	idAttribute:"articulo_id"
 });
@@ -27,4 +31,9 @@ var PortadasList = Backbone.Collection.extend({
 var Articulos = Backbone.Collection.extend({
 	model:Articulo,
 	url:'controllers/articulos_controller.php'
+});
+
+var Usuarios = Backbone.Collection.extend({
+	model: Usuario,
+	url:"controllers/usuarios_controller.php"
 });

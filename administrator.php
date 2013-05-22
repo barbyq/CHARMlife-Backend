@@ -1,7 +1,7 @@
 <?php 
 	session_start();
 	$_SESSION['username'] = "Alf";
-	$_SESSION['userid'] = 1;
+	$_SESSION['userid'] = 3;
  ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -29,6 +29,7 @@
 	<script type="text/javascript" src="js/library/chosen.jquery.js"></script>
 	<script type="text/javascript" src="js/models.js"></script>
 	<script type="text/javascript" src="js/viewsArticulos.js"></script>
+	<script type="text/javascript" src="js/viewsUsuarios.js"></script>
 	<script type="text/javascript" src="js/portadas_views.js"></script>
 	<script type="text/javascript" src="js/router.js"></script>
 	<script type="text/javascript" src="js/library/jquery.ui.widget.js"></script>
@@ -63,7 +64,7 @@
 			<li><a href="#portadas">Portadas</a></li>
 			<li><a href="#articulos">Articulos</a></li>
 			<li><a href="#colaboradores">Colaboradores</a></li>
-			<li><a href="#">Usuarios</a></li>
+			<li><a href="#usuarios">Usuarios</a></li>
 			<li><a href="#Config">Configuraciones</a></li>
 			<img id="gifi" src="img/loading.gif">
 		</ul>

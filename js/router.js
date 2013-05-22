@@ -5,6 +5,8 @@ function addBar(section){
 	return '<form class="searchBar" id="searchi"><a href="#' + section +'/add" class="button">Agregar</a></form>';
 }
 
+var usuarios = new Usuarios();
+
 var RouterCharm = Backbone.Router.extend({
 	routes:{
 		"": "index",
@@ -17,7 +19,10 @@ var RouterCharm = Backbone.Router.extend({
 		"portadas/add":"addPortadas",
 		"portadas/:id": "showPortada", 
 		"portadas/:id/edit":"editPortadas",
-		"portadas/:id/delete": "deletePortadas"
+		"portadas/:id/delete": "deletePortadas",
+		"usuarios":"usuarios",
+		"usuarios/add":"addusuario",
+		"usuario/:id/edit":"editusuario"
 	}, index:function  () {
 	  $('#main').empty();
 	},initialize: function(){
@@ -106,6 +111,31 @@ var RouterCharm = Backbone.Router.extend({
 	 		  editarVista.loadColabs();
 	 		}, 1000);
 	 	},'json');
+	},usuarios:function() {
+	  var tablaUsuarios = new ViewTableUsuarios({collection:usuarios});
+	  $('#main').empty();
+	  $('#main').append("<a class='boton-charm natural' href='#usuarios/add'>Registra Usuario</a>");
+	  $('#main').append(tablaUsuarios.render().el);
+	  usuarios.fetch();
+	},addusuario:function  () {
+		var vistaRegistro = new RegisterUserView();
+		$('#main').html(vistaRegistro.render().el);
+		setTimeout(function  () {
+		  $("select").chosen();
+		}, 1000);
+	},editusuario:function (id) {
+	  console.log(id);
+	  if (usuarios.length == 0) {
+	  	  usuarios.fetch({async:false});
+	  }
+	  var busqueda = usuarios.find(function  (ble) {
+	    return ble.get("usuario_id") == id;
+	  })
+	  var updateView = new ViewUpdateUser({model:busqueda});
+	  $('#main').html(updateView.render().el);
+	  setTimeout(function  () {
+	    $("select").chosen();
+	  }, 1000);
 	},
 	start: function() {
 		Backbone.history.start();
