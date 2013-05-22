@@ -242,9 +242,10 @@ var EditarArticulo = Backbone.View.extend({
 	  todoslosvalores.push({name:"contenido",value:protegido});
 	  todoslosvalores.push({name:"articulo_id",value:contexto.model.get("articulo_id")});
 	  todoslosvalores.push({name:"receiver",value:"update"}); 
+
 	  $.post("controllers/articulos_controller.php",todoslosvalores,function (response) {
 			alert("Actualizado con exito!");
-			CharmRouter.navigate("articulos", {trigger:true});	 
+			CharmRouter.navigate("articulos", {trigger:true});
 	  });
 	},loadColabs:function  () {
 	  $('#fechagaleriaeventoedit').datepicker();

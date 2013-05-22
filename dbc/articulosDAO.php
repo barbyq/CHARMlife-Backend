@@ -72,6 +72,7 @@ class articulosDAO
 			$ti->bind_param("ssiiiiiiisi",$articulo->contenido,$articulo->subtitulo,$articulo->year,$articulo->mes,$articulo->dia,$articulo->colaborador_id,$articulo->seccion_id,$articulo->status,$articulo->tipo,$articulo->titulo,$articulo->articulo_id);
 			$ti->execute();
 		}
+
 	}
 
 	public function deleteArticulo($id)
@@ -117,6 +118,7 @@ class articulosDAO
 			}	
 		}
 	}
+
 
 	public function updateTags($articulo)
 	{
@@ -198,5 +200,6 @@ class articulosDAO
 			$ti->execute();
 		}
 	}
+
 }
  ?>
