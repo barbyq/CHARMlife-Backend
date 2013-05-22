@@ -30,6 +30,7 @@
 	<script type="text/javascript" src="js/models.js"></script>
 	<script type="text/javascript" src="js/viewsArticulos.js"></script>
 	<script type="text/javascript" src="js/viewsUsuarios.js"></script>
+		<script type="text/javascript" src="js/viewsChismes.js"></script>
 	<script type="text/javascript" src="js/portadas_views.js"></script>
 	<script type="text/javascript" src="js/colaboradores_views.js"></script>
 	<script type="text/javascript" src="js/areas_secciones_views.js"></script>
