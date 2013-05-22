@@ -190,6 +190,13 @@ var RouterCharm = Backbone.Router.extend({
 		$.post('controllers/secciones_controller.php', {delete: id}, function(data) {
   			context.navigate("secciones", {trigger: true, replace: true});
 		});
+	},showAreas: function(){
+		this.areaList.fetch({async: false});
+		var areaListView = new AreaListView({collection: this.areaList});
+		areaListView.render();
+		$('#main').empty();
+		$('#main').append(addBar('areas'));
+		$('#main').append(areaListView.el);
 	},
 	addAreas: function(){
 		var areaAddView = new AreaAddView();
