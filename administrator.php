@@ -30,6 +30,7 @@
 	<script type="text/javascript" src="js/models.js"></script>
 	<script type="text/javascript" src="js/viewsArticulos.js"></script>
 	<script type="text/javascript" src="js/portadas_views.js"></script>
+	<script type="text/javascript" src="js/colaboradores_views.js"></script>
 	<script type="text/javascript" src="js/router.js"></script>
 	<script type="text/javascript" src="js/library/jquery.ui.widget.js"></script>
 	<script type="text/javascript" src="js/library/tmpl.min.js"></script>

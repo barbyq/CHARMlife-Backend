@@ -17,11 +17,17 @@ var RouterCharm = Backbone.Router.extend({
 		"portadas/add":"addPortadas",
 		"portadas/:id": "showPortada", 
 		"portadas/:id/edit":"editPortadas",
-		"portadas/:id/delete": "deletePortadas"
+		"portadas/:id/delete": "deletePortadas",
+		"colaboradores":"showColaboradores", 
+		"colaboradores/add" : "addColab",
+		"colaboradores/:id": "showColaborador",
+		"colaboradores/:id/edit": "editColab",
+		"colaboradores/:id/delete": "deleteColab"
 	}, index:function  () {
 	  $('#main').empty();
 	},initialize: function(){
 		this.portadasList = new PortadasList();
+		this.colabList = new ColaboradorList();
 	},
 	showSociales: function(){
 
@@ -106,6 +112,42 @@ var RouterCharm = Backbone.Router.extend({
 	 		  editarVista.loadColabs();
 	 		}, 1000);
 	 	},'json');
+	},showColaboradores: function(){
+		console.log("hey");
+		$('#main').empty();
+		$('#main').html(addBar('colaboradores'));
+		this.colabList.fetch({async: false});
+		var colabListView = new ColaboradorListView({collection: this.colabList});
+		colabListView.render();
+		$('#main').append(colabListView.el);
+	},
+	showColaborador: function(id){
+		this.colabList.fetch({async: false});
+		var colab = this.colabList.get(id);
+		var colabFullView = new ColaboradorFullView({model: colab});
+		colabFullView.render();
+		$('#main').html(colabFullView.el);	
+	},
+	addColab: function(){
+		colabAddView = new ColaboradorAddView();
+		colabAddView.render();
+		$('#main').html(colabAddView.el);
+	},
+	editColab: function(id){
+		if (this.colabList.length == 0){
+			this.colabList.fetch({async: false});
+		}
+		var colab = this.colabList.get(id);
+		var colabEditView = new ColaboradorEditView({model: colab});
+		colabEditView.render();
+		$('#main').html(colabEditView.el);
+	},
+	deleteColab: function(id){
+		var colab = this.colabList.get(id);
+		var context = this;
+		$.post('controllers/colaboradores_controller.php', {delete: id}, function(data) {
+  			context.navigate("colaboradores", {trigger: true, replace: true});
+		});
 	},
 	start: function() {
 		Backbone.history.start();

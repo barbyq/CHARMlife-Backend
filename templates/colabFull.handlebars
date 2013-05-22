@@ -1,0 +1,30 @@
+
+<h1>{{nombre}} {{apellido}}</h1>
+<img src="upload/colaboradores/{{id}}/{{imagen}}" style="width: 150px;"/>
+<ul class="fullColab">
+	<li><strong>Plaza:</strong> {{plaza}}</li>
+	<li><strong>Descripción:</strong> {{descripcion}}</li>
+	{{#if twitter}}
+	<li><strong>Twitter:</strong> <a href="https://twitter.com/{{twitter}}" target="_blank">@{{twitter}}</a></li>
+	{{/if}}
+	<li><strong>Giro:</strong> {{giro}}</li>
+	<li><strong>Medio:</strong>{{#ifeq medio 0}}Digital{{/ifeq}}{{#ifeq medio 1}}Impreso{{/ifeq}}</li>
+	<li><strong>Tipo:</strong>{{#ifeq tipo 0}}Persona{{/ifeq}}{{#ifeq tipo 1}}Empresa{{/ifeq}}</li>
+	<li style="margin-top:3px; margin-bottom:5px;"><strong>Secciones:</strong>
+		{{#each secciones}}
+			 <span class="seccion">{{seccion}}</span>	
+		{{/each}}
+	</li>
+	
+	{{#if link_extra}}
+		<li><strong>Extras:</strong> <a href="http://{{link_extra}}" target="_blank">{{link_extra}}</a></li>
+	{{/if}}
+</ul>
+<br class="clear">
+<p class="controls">
+	<a href="#colaboradores/{{id}}/edit">Editar</a>
+	<a href="#colaboradores/{{id}}/delete">Borrar</a>
+</p>
+
+
+
