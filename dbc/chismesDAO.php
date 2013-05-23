@@ -23,7 +23,7 @@ class chismesDAO{
 		if($stmt->prepare($q)) {
  			$stmt->bind_param('i', $id);
  			$stmt->execute();
- 			$stmt->bind_result($id, $fecha, $area_id, $area);
+ 			$stmt->bind_result($id, $fecha, $titulo,$texto,$link,$foto);
  			while($stmt->fetch()){
  				$obj->id = $id;
  				$obj->fecha = $fecha;
@@ -41,7 +41,7 @@ class chismesDAO{
 		$q = "INSERT INTO chismes (fecha, titulo, texto, link, foto) VALUES (?, ?, ?, ?, ?)";
 		$stmt = $this->dbc->stmt_init();
 		if($stmt->prepare($q)) {
-			$stmt->bind_param('ss', $obj->fecha, $obj->titulo, $obj->texto, $obj->link, $obj->foto);
+			$stmt->bind_param('sssss', $obj->fecha, $obj->titulo, $obj->texto, $obj->link, $obj->foto);
 			$stmt->execute();
 		}
 		$id = $this->dbc->insert_id;
@@ -53,7 +53,7 @@ class chismesDAO{
 		$q = "UPDATE chismes SET fecha = ? , titulo = ?, texto = ? , link = ?, foto = ? WHERE id = ?";
 		$stmt = $this->dbc->stmt_init();
 		if($stmt->prepare($q)) {
-			$stmt->bind_param('ssssss', $obj->fecha, $obj->titulo, $obj->texto, $obj->link, $obj->foto, $obj->id);
+			$stmt->bind_param('sssssi', $obj->fecha, $obj->titulo, $obj->texto, $obj->link, $obj->foto, $obj->id);
 			$stmt->execute();
 		}
 		$stmt->close();

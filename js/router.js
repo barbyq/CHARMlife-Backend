@@ -12,6 +12,8 @@ var RouterCharm = Backbone.Router.extend({
 		"": "index",
 		"sociales":"showSociales",
 		"chismes":"chismes",
+		"chismes/add":"addchisme",
+		"chisme/:id/edit":"editchisme",
 		"articulo/:id":"showArticulo",
 		"articulos":"showArticulos",
 		"articulos/add":"registrararticulo",
@@ -55,6 +57,22 @@ var RouterCharm = Backbone.Router.extend({
 		var tablaChismes = new ViewTablaChismes({collection:chismes});
 		$('#main').append(tablaChismes.render().el);
 		chismes.fetch();
+	},addchisme:function  () {
+	  $('#main').empty();
+	  var registerChisme = new RegisterChismeView();
+	  $('#main').html(registerChisme.render().el);
+	  setTimeout(function  () {
+	    registerChisme.loader();
+	  }, 1000);
+	},editchisme:function  (id) {
+	  $.post("controllers/chismes_controller.php",{receiver:"damechisme",chismeid:id},function  (response) {
+	    var chismeedit = new Chisme(response);
+	    var chismeEditView = new ChismeEditView({model:chismeedit});
+	    $('#main').html(chismeEditView.render().el);
+	 	setTimeout(function  () {
+	 		chismeEditView.loader();
+	 	}, 1000);
+	  },'json');
 	},
 	showPortadas: function(){
 		this.portadasList.fetch({async: false});

@@ -174,6 +174,45 @@ body {
     float: left;
     margin: 10px; }
 
+.colab_chisme {
+  padding: 20px;
+  border: 3px solid #ebebee;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 2px 2px 2px #d0ced8;
+  -o-box-shadow: 2px 2px 2px #d0ced8;
+  box-shadow: 2px 2px 2px #d0ced8;
+  width: 450px;
+  margin: 0 auto;
+  margin-top: 20px;
+  text-shadow: 1px 1px 1px white;
+  background-color: white;
+  position: relative;
+  height: 550px; }
+  .colab_chisme h1 {
+    font-weight: bold;
+    font-size: 25px; }
+  .colab_chisme img {
+    float: left;
+    border: 3px solid #ebebee;
+    -webkit-box-shadow: 2px 2px 2px #d0ced8;
+    -o-box-shadow: 2px 2px 2px #d0ced8;
+    box-shadow: 2px 2px 2px #d0ced8; }
+  .colab_chisme ul.fullColab {
+    float: left;
+    margin-left: 20px;
+    margin-top: 6px;
+    width: 270px; }
+  .colab_chisme .controls {
+    position: relative;
+    padding: 0px;
+    text-align: right; }
+  .colab_chisme #layouts img {
+    width: 168px;
+    float: left;
+    margin: 10px; }
+
 .boton-charm {
   position: relative;
   left: 10%;
