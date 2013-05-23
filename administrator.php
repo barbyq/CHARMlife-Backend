@@ -34,6 +34,7 @@
 	<script type="text/javascript" src="js/portadas_views.js"></script>
 	<script type="text/javascript" src="js/colaboradores_views.js"></script>
 	<script type="text/javascript" src="js/areas_secciones_views.js"></script>
+	<script type="text/javascript" src="js/varios_views.js"></script>
 	<script type="text/javascript" src="js/router.js"></script>
 	<script type="text/javascript" src="js/library/jquery.ui.widget.js"></script>
 	<script type="text/javascript" src="js/library/tmpl.min.js"></script>
