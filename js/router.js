@@ -11,6 +11,7 @@ var RouterCharm = Backbone.Router.extend({
 	routes:{
 		"": "index",
 		"sociales":"showSociales",
+		"chismes":"chismes",
 		"articulo/:id":"showArticulo",
 		"articulos":"showArticulos",
 		"articulos/add":"registrararticulo",
@@ -46,7 +47,14 @@ var RouterCharm = Backbone.Router.extend({
 		this.secList = new SeccionList();
 	},
 	showSociales: function(){
-
+	},
+	chismes:function  () {
+		$('#main').empty();
+		$('#main').append("<a class='boton-charm natural' href='#chismes/add'>Registra Chisme</a>");
+		var chismes = new Chismes();
+		var tablaChismes = new ViewTablaChismes({collection:chismes});
+		$('#main').append(tablaChismes.render().el);
+		chismes.fetch();
 	},
 	showPortadas: function(){
 		this.portadasList.fetch({async: false});
