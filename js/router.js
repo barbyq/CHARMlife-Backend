@@ -263,7 +263,7 @@ var RouterCharm = Backbone.Router.extend({
 		outfitView.render();
 		$('#main').empty();
 		$('#main').append(outfitView.el);
-	}
+	},
 	start: function() {
 		Backbone.history.start();
 	}
