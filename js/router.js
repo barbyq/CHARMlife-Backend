@@ -39,6 +39,7 @@ var RouterCharm = Backbone.Router.extend({
 		"areas/add" : "addAreas",
 		"areas/:id/edit": "editAreas",
 		"areas/:id/delete": "deleteAreas",
+		"outfit": "showOutfit",
 	}, index:function  () {
 	  $('#main').empty();
 	},initialize: function(){
@@ -275,6 +276,11 @@ var RouterCharm = Backbone.Router.extend({
 		$.post('controllers/areas_controller.php', {delete: id}, function(data) {
   			context.navigate("areas", {trigger: true, replace: true});
 		});
+	},showOutfit: function(){
+		var outfitView = new OutfitView();
+		outfitView.render();
+		$('#main').empty();
+		$('#main').append(outfitView.el);
 	},
 	start: function() {
 		Backbone.history.start();

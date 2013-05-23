@@ -62,13 +62,15 @@
 	<nav id="mainNav">
 		<a href="#" class="toplogo"><img src="img/charm.png" alt="PLAYERS of life Admin"></a>
 		<ul>
-			<li><a href="#">Sociales</a></li>
+			<li><a href="#sociales">Sociales</a></li>
 			<li><a href="#chismes">¿Que esta pasando?</a></li>
 			<li><a href="#portadas">Portadas</a></li>
 			<li><a href="#articulos">Articulos</a></li>
 			<li><a href="#colaboradores">Colaboradores</a></li>
-			<li><a href="#usuarios">Usuarios</a></li>
-			<li><a href="#Config">Configuraciones</a></li>
+
+			<li><a href="#outfit">Outfit</a></li>
+			<li><a href="#redes">Amigos en las Redes</a></li>
+			
 			<li><a href="#secciones">Secciones</a></li>
 			<li><a href="#areas">Areas</a></li>
 
