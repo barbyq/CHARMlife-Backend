@@ -41,23 +41,19 @@ if (isset($_POST['receiver']) && $_POST['receiver'] == "registro") {
 		print_r($chisme);
 		$chismidao->updateChisme($chisme);
 	}	
-
 }elseif (isset($_POST['receiver']) && $_POST['receiver'] == "imagenchisme") {
 	$generado = $_POST['generado'];
-	print_r($_FILES['imagenchisme']["type"]);
 	if (is_dir('../TemporalChismes/'.$generado)) {
 		rmdir_recurse('../TemporalChismes/'.$generado);
 		mkdir('../TemporalChismes/'.$generado);
-		if ($_FILES['imagenchisme']['type'] =='image/jpeg') {
-			print_r("Es jpg");
+		if (strlen($_FILES['imagenchisme']['type']) == 10) {
 			move_uploaded_file($_FILES['imagenchisme']['tmp_name'],'../TemporalChismes/'.$generado.'/'.$generado.'.jpg');
 		}else{
 			move_uploaded_file($_FILES['imagenchisme']['tmp_name'],'../TemporalChismes/'.$generado.'/'.$generado.'.png');
 		}		
 	}else{
 		mkdir('../TemporalChismes/'.$generado);
-		if ($_FILES['imagenchisme']['type'] =='image/jpeg') {
-			print_r("Es jpg");
+		if (strlen($_FILES['imagenchisme']['type']) == 10) {
 			move_uploaded_file($_FILES['imagenchisme']['tmp_name'],'../TemporalChismes/'.$generado.'/'.$generado.'.jpg');
 		}else{
 			move_uploaded_file($_FILES['imagenchisme']['tmp_name'],'../TemporalChismes/'.$generado.'/'.$generado.'.png');
@@ -85,7 +81,13 @@ if (isset($_POST['receiver']) && $_POST['receiver'] == "registro") {
 		$fechaexplotada = explode("/",$_POST['fecha']);
 		$chisme->fecha = $fechaexplotada[2]."-".$fechaexplotada[0]."-".$fechaexplotada[1];
 	}
-	$chisme->foto = "Chismes/".$chisme->id."/".$chisme->id.".jpg";
+
+	if (is_dir('../Chismes/'.$chisme->id)) {
+		$escaneo = scandir('../Chismes/'.$chisme->id);
+		$tipo = substr($escaneo[2],strlen($escaneo[2]) - 3);
+		$chisme->foto = 'Chismes/'.$chisme->id.'/'.$chisme->id.'.'.$tipo;
+		print_r($chisme);
+	}	
 	$chismidao->updateChisme($chisme);
 }elseif (isset($_POST['receiver']) &&  $_POST['receiver'] == "updateimagen") {
 	$idamodificar = $_POST['idchisme'];
