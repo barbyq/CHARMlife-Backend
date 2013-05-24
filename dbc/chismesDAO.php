@@ -69,13 +69,5 @@ class chismesDAO{
 		}
 		$stmt->close();
 	}
-
-
-
-
-
-
 }
-
-
 ?>

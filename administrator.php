@@ -67,10 +67,8 @@
 			<li><a href="#portadas">Portadas</a></li>
 			<li><a href="#articulos">Articulos</a></li>
 			<li><a href="#colaboradores">Colaboradores</a></li>
-
 			<li><a href="#outfit">Outfit</a></li>
 			<li><a href="#redes">Amigos en las Redes</a></li>
-			
 			<li><a href="#secciones">Secciones</a></li>
 			<li><a href="#areas">Areas</a></li>
 

@@ -111,8 +111,7 @@ if (isset($_POST['receiver']) && $_POST['receiver'] == "registro") {
 	if (is_dir("../Chismes/".$id)) {
 		rmdir_recurse("../Chismes/".$id);
 	}
-}
-else{
+}else{
 	echo json_encode($chismidao->getChismes());
 }
 ?>
