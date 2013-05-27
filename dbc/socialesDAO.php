@@ -6,7 +6,6 @@ public function __construct($connection){
 }
 
 public function getSociales(){
-
 	$q = "SELECT sociales_id, titulo, subtitulo, fecha, descripcion, compartido, recomendado, visto  FROM sociales ORDER BY fecha DESC";
 	$array = array();
 	$r = $this->dbc->query($q);
@@ -72,6 +71,24 @@ public function deleteSocial($obj){
 		}
 		$stmt->close();
 		return $obj;
+}
+
+public function insertFoto($foto)
+{
+	$smn = "INSERT INTO fotos(img,sociales_id) values(?,?)";
+	$co = $this->dbc->stmt_init();
+	if ($co->prepare($smn)) {
+		$co->bind_param("si",$foto->url,$foto->sociales_id);
+		$co->execute();
+	}
+}
+
+public function getFotosOfSocial($id)
+{	
+	$arr = array();
+	$busquedota = "SELECT fotos_id,img from fotos where sociales_id = ?";
+	$ye = $this->dbc->stmt_init();
+
 }
 
 }

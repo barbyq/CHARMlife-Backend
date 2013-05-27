@@ -207,7 +207,6 @@ var RegisterArticulo = Backbone.View.extend({
 		  },'json').fail(function(e) { console.log(e); });
 	    var $seccionesDOM = $('<select name="secciones" id="seccions"></select>');
 	    $.post('controllers/secciones_controller.php',{receiver:true},function(response) {
-	    		    	console.log(response);
 	    	for (var i = 0; i < response.length; i++) {
 		    	var secnombre = response[i]['nombre'];
 		    	var secid = response[i]['id'];
@@ -255,7 +254,6 @@ var EditarArticulo = Backbone.View.extend({
 		  	for (var i = 0; i < response.length; i++) {
 		  		var nombre = response[i]['nombrec'];
 		  		var id = response[i]['id'];
-		  		console.log("Compare: "+ nombre + " , " + contexto.model.get("colaborador_id"));
 		  		if (contexto.model.get("colaborador_id") == nombre) {
 		  			$colaboradoresDOM.append('<option value="'+id+'" selected="selected">'+nombre+'</option>');
 		  		}else{
@@ -270,7 +268,6 @@ var EditarArticulo = Backbone.View.extend({
 	    	for (var i = 0; i < response.length; i++) {
 		    	var secnombre = response[i]['nombre'];
 		    	var secid = response[i]['id'];
-		    	console.log("Compare: "+ secnombre + ", size: " + secnombre.length + contexto.model.get("seccion_id") + " , " + contexto.model.get("seccion_id").length);
 		    	if (contexto.model.get("seccion_id") == secnombre) {
 		    		$seccionesDOM.append("<option value='"+secid+"' selected='selected'>"+secnombre+"</option>");
 		    	}else{

@@ -7,6 +7,10 @@ var Usuario = Backbone.Model.extend({
 	idAttribute:"usuario_id"
 });
 
+var Social = Backbone.Model.extend({
+	idAttribute:"sociales_id"
+});
+
 var Chisme = Backbone.Model.extend({ });
 
 var Articulo = Backbone.Model.extend({
@@ -74,4 +78,9 @@ var Usuarios = Backbone.Collection.extend({
 var Chismes = Backbone.Collection.extend({	
 	model:Chisme,
 	url:"controllers/chismes_controller.php"
+});
+
+var Sociales = Backbone.Collection.extend({
+	model:Social,
+	url:"controllers/sociales_controller.php"
 });

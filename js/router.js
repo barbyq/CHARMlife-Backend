@@ -11,6 +11,8 @@ var RouterCharm = Backbone.Router.extend({
 	routes:{
 		"": "index",
 		"sociales":"showSociales",
+		"social/add":"addSocial",
+		"social/:id/edit":"editsocial",
 		"chismes":"chismes",
 		"chismes/add":"addchisme",
 		"chisme/:id/edit":"editchisme",
@@ -49,8 +51,30 @@ var RouterCharm = Backbone.Router.extend({
 		this.secList = new SeccionList();
 	},
 	showSociales: function(){
-	},
-	chismes:function  () {
+		$('#main').empty();
+		$('#main').append("<a class='boton-charm natural' href='#social/add'>Registra Social</a>");
+		var sociales = new Sociales();
+		var viewTablaSociales = new ViewTablaSociales({collection: sociales});
+		$('#main').append(viewTablaSociales.render().el);
+		sociales.fetch();
+	},addSocial:function  () {
+		var vista = new RegisterSocialView();
+		$('#main').html(vista.render().el);
+		setTimeout(function  () {
+		vista.loader();
+		}, 1000);
+	},editsocial:function  (edit) {
+		var idi = edit;
+		$.post("controllers/sociales_controller.php",{receiver:"socialcontinue",idsocial:idi},function  (response) {
+			console.log(response);
+			var social = new Social(response);
+			var editSocial = new EditSocialView({model:social});
+			$('#main').html(editSocial.render().el);
+			setTimeout(function  () {
+				editSocial.loader();
+			}, 1000);
+		},'json');
+	},chismes:function  () {
 		$('#main').empty();
 		$('#main').append("<a class='boton-charm natural' href='#chismes/add'>Registra Chisme</a>");
 		var chismes = new Chismes();
