@@ -195,7 +195,6 @@ var RegisterArticulo = Backbone.View.extend({
 		});
 	},loadColadsandSections:function() {
 		$('#fechagaleriaevento').datepicker();
-
 	  var $colaboradoresDOM = $("<select name='colaboradores' id='colabs'></select>");
 	    $.post('controllers/colaboradores_controller.php',{receiver:true},function(response) {
 		  	for (var i = 0; i < response.length; i++) {
@@ -208,9 +207,10 @@ var RegisterArticulo = Backbone.View.extend({
 		  },'json').fail(function(e) { console.log(e); });
 	    var $seccionesDOM = $('<select name="secciones" id="seccions"></select>');
 	    $.post('controllers/secciones_controller.php',{receiver:true},function(response) {
+	    		    	console.log(response);
 	    	for (var i = 0; i < response.length; i++) {
 		    	var secnombre = response[i]['nombre'];
-		    	var secid = response[i]['seccion_id'];
+		    	var secid = response[i]['id'];
 		    	$seccionesDOM.append("<option value='"+secid+"'>"+secnombre+"</option>");
 	    	};
 	    	$('#seccioneselect').html($seccionesDOM);
@@ -253,8 +253,9 @@ var EditarArticulo = Backbone.View.extend({
 	  var $colaboradoresDOM = $("<select name='colaboradores'></select>");
 	    $.post('controllers/colaboradores_controller.php',{receiver:true},function(response) {
 		  	for (var i = 0; i < response.length; i++) {
-		  		var nombre = response[i]['nombre'];
+		  		var nombre = response[i]['nombrec'];
 		  		var id = response[i]['id'];
+		  		console.log("Compare: "+ nombre + " , " + contexto.model.get("colaborador_id"));
 		  		if (contexto.model.get("colaborador_id") == nombre) {
 		  			$colaboradoresDOM.append('<option value="'+id+'" selected="selected">'+nombre+'</option>');
 		  		}else{
@@ -268,7 +269,8 @@ var EditarArticulo = Backbone.View.extend({
 	    $.post('controllers/secciones_controller.php',{receiver:true},function(response) {
 	    	for (var i = 0; i < response.length; i++) {
 		    	var secnombre = response[i]['nombre'];
-		    	var secid = response[i]['seccion_id'];
+		    	var secid = response[i]['id'];
+		    	console.log("Compare: "+ secnombre + ", size: " + secnombre.length + contexto.model.get("seccion_id") + " , " + contexto.model.get("seccion_id").length);
 		    	if (contexto.model.get("seccion_id") == secnombre) {
 		    		$seccionesDOM.append("<option value='"+secid+"' selected='selected'>"+secnombre+"</option>");
 		    	}else{
