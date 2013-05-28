@@ -39,8 +39,8 @@ class UploadHandler
         $idi = $_SESSION['id'];
         $this->options = array(
             'script_url' => $this->get_full_url().'/',
-            'upload_dir' => dirname($_SERVER['SCRIPT_FILENAME']).'/'.$idi.'/files/',
-            'upload_url' => $this->get_full_url().'/'.$idi.'/files/',
+            'upload_dir' => dirname($_SERVER['SCRIPT_FILENAME']).'/'.$idi.'/',
+            'upload_url' => $this->get_full_url().'/'.$idi.'/',
             'user_dirs' => false,
             'mkdir_mode' => 0755,
             'param_name' => 'files',

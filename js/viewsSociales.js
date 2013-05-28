@@ -8,6 +8,7 @@ var ViewRowsociales = Backbone.View.extend({
 		var id = elemento.attr('id');
 		if (confirm("Seguro que quieres borrarlo?")) {
 			$.post("controllers/sociales_controller.php",{receiver:"borrar",idsocial:this.model.get("sociales_id")},function  (response) {
+				console.log(response);
 				contexto.$el.remove();
 			});
 		};
@@ -57,7 +58,7 @@ var RegisterSocialView = Backbone.View.extend({
 	  console.log(valores);
 	  $.post("controllers/sociales_controller.php",valores,function  (response) {
 	    var hola = parseInt(response);
-	    CharmRouter.navigate("social/"+hola+"/edit",{trigger:false});
+	    CharmRouter.navigate("social/"+hola+"/edit",{trigger:true});
 	  });
 	},
 	loader:function() {	  
@@ -77,24 +78,28 @@ var RegisterSocialView = Backbone.View.extend({
 
 var EditSocialView = Backbone.View.extend({
 	id:"editar",
-	className:"colab_chisme",
+	className:"colab_chisme articulos_main",
 	events:{
-		"click .editar":"editar"
+		"click .editar":"editar",
+		"click .editardatos":"editardatos"
 	},
 	initialize:function  () {
 	  this.iditemporalizador = generaidtexto();
-	},editar:function  () {
+	},editardatos:function() {
+		CharmRouter.navigate("social/"+this.model.get("sociales_id")+"/data",{trigger:true});	
+	},
+	editar:function  () {
 	  var valores = $('#editar :input').serializeArray();
-	  valores.push({name:"temporal",value:this.iditemporalizador});
-	  valores.push({name:"receiver",value:"registro"});
+	  valores.push({name:"receiver",value:"edicionfotos"});
+	  valores.push({name:"sociales_id",value:this.model.get("sociales_id")})
+	  console.log(valores);
 	  $.post("controllers/sociales_controller.php",valores,function  (response) {
-	    alert("Guardado con exito!");
-	    CharmRouter.navigate("sociales",{trigger:true});
+	     alert("Guardado con exito!");
+	     CharmRouter.navigate("sociales",{trigger:true});
 	  });
 	},
 	loader:function() {	  
 		var contexto = this;
-		console.log(this.model.get("imagenes"));
 	},
 	render:function  () {
 		var contexto = this;
@@ -106,6 +111,142 @@ var EditSocialView = Backbone.View.extend({
 	  return this;
 	}
 });
+
+var EditDataSocialView = Backbone.View.extend({
+	id:"editdata",
+	className:"colab_edit articulos_main",
+	events:{
+		"click .reditdata":"reditdata"
+	},
+	initialize:function  () {
+	  this.iditemporalizador = generaidtexto();
+	},reditdata:function  () {
+	  var contexto = this;
+	  var valores = $('#editdata :input').serializeArray();
+	  valores.push({name:"receiver",value:"updatedatasocial"});
+	  valores.push({name:"usuario_id",value:UserId});
+	  valores.push({name:"sociales_id",value:this.model.get("sociales_id")});
+	  console.log(valores);
+	  $.post("controllers/sociales_controller.php",valores,function  (response) {
+	     alert("Guardado con exito!");
+	     CharmRouter.navigate("social/"+contexto.model.get("sociales_id")+"/edit",{trigger:true});
+	  });
+	},
+	loader:function() {	  
+		var contexto = this;
+		$('#fechita').datepicker();
+		ActivarVinculacionDataEdit(this.model.get("sociales_id"));
+		ActivarSubidaDataEdit(this.model.get("sociales_id"));
+	},
+	render:function  () {
+		var contexto = this;
+		$.get("templates/EditSocialData.handlebars",function  (response) {
+		  var cn = Handlebars.compile(response);
+		  var eichtiemel = cn(contexto.model.toJSON());
+		  contexto.$el.html(eichtiemel);
+		});
+	  return this;
+	}
+});
+
+function ActivarVinculacionDataEdit(socialedit) {	
+   $.post('Sociales/Recibidor.php',{temporaral:socialedit},function(searmochido) {
+  	 	console.log(searmochido);
+  	 	console.log("lo mande aca chido");
+    }).fail(function(e) {
+       console.log(e);
+     });
+     $.post('Sociales/Recibidor.php',{temporaral:socialedit},function(searmochido) {
+  	 	console.log(searmochido);
+  	 	console.log("lo mande aca chido");
+    }).fail(function(e) {
+       console.log(e);
+     });
+}
+
+function ActivarSubidaDataEdit (socialid) {
+    $('#socialuploadedit').fileupload({
+        // Uncomment the following to send cross-domain cookies:
+        //xhrFields: {withCredentials: true},
+        url: 'Sociales/index.php'
+    });
+
+    $('#socialuploadedit').bind("fileuploaddone",function  (e,data) {
+    	console.log(e);
+    	console.log(data);
+    	for (var i = 0; i < data['result']['files'].length; i++) {
+    		var nombre = data['result']['files'][i]['name'];
+    		$.post("controllers/sociales_controller.php",{receiver:"agregafotosocial",foto:nombre,social_id:socialid},function (response) {
+    			console.log(response);
+    		});
+    		console.log(nombre);
+    	};
+    	console.log("Subi algo aca chido");
+    }).bind('fileuploaddestroyed', function (e, data) {
+    	console.log(data);
+    	var archivoborradin = data['url'].substring(60,data['url'].indexOf("&"));
+    	$.post("controllers/sociales_controller.php",{receiver:"borrarfoto",social_id:socialid,foto:archivoborradin},function  (response) {
+    		console.log(response);
+    	});
+    });
+    // Enable iframe cross-domain access via redirect option:
+    $('#socialuploadedit').fileupload(
+        'option',
+        'redirect',
+        window.location.href.replace(
+            /\/[^\/]*$/,
+            '/cors/result.html?%s'
+        )
+    );
+
+    if (window.location.hostname === 'blueimp.github.com') {
+        // Demo settings:
+        $('#socialuploadedit').fileupload('option', {
+            url: '//jquery-file-upload.appspot.com/',
+            maxFileSize: 5000000,
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+            process: [
+                {
+                    action: 'load',
+                    fileTypes: /^image\/(gif|jpeg|png)$/,
+                    maxFileSize: 20000000 // 20MB
+                },
+                {
+                    action: 'resize',
+                    maxWidth: 1440,
+                    maxHeight: 900
+                },
+                {
+                    action: 'save'
+                }
+            ]
+        });
+        // Upload server status check for browsers with CORS support:
+        if ($.support.cors) {
+            $.ajax({
+                url: '//jquery-file-upload.appspot.com/',
+                type: 'HEAD'
+            }).fail(function () {
+                $('<span class="alert alert-error"/>')
+                    .text('Upload server currently unavailable - ' +
+                            new Date())
+                    .appendTo('#socialuploadedit');
+            });
+        }
+    } else {
+        // Load existing files:
+        $.ajax({
+            // Uncomment the following to send cross-domain cookies:
+            //xhrFields: {withCredentials: true},
+            url: $('#socialuploadedit').fileupload('option', 'url'),
+            dataType: 'json',
+            context: $('#socialuploadedit')[0]
+        }).done(function (result) {
+            $(this).fileupload('option', 'done')
+                .call(this, null, {result: result});
+        });
+    }
+}	
 
 function ActivarVinculacionSocial(social) {	
    $.post('TemporalSociales/Recibidor.php',{temporaral:social},function(searmochido) {

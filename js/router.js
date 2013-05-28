@@ -13,6 +13,7 @@ var RouterCharm = Backbone.Router.extend({
 		"sociales":"showSociales",
 		"social/add":"addSocial",
 		"social/:id/edit":"editsocial",
+		"social/:id/data":"editdatasocial",
 		"chismes":"chismes",
 		"chismes/add":"addchisme",
 		"chisme/:id/edit":"editchisme",
@@ -72,6 +73,16 @@ var RouterCharm = Backbone.Router.extend({
 			$('#main').html(editSocial.render().el);
 			setTimeout(function  () {
 				editSocial.loader();
+			}, 1000);
+		},'json');
+	},editdatasocial:function(id) {
+		$.post("controllers/sociales_controller",{receiver:"socialcontinue",idsocial:id},function  (response) {
+			console.log(response);
+			var bd = new Social(response);
+			var viewSocialData = new EditDataSocialView({model:bd});
+			$('#main').html(viewSocialData.render().el);
+			setTimeout(function  () {
+				viewSocialData.loader();
 			}, 1000);
 		},'json');
 	},chismes:function  () {

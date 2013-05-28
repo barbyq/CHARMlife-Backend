@@ -281,4 +281,8 @@ body {
     opacity: 0.01; }
 
 .articulos_main {
-  width: 900px; }
+  width: 900px;
+  height: 100%; }
+
+.textareatop {
+  margin-top: -60%; }

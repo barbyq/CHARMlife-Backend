@@ -55,7 +55,7 @@ public function updateSocial($obj){
 	$q = "UPDATE sociales SET titulo = ? , subtitulo = ?, fecha = ?, descripcion = ?, usuario_id = ? WHERE sociales_id = ?";
 		$stmt = $this->dbc->stmt_init();
 		if($stmt->prepare($q)) {
-			$stmt->bind_param('ssssss', $obj->titulo, $obj->subtitulo, $obj->fecha, $obj->descripcion, $obj->usuario_id);
+			$stmt->bind_param('ssssii', $obj->titulo, $obj->subtitulo, $obj->fecha, $obj->descripcion, $obj->usuario_id,$obj->sociales_id);
 			$stmt->execute();
 		}
 		$stmt->close();
@@ -63,13 +63,12 @@ public function updateSocial($obj){
 }
 
 public function deleteSocial($obj){
-	$q = "DELETE FROM sociale WHERE sociales_id = ?";
+	$q = "DELETE FROM sociales WHERE sociales_id = ?";
 		$stmt = $this->dbc->stmt_init();
 		if($stmt->prepare($q)) {
 			$stmt->bind_param('s', $obj->sociales_id);
 			$stmt->execute();
 		}
-		$stmt->close();
 		return $obj;
 }
 
@@ -83,12 +82,54 @@ public function insertFoto($foto)
 	}
 }
 
-public function getFotosOfSocial($id)
-{	
-	$arr = array();
-	$busquedota = "SELECT fotos_id,img from fotos where sociales_id = ?";
-	$ye = $this->dbc->stmt_init();
+public function getImagenesbySocialId($id)
+{
+	$arregl = array();
+	$comida = "SELECT fotos_id,descripcion,img from fotos where sociales_id = ?";
+	$s = $this->dbc->stmt_init();
+	if ($s->prepare($comida)) {
+		$s->bind_param("i",$id);
+		$s->execute();
+		$s->bind_result($id,$descri,$img);
+		while ($s->fetch()) {
+			$dim = new stdClass;
+			$dim->foto_id = $id;
+			$dim->descripcion = $descri;
+			$dim->img = $img;
+			$arregl[] = $dim;
+		}
+	}
+	return $arregl;
+}
 
+public function updateDescripcionFoto($img)
+{
+	$q = "UPDATE fotos set descripcion = ? where fotos_id = ?";
+	$s = $this->dbc->stmt_init();
+	if ($s->prepare($q)) {
+		$s->bind_param("si",$img->descripcion,$img->id);
+		$s->execute();
+	}
+}
+
+public function deleteFoto($objeto)
+{
+	$q = "DELETE from fotos where img = ? && sociales_id = ?";
+	$s = $this->dbc->stmt_init();
+	if ($s->prepare($q)) {
+		$s->bind_param("si",$objeto->url,$objeto->sociales_id);
+		$s->execute();
+	}
+}
+
+public function deleteFotosBySocialId($id)
+{
+	$q = "DELETE FROM fotos where sociales_id = ?";
+	$s = $this->dbc->stmt_init();
+	if ($s->prepare($q)) {
+		$s->bind_param("i",$id);
+		$s->execute();
+	}
 }
 
 }
