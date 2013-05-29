@@ -1,19 +1,17 @@
-<form class="colab_edit" action="controllers/outfit_controller.php" method="post">
 <h1>Upload Outfit</h1>
 <table>
 	<tr>
 		<td colspan="2">
-			<img src="upload/img/{{outfit}}" style="width: 180px" class="uploadImg"/><br>
-			<input type="button" value="Browse..." class="uploadImg">
-			<p class="error" style="width: 120px;"></p>
+			<img src="{{outfit}}" style="width: 180px" class="uploadImg"/><br>
+            <span class="file-wrapper" id="yemn">
+            <input type="file" name="photo" id="photoip" />
+             <span id="UploadImagen" class="button">Browse...</span>
+            </span>
 		</td>
 	</tr>
 </table>
 <br class="clear">
 
 <p class="controls">
-	<input type="submit" value="Guardar"/>
-	<a href="#outfit" class="button">Cancelar</a>
+	<button class="natural">Guardar</button>
 </p>
-</form>
-

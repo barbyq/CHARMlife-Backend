@@ -21,6 +21,8 @@ var Area_ = Backbone.Model.extend({ });
 
 var Seccion = Backbone.Model.extend({ });
 
+var Outfit = Backbone.Model.extend({});
+
 //Collections
 var SocialesList = Backbone.Collection.extend({
 	model:Social,

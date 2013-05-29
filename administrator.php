@@ -4,6 +4,7 @@
 		$usuario = $_SESSION['user'];
 		$_SESSION['username'] = $usuario->nombre;
 		$_SESSION['userid'] = $usuario->usuario_id;		
+		$_SESSION['adminlevel'] = $usuario->permisos;
 	}else{
 		header("Location: index.php");
 	}
@@ -78,7 +79,11 @@
 			<li><a href="#redes">Amigos en las Redes</a></li>
 			<li><a href="#secciones">Secciones</a></li>
 			<li><a href="#areas">Areas</a></li>
+			<?php if ($_SESSION['adminlevel'] == 1) {
+				?>
 			<li><a href="#usuarios">Usuarios</a></li>
+				<?
+			} ?>
 			<img id="gifi" src="img/loading.gif">
 		</ul>
 	</nav>

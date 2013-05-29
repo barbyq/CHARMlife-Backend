@@ -153,7 +153,7 @@ if (isset($_POST['registro'])) {
 		rmdir_recurse('../TemporalImagenes/'.$generado);
 		mkdir('../TemporalImagenes/'.$generado);
 		if ($_FILES['imagenprincipali']['type'] ==='image/jpeg') {
-			move_uploaded_file($_FILES['imagenprincipali']['tmp_name'],'../../TemporalImagenes/'.$generado.'/'.$generado.'.jpg');
+			move_uploaded_file($_FILES['imagenprincipali']['tmp_name'],'../TemporalImagenes/'.$generado.'/'.$generado.'.jpg');
 		}else{
 			move_uploaded_file($_FILES['imagenprincipali']['tmp_name'],'../TemporalImagenes/'.$generado.'/'.$generado.'.png');
 		}		

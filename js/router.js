@@ -312,10 +312,17 @@ var RouterCharm = Backbone.Router.extend({
   			context.navigate("areas", {trigger: true, replace: true});
 		});
 	},showOutfit: function(){
-		var outfitView = new OutfitView();
-		outfitView.render();
-		$('#main').empty();
-		$('#main').append(outfitView.el);
+		$.post("controllers/outfit_controller.php",{receiver:"dameoutfit"},function  (response) {
+			console.log(response);
+			var outfit = new Outfit(response);
+			var outfitView = new OutfitView({model:outfit});
+			outfitView.render();
+			$('#main').empty();
+			$('#main').append(outfitView.el);
+			setTimeout(function  () {
+				outfitView.loader();
+			}, 1000);
+		},'json');
 	},
 	start: function() {
 		Backbone.history.start();
