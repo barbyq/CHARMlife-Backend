@@ -28,6 +28,23 @@ if (isset($_POST['registro'])) {
 }elseif (isset($_POST['borrar'])) {
 	$id = $_POST['borrar'];
 	$userDAO->eraseUser($id);
-}else{
+}elseif (isset($_POST['receiver']) && $_POST['receiver'] == "letmein") {
+	$username = $_POST['usi'];
+	$password = $_POST['yadayada'];
+	$queonda = $userDAO->getUser($username);
+
+	if (isset($queonda->username)) {
+		if ($queonda->password == $password) {
+			session_start();
+			$_SESSION['user'] = $queonda;
+			header("Location: ../administrator.php");
+		}else{
+			header("Location: ../index.php");
+		}
+	}else {
+		header("Location: ../index.php");
+	}
+}
+else{
 	echo json_encode($userDAO->getUsuarios());
 } ?>

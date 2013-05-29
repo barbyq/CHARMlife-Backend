@@ -35,6 +35,26 @@
 		}
 		$statutin->close();
 	}
+
+	public function getUser($username)
+	{
+		$mono = new stdClass;
+		$comida = "SELECT usuario_id,username,nombre,password,permisos from usuarios where username = ?";
+		$smn = $this->dbc->stmt_init();
+		if ($smn->prepare($comida)) {
+			$smn->bind_param("s",$username);
+			$smn->execute();
+			$smn->bind_result($usuario_id,$userneim,$nombre,$password,$permisos);
+			while ($smn->fetch()) {
+				$mono->usuario_id = $usuario_id;
+				$mono->username = $userneim;
+				$mono->nombre = $nombre;
+				$mono->password = $password;
+				$mono->permisos = $permisos;
+			}
+		}
+		return $mono;
+	}
 	
 	public function eraseUser($oki)
 	{

@@ -1,7 +1,12 @@
 <?php 
 	session_start();
-	$_SESSION['username'] = "Alf";
-	$_SESSION['userid'] = 3;
+	if (isset($_SESSION['user'])) {
+		$usuario = $_SESSION['user'];
+		$_SESSION['username'] = $usuario->nombre;
+		$_SESSION['userid'] = $usuario->usuario_id;		
+	}else{
+		header("Location: index.php");
+	}
  ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -73,7 +78,7 @@
 			<li><a href="#redes">Amigos en las Redes</a></li>
 			<li><a href="#secciones">Secciones</a></li>
 			<li><a href="#areas">Areas</a></li>
-
+			<li><a href="#usuarios">Usuarios</a></li>
 			<img id="gifi" src="img/loading.gif">
 		</ul>
 	</nav>
