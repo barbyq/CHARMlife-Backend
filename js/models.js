@@ -23,6 +23,8 @@ var Seccion = Backbone.Model.extend({ });
 
 var Outfit = Backbone.Model.extend({});
 
+var Amigo = Backbone.Model.extend({	});
+
 //Collections
 var SocialesList = Backbone.Collection.extend({
 	model:Social,

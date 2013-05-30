@@ -76,14 +76,12 @@
 			<li><a href="#articulos">Articulos</a></li>
 			<li><a href="#colaboradores">Colaboradores</a></li>
 			<li><a href="#outfit">Outfit</a></li>
-			<li><a href="#redes">Amigos en las Redes</a></li>
+			<li><a href="#amigosenlasnetworks">Amigos en las Redes</a></li>
 			<li><a href="#secciones">Secciones</a></li>
 			<li><a href="#areas">Areas</a></li>
-			<?php if ($_SESSION['adminlevel'] == 1) {
-				?>
+			<?php if ($_SESSION['adminlevel'] == 1) {	?>
 			<li><a href="#usuarios">Usuarios</a></li>
-				<?
-			} ?>
+				<? } ?>
 			<img id="gifi" src="img/loading.gif">
 		</ul>
 	</nav>

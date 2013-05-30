@@ -43,6 +43,7 @@ var RouterCharm = Backbone.Router.extend({
 		"areas/:id/edit": "editAreas",
 		"areas/:id/delete": "deleteAreas",
 		"outfit": "showOutfit",
+		"amigosenlasnetworks":"friendsintheredes"
 	}, index:function  () {
 	  $('#main').empty();
 	},initialize: function(){
@@ -323,8 +324,16 @@ var RouterCharm = Backbone.Router.extend({
 				outfitView.loader();
 			}, 1000);
 		},'json');
-	},
-	start: function() {
+	},friendsintheredes:function() {
+		$.get("controllers/amigos_controller.php",function (response) {
+			var amigo = new Amigo(response);
+			var amigosView = new AmigosView({model:amigo});
+			$('#main').html(amigosView.render().el);
+			setTimeout(function  () {
+				amigosView.loader();
+			}, 1000);
+		},'json');
+	},start: function() {
 		Backbone.history.start();
 	}
 });
