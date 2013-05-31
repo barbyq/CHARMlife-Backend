@@ -49,7 +49,9 @@
 		<td>Secciones:</td>
 		<td>
 			<select multiple style="width: 200px" data-placeholder="Selecciona las secciones..." name="secciones[]" id="seccionSelect">
-
+			{{#each seccion}}
+				<option value="{{id}}">{{nombre}}</option>
+			{{/each}}
 			</select>
 		</td>	
 	</tr>
@@ -67,6 +69,6 @@
 
 
 <p class="controls">
-	<input type="submit" class="reditorcolab" value="Guardar"/>
+	<input type="submit" class="guardarcolab" value="Guardar"/>
 	<a href="#colaboradores{{#if id}}/{{id}}{{/if}}" class="button">Cancelar</a>
 </p>

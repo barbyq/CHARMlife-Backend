@@ -379,3 +379,13 @@ body{
 .textareatop{
 	margin-top: -60%;
 }
+
+.seccion{
+	font-size: 12px;
+	padding: 4px;
+	margin-left: 3px;
+	border: 1px solid $fontMainNavColor;
+	@include rounded(3px);
+	background-color: lighten($fontMainNavColor, 35%);
+	@include shadow(2px 2px 2px lighten($fontMainNavColor, 30%));
+}

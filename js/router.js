@@ -33,7 +33,6 @@ var RouterCharm = Backbone.Router.extend({
 		"colaboradores/add" : "addColab",
 		"colaboradores/:id": "showColaborador",
 		"colaboradores/:id/edit": "editColab",
-		"colaboradores/:id/delete": "deleteColab",
 		"secciones":"showSecciones",
 		"secciones/add":"addSeccion",
 		"secciones/:id/edit":"editSeccion",
@@ -235,6 +234,9 @@ var RouterCharm = Backbone.Router.extend({
 		colabAddView = new ColaboradorAddView();
 		colabAddView.render();
 		$('#main').html(colabAddView.el);
+		setTimeout(function  () {
+			colabAddView.loader();
+		}, 1000);
 	},
 	editColab: function(id){
 		if (this.colabList.length == 0){
@@ -244,6 +246,9 @@ var RouterCharm = Backbone.Router.extend({
 		var colabEditView = new ColaboradorEditView({model: colab});
 		colabEditView.render();
 		$('#main').html(colabEditView.el);
+		setTimeout(function  () {
+			colabEditView.loader();
+		}, 1000);
 	},
 	deleteColab: function(id){
 		var colab = this.colabList.get(id);
@@ -274,7 +279,10 @@ var RouterCharm = Backbone.Router.extend({
 		console.log(seccion);
 		var seccEditView = new SeccionEditView({model: seccion});
 		seccEditView.render();
-		$('#main').html(seccEditView.el);	
+		$('#main').html(seccEditView.el);
+		setTimeout(function  () {
+			seccEditView.loader();
+		},1000);	
 	},
 	deleteSeccion: function(id){
 		var context = this;

@@ -85,6 +85,6 @@
     }
     closedir($handle);
     rmdir($path);
-}
+	}
 
 ?>
