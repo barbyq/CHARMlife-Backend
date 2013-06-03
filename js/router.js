@@ -77,7 +77,7 @@ var RouterCharm = Backbone.Router.extend({
 			}, 1000);
 		},'json');
 	},editdatasocial:function(id) {
-		$.post("controllers/sociales_controller",{receiver:"socialcontinue",idsocial:id},function  (response) {
+		$.post("controllers/sociales_controller.php",{receiver:"socialcontinue",idsocial:id},function  (response) {
 			console.log(response);
 			var bd = new Social(response);
 			var viewSocialData = new EditDataSocialView({model:bd});
@@ -342,7 +342,6 @@ var RouterCharm = Backbone.Router.extend({
 				amigosView.loader();
 			}, 1000);
 		},'json');
-<<<<<<< HEAD
 	},banner:function() {
 		$.get("controllers/banner_controller.php",function  (response) {
 			console.log(response);
@@ -357,9 +356,6 @@ var RouterCharm = Backbone.Router.extend({
 		},'json');
 	},
 	start: function() {
-=======
-	},start: function() {
->>>>>>> a76cdaf858595e09b47f973e5ee0b6a6699b0784
 		Backbone.history.start();
 	}
 });

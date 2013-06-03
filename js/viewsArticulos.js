@@ -198,7 +198,7 @@ var RegisterArticulo = Backbone.View.extend({
 	  var $colaboradoresDOM = $("<select name='colaboradores' id='colabs'></select>");
 	    $.post('controllers/colaboradores_controller.php',{receiver:true},function(response) {
 		  	for (var i = 0; i < response.length; i++) {
-		  		var nombre = response[i]['nombre'];
+		  		var nombre = response[i]['nombrec'];
 		  		var id = response[i]['id'];
 		  		$colaboradoresDOM.append('<option value="'+id+'">'+nombre+'</option>');
 		  	};

@@ -92,6 +92,8 @@ if (isset($_POST['receiver']) && $_POST['receiver'] == "registro") {
 	$aborr->url = "Sociales/".$socia."/".$fotosacada;
 	$aborr->sociales_id = $socia;
 	$socialesdao->deleteFoto($aborr);
+	print_r("Borre foto:");
+	print_r($aborr);
 }elseif (isset($_POST['receiver']) && $_POST['receiver'] == "borrar") {
 	$id = $_POST['idsocial'];
 	$soci = $socialesdao->getSocialById($id);

@@ -7,14 +7,8 @@ var OutfitView = Backbone.View.extend({
 		this.iditemporalizador = generaidtexto();
 	},confirmaroutfit:function  () {
 		$.post("controllers/outfit_controller",{receiver:"confirmaroutfit",generado:this.iditemporalizador},function  (response) {
-<<<<<<< HEAD
 			alert("Guardado Con exito");
 			CharmRouter.navigate("outfit",{trigger:true});
-=======
-			console.log(response);
-			alert("Guardado Con exito");
-			CharmRouter("outfit",{trigger:true});
->>>>>>> a76cdaf858595e09b47f973e5ee0b6a6699b0784
 		});	
 	},
 	loader:function  () {

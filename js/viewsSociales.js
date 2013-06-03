@@ -184,7 +184,7 @@ function ActivarSubidaDataEdit (socialid) {
     	console.log("Subi algo aca chido");
     }).bind('fileuploaddestroyed', function (e, data) {
     	console.log(data);
-    	var archivoborradin = data['url'].substring(60,data['url'].indexOf("&"));
+    	var archivoborradin = data['url'].substring(50,data['url'].indexOf("&"));
     	$.post("controllers/sociales_controller.php",{receiver:"borrarfoto",social_id:socialid,foto:archivoborradin},function  (response) {
     		console.log(response);
     	});

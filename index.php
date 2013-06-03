@@ -437,7 +437,7 @@ function bit_rol(num, cnt)
 		<br/>
 		<div class="login-panel" align="center">
 			<p>Username</p>
-			<input type="text" id="sui" name="sui">
+			<input type="email" id="sui" name="sui">
 			<p>Password</p>
 			<input id="passi" type="password" name="yadayadayada">
 			<br class="clear"/>
