@@ -23,6 +23,43 @@
 	<script type="text/javascript">
 	var CharmRouter = 0;
 	$(document).ready(function() {
+
+    $('#passi').keypress(function  (event) {
+        if ( event.which == 13 ) {
+           event.preventDefault();
+           var user = $('#sui').val();
+    var passi = $('#passi').val();
+    var protegido = hex_md5(passi);
+
+      var form = document.createElement("form");
+      form.setAttribute("method", "POST");
+      form.setAttribute("action", "controllers/usuarios_controller.php");
+
+        var campousername = document.createElement("input");
+        campousername.setAttribute("type", "hidden");
+        campousername.setAttribute("name", "usi");
+        campousername.setAttribute("value", user);
+
+        form.appendChild(campousername);
+
+        var campopassword = document.createElement("input");
+        campopassword.setAttribute("type", "hidden");
+        campopassword.setAttribute("name", "yadayada");
+        campopassword.setAttribute("value", protegido);
+
+        form.appendChild(campopassword)
+         var camporeciber = document.createElement("input");
+         camporeciber.setAttribute("type", "hidden");
+         camporeciber.setAttribute("name", "receiver");
+         camporeciber.setAttribute("value", "letmein");
+
+        form.appendChild(camporeciber);
+
+      document.body.appendChild(form);
+      form.submit();
+        }
+    });
+
 		$('#login').click(function  () {
 		var user = $('#sui').val();
 		var passi = $('#passi').val();
@@ -437,9 +474,9 @@ function bit_rol(num, cnt)
 		<br/>
 		<div class="login-panel" align="center">
 			<p>Username</p>
-			<input type="email" id="sui" name="sui">
+			<input type="email" id="sui" name="username">
 			<p>Password</p>
-			<input id="passi" type="password" name="yadayadayada">
+			<input id="passi" type="password">
 			<br class="clear"/>
 			<br/>
 			<button id="login" class="boton-charm natural">Log In</button>
