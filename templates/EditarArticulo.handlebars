@@ -1,0 +1,167 @@
+    <h3>Editar Articulo</h3>
+    <br/>
+
+    <table>
+        <tr>
+            <td colspan="2">
+                 <img id="imagenprinciedit" src="img/ImagenPrinciDefault.png" height="300px" width="300px">
+                <span class="file-wrapper" style="">
+                <input type="file" name="photo" id="princiupdate" />
+                 <span id="princiupdat" class="button">Browse...</span>
+                </span>
+            </td>
+            <td colspan="2">
+                 <img id="tomupdate" src="img/Tomneil.png" height="150px" width="150px">
+                 <span class="file-wrapper" style="">
+                 <input type="file" name="photogenic" id="thumbupdate" />
+                 <span id="tomneilupdat" class="button">Browse...</span>
+                 </span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>Titulo</p>
+                <input type="text" name="titulo" id="updata" value="{{titulo}}" style="width:150px">
+            </td>
+            <td>
+                <p>Fecha evento</p>
+                <input type="text" id="fechagaleriaeventoedit" name="fecha" value="{{mes}}/{{dia}}/{{year}}">
+            </td>
+            <td>
+                <p>Status</p>
+                <select name="status" id="asti">
+                    <option value="1" {{#ifeq status 1}} selected="selected" {{/ifeq}}>Borrador/Esperar Review</option>
+                    <option value="2" {{#ifeq status 2}} selected="selected" {{/ifeq}}>En Espera</option>
+                    <option value="0" {{#ifeq status 0}} selected="selected" {{/ifeq}}>Publicar</option>
+                </select>
+            </td>
+            <td>
+                <p>Medio</p>
+                <select name="medio" id="comidaotravez">
+                    <option value="0" {{#ifeq impreso 0}} selected="selected" {{/ifeq}}>Impreso</option>
+                    <option value="1" {{#ifeq impreso 1}} selected="selected" {{/ifeq}}>Digital</option>
+                </select>
+            </td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>Subtitulo</p>
+                <input type="text" name="subtitulo" id="Subtitulo" value="{{subtitulo}}" style="width:150px">
+            </td>
+            <td>
+                <p>Tags (Separados por coma)</p>
+                <input type="text" name="tags" id="tagsedit" class="lostags" value="nocargado">   
+            </td>
+            <td>
+                <p>
+                    {{#ifeq tipo 0}} Articulo {{/ifeq}}
+                    {{#ifeq tipo 1}} Galeria {{/ifeq}}
+                    {{#ifeq tipo 2}} Video {{/ifeq}}
+                </p>
+            </td>
+            <td>
+                <div id="videitoedit" style="display:none;">
+                    <p>Video Cargado... </p>
+                    <input type="text" name="video" id="subirvideoedit">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <p>Colaborador</p>
+                <div id="colaboradoreselectedit"></div>
+            </td>
+            <td colspan="2">
+                <p>Secciones</p>
+                <div id="seccioneselectedit"></div>
+            </td>
+        </tr>
+    </table>
+    <div align="center" style="font-family: 'Roboto Condensed', 'Arial Narrow', Arial, sans-serif;font-weight: 300;">
+        <p>Contenido</p>
+        <textarea id="areaupdate" style="width:700px;height:250px;font-family: 'Roboto Condensed', 'Arial Narrow', Arial, sans-serif;font-weight: 300;"></textarea>
+    </div>
+
+<br/>
+<button class="boton-charm actualizar natural" id="finish">Actualizar</button>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<div class="container" id="yeyeyei">
+    <!-- The file upload form used as target for the file upload widget -->
+    <form id="wopo" action="/proyectoDigital/controllers/Galerias/index.php" method="POST" enctype="multipart/form-data">
+        <!-- Redirect browsers with JavaScript disabled to the origin page -->
+        <noscript><input type="hidden" name="redirect" value="http://blueimp.github.com/jQuery-File-Upload/"></noscript>
+        <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+        <div class="row fileupload-buttonbar">
+            <div class="span7">
+                <!-- The fileinput-button span is used to style the file input field as button -->
+                <span class="btn btn-success fileinput-button">
+                    <i class="icon-plus icon-white"></i>
+                    <span>Add files...</span>
+                    <input type="file" name="files[]" multiple>
+                </span>
+                <button type="submit" class="btn btn-primary start">
+                    <i class="icon-upload icon-white"></i>
+                    <span>Start upload</span>
+                </button>
+                <button type="reset" class="btn btn-warning cancel">
+                    <i class="icon-ban-circle icon-white"></i>
+                    <span>Cancel upload</span>
+                </button>
+                <button type="button" class="btn btn-danger delete">
+                    <i class="icon-trash icon-white"></i>
+                    <span>Delete</span>
+                </button>
+                <input type="checkbox" class="toggle">
+            </div>
+            <!-- The global progress information -->
+            <div class="span5 fileupload-progress fade">
+                <!-- The global progress bar -->
+                <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                    <div class="bar" style="width:0%;"></div>
+                </div>
+                <!-- The extended global progress information -->
+                <div class="progress-extended">&nbsp;</div>
+            </div>
+        </div>
+        <!-- The loading indicator is shown during file processing -->
+        <div class="fileupload-loading"></div>
+        <br>
+        <!-- The table listing the files available for upload/download -->
+        <table role="presentation" class="table table-striped"><tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody></table>
+    </form>
+</div>
+
+<!-- modal-gallery is the modal dialog used for the image gallery -->
+<div id="modal-gallery" class="modal modal-gallery hide fade" data-filter=":odd" tabindex="-1">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3 class="modal-title"></h3>
+    </div>
+    <div class="modal-body"><div class="modal-image"></div></div>
+    <div class="modal-footer">
+        <a class="btn modal-download" target="_blank">
+            <i class="icon-download"></i>
+            <span>Download</span>
+        </a>
+        <a class="btn btn-success modal-play modal-slideshow" data-slideshow="5000">
+            <i class="icon-play icon-white"></i>
+            <span>Slideshow</span>
+        </a>
+        <a class="btn btn-info modal-prev">
+            <i class="icon-arrow-left icon-white"></i>
+            <span>Previous</span>
+        </a>
+        <a class="btn btn-primary modal-next">
+            <span>Next</span>
+            <i class="icon-arrow-right icon-white"></i>
+        </a>
+    </div>
+</div>

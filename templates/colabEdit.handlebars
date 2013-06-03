@@ -1,0 +1,72 @@
+<table>
+	<tr>
+		<td colspan="2">
+			<img src="{{#if imagen}}{{imagen}}{{else}}img/profile.png{{/if}}" style="width: 180px" class="uploadImg"/><br>
+			<input type="button" value="Browse..." class="uploadImg">
+			<p class="error" style="width: 120px;"></p>
+		</td>
+	</tr>
+	<tr>
+		<td>Nombre:</td>
+		<td><input type="text" value="{{#if nombre}}{{nombre}}{{/if}}" name="nombre"></td>
+	</tr>
+	<tr>
+		<td>Apellido:</td>
+		<td><input type="text" value="{{#if apellido}}{{apellido}}{{/if}}" name="apellido"></td>
+	</tr>
+	<tr>
+		<td>Descripción:</td>
+		<td><input type="text" value="{{#if descripcion}}{{descripcion}}{{/if}}" name="descripcion"></td>
+	</tr>
+	<tr>
+		<td>twitter:</td>
+		<td>@<input type="text" value="{{#if twitter}}{{twitter}}{{/if}}" name="twitter"></td>
+	</tr>
+	<tr>
+		<td>Giro:</td>
+		<td><input type="text" value="{{#if giro}}{{giro}}{{/if}}" name="giro"></td>
+	</tr>
+	<tr>
+		<td>Medio:</td>
+		<td>
+			<select style="width: 110px;" data-placeholder="Selecciona el medio..." name="medio">
+				<option value="0" {{#ifeq medio 0}} selected="selected" {{/ifeq}}>Digital</option>
+				<option value="1" {{#ifeq medio 1}} selected="selected" {{/ifeq}}>Impreso</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>Tipo:</td>
+		<td>
+			<select style="width:110px" data-placeholder="Selecciona el tipo..." name="tipo">
+				<option value="0" {{#ifeq tipo 0}} selected="selected" {{/ifeq}}>Persona</option>
+				<option value="1" {{#ifeq tipo 1}} selected="selected" {{/ifeq}}>Empresa</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		
+		<td>Secciones:</td>
+		<td>
+			<select multiple style="width: 200px" data-placeholder="Selecciona las secciones..." name="secciones[]" id="seccionSelect">
+
+			</select>
+		</td>	
+	</tr>
+	
+	<tr>
+		<td>Link Extra:</td>
+		<td><input type="text" value="{{#if link_extra}}{{link_extra}}{{/if}}" name="link_extra"></td>
+	</tr>
+</table>
+<br class="clear">
+<input type="hidden" name="imagen" value="{{#if id}}{{imagen}}{{/if}}" class="colaboradores_imagen"/>
+<input type="hidden" name="action" value="{{#if id}}edit{{else}}add{{/if}}"/>
+{{#if id}}<input type="hidden" name="id" value="{{id}}"/>
+<input type="hidden" name="imgs" value="" class="imgs_array"/>{{/if}}
+
+
+<p class="controls">
+	<input type="submit" class="reditorcolab" value="Guardar"/>
+	<a href="#colaboradores{{#if id}}/{{id}}{{/if}}" class="button">Cancelar</a>
+</p>

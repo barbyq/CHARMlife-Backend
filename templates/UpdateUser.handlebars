@@ -1,0 +1,16 @@
+<br/>
+<p>Nombre</p>
+<input type="text" name="nombre" value="{{nombre}}" id="nomb">
+<p>Correo</p>
+<input type="email" name="username" value="{{username}}" id="imeil">
+<p>Password :3!</p>
+<input type="password" name="password" id="passguord">
+<p>Admin Level</p>
+<select name="permisos">
+	<option value="1" {{#ifeq permisos 1}} selected="selected" {{/ifeq}}>Admin</option>
+    <option value="2" {{#ifeq permisos 2}} selected="selected" {{/ifeq}}>Editor</option>
+    <option value="3" {{#ifeq permisos 3}} selected="selected" {{/ifeq}}>Colaborador</option>
+</select>
+<br/>
+<br/>
+<button class="boton-charm updeitro natural">Actualizar</button>

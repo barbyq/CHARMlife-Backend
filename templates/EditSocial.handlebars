@@ -1,0 +1,19 @@
+<h1>{{titulo}}</h1>
+<h2>{{subtitulo}}</h2>
+<button class="natural editardatos">Editar Datos del Social</button>
+<br/>
+<table id="imagenes">
+	<tr>
+		<td>Imagen</td>
+		<td>Dame una descripción</td>
+	</tr>
+	{{#each imagenes}}
+	<tr>
+	<td><img height="200px" width="200px" src="{{img}}"></td>
+	<td>
+		<textarea class="textareatop" name="{{foto_id}}">{{descripcion}}</textarea></td>
+		</tr>
+	{{/each}}
+</table>
+
+<button class="boton-charm natural editar">Guardar</button>

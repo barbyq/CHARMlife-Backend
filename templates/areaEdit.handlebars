@@ -1,0 +1,18 @@
+<form action="controllers/areas_controller.php" method="post" class="colab_edit">
+	<table>
+		<tr>
+			<td colspan="2"><strong>Areas:</strong></td>
+		</tr>
+		<tr>
+			<td>Nombre: </td>
+			<td><input type="text" name="nombre" value="{{#if nombre}}{{nombre}}{{/if}}"/></td>
+		</tr>
+	</table>
+	{{#if id}}<input type="hidden" name="id" value="{{id}}">{{/if}}
+	<input type="hidden" name="action" value="{{#if id}}edit{{else}}add{{/if}}">
+
+	<p class="controls">
+		<input type="submit" value="Guardar"/>
+		<a href="#areas" class="button">Cancelar</a>
+	</p>
+</form>
