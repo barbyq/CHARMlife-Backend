@@ -88,7 +88,7 @@ var ViewArticulo = Backbone.View.extend({
 				}	
 			
 				if (contextotote.model.get('tipo') == 1) {
-			    $('#contenidomostrar').html();
+				    $('#contenidomostrar').html();
 				}else if (contextotote.model.get('tipo') == 2) {
 					$.post('controllers/articulos_controller.php',{receiver:'damevideo',idvide:contextotote.model.get('articulo_id')},function(response) {
 						console.log(response);
