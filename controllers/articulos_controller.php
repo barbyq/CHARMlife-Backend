@@ -88,6 +88,16 @@ if (isset($_POST['registro'])) {
 		rename('../Thumbnails/'.$idgenerado.'/'.$escaneo[2],'../Thumbnails/'.$idgenerado.'/'.$idgenerado.'.'.$tipo);
 	}
 
+	if (is_dir("../TemporalMasCharm/".$temporaldir."/")) {
+		$fuente = "../TemporalMasCharm/".$temporaldir."/";
+		$destino = "../MasCharm/".$idgenerado."/";
+		recurse_copy($fuente,$destino);
+		if (is_dir("../TemporalMasCharm/".$temporaldir)) {
+			rmdir_recurse("../TemporalMasCharm/".$temporaldir);
+		}
+	}
+
+
 }elseif (isset($receiver) && $receiver == "borrar") {
 	$id = $_POST['idarticulo'];
 	$articulo = $articleDao->getArticulo($id);
@@ -139,6 +149,11 @@ if (isset($_POST['registro'])) {
 		$imagenes->thumbnail = $tomneil[2];
 	}
 
+	if (is_dir('../MasCharm/'.$id)) {
+		$mascharm = scandir('../MasCharm'.$id);
+		$imagenes->mascharm = $mascharm[2];
+	}
+	
 	$video = $articleDao->dameurlvid($id);
 
 	$jsoncontenido = new stdClass;
@@ -222,7 +237,27 @@ if (isset($_POST['registro'])) {
 			move_uploaded_file($_FILES['thumbnail']['tmp_name'],"../Thumbnails/".$cosha."/".$cosha.".png");
 		}
 	}	
-}elseif (isset($receiver) && $receiver == "update") {
+}elseif (isset($_POST['receiver']) && $_POST['receiver'] == "mascharm") {
+	$generado = $_POST['generado'];
+		print_r($_FILES['mascharmfile']["type"]);
+		if (is_dir('../TemporalMasCharm/'.$generado)) {
+			rmdir_recurse('../TemporalMasCharm/'.$generado);
+			mkdir('../TemporalMasCharm/'.$generado);
+			if ($_FILES['mascharmfile']['type'] ==='image/jpeg') {
+				move_uploaded_file($_FILES['mascharmfile']['tmp_name'],'../TemporalMasCharm/'.$generado.'/'.$generado.'.jpg');
+			}else{
+				move_uploaded_file($_FILES['mascharmfile']['tmp_name'],'../TemporalMasCharm/'.$generado.'/'.$generado.'.png');
+			}		
+		}else{
+			mkdir('../TemporalMasCharm/'.$generado);
+			if ($_FILES['mascharmfile']['type'] ==='image/jpeg') {
+				move_uploaded_file($_FILES['mascharmfile']['tmp_name'],'../TemporalMasCharm/'.$generado.'/'.$generado.'.jpg');
+			}else{
+				move_uploaded_file($_FILES['mascharmfile']['tmp_name'],'../TemporalMasCharm/'.$generado.'/'.$generado.'.png');
+			}
+		}
+}
+elseif (isset($receiver) && $receiver == "update") {
 	$id = $_POST['articulo_id'];
 
 	$art = new stdClass;
