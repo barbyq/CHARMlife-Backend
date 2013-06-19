@@ -150,7 +150,7 @@ if (isset($_POST['registro'])) {
 	}
 
 	if (is_dir('../MasCharm/'.$id)) {
-		$mascharm = scandir('../MasCharm'.$id);
+		$mascharm = scandir('../MasCharm/'.$id);
 		$imagenes->mascharm = $mascharm[2];
 	}
 	

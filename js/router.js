@@ -185,10 +185,10 @@ var RouterCharm = Backbone.Router.extend({
 	 		var articuloeditable = new Articulo(response);
 	 		var editarVista = new EditarArticulo({model:articuloeditable});
 	 		$('#main').html(editarVista.render().el);
-	 		setTimeout(function  () {
-	 		  editarVista.loadStuff();
-	 		  editarVista.loadColabs();
-	 		}, 1000);
+	 		setTimeout(function() {
+	 			editarVista.loadColabs();
+	 			editarVista.loadStuff();
+	 		},500);
 	 	},'json');
 	},usuarios:function() {
 	  var tablaUsuarios = new ViewTableUsuarios({collection:usuarios});

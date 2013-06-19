@@ -294,7 +294,7 @@ var EditarArticulo = Backbone.View.extend({
 	loadStuff:function(){
 		var contexto = this;
 		$.post("controllers/articulos_controller.php",{receiver:"contenido",articulo:this.model.get("articulo_id")},function  (response) {
-		  console.log(response);
+			console.log(response);
 			$('#yeyeyei').hide();
 			$('select').chosen();
 			var protegido = contexto.model.get("contenido");
@@ -320,7 +320,7 @@ var EditarArticulo = Backbone.View.extend({
 			}		
 
 			if (typeof response['imagenes']['mascharm'] != "undefined") {
-				$('#mascharmupdate'),attr("src","MasCharm/"+contexto.model.get("articulo_id")+"/"+response['imagenes']['mascharm']+"?timestamp"+new Date().getTime());
+				$('#mascharmupdate').attr("src","MasCharm/"+contexto.model.get("articulo_id")+"/"+response['imagenes']['mascharm']+"?timestamp"+new Date().getTime());
 			};
 
 			switch(contexto.model.get("tipo")){
@@ -361,7 +361,9 @@ var EditarArticulo = Backbone.View.extend({
 				}
 			});			
 			nicEditors.allTextAreas();
-		},'json');
+		},'json').fail(function  (e) {
+			console.log(e);
+		});
 	},
 	render:function  () {
 		Handlebars.registerHelper('ifeq', function (a, b, options) {
