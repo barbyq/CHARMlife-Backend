@@ -193,6 +193,19 @@ var RegisterArticulo = Backbone.View.extend({
 				$('#tom').attr('src','TemporalThumbnails/'+contexto.iditemporalizador+'/'+contexto.iditemporalizador+"."+coshi);
 			}
 		});
+
+	  	var mascharm = $('#yemn3upi').upload({
+			name: 'mascharmfile',
+            action: 'controllers/articulos_controller.php',
+            enctype: 'multipart/form-data',
+            autoSubmit: true,
+            params:{receiver:'mascharm',generado:contexto.iditemporalizador},
+			onComplete:function() {
+				var nombre = mascharm.filename();
+				var tipo = nombre.substr(nombre.length - 3);
+				$('#mascharm').attr('src','TemporalMasCharm/'+contexto.iditemporalizador+'/'+contexto.iditemporalizador+"."+tipo);
+			}
+		});
 	},loadColadsandSections:function() {
 		$('#fechagaleriaevento').datepicker();
 	  var $colaboradoresDOM = $("<select name='colaboradores' id='colabs'></select>");
@@ -306,6 +319,10 @@ var EditarArticulo = Backbone.View.extend({
 				$('#tomupdate').attr("src","Thumbnails/"+contexto.model.get("articulo_id")+"/"+response['imagenes']['thumbnail']+"?timestamp=" + new Date().getTime());
 			}		
 
+			if (typeof response['imagenes']['mascharm'] != "undefined") {
+				$('#mascharmupdate'),attr("src","MasCharm/"+contexto.model.get("articulo_id")+"/"+response['imagenes']['mascharm']+"?timestamp"+new Date().getTime());
+			};
+
 			switch(contexto.model.get("tipo")){
 				case 1:
 					ActivarGaleria(contexto.model.get("articulo_id"));
@@ -343,7 +360,6 @@ var EditarArticulo = Backbone.View.extend({
 					$('#tomupdate').attr('src','Thumbnails/'+contexto.model.get('articulo_id')+'/'+contexto.model.get('articulo_id')+"."+tipo+"?timestamp=" + new Date().getTime());
 				}
 			});			
-
 			nicEditors.allTextAreas();
 		},'json');
 	},
