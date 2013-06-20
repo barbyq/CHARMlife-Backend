@@ -170,10 +170,10 @@ var RegisterArticulo = Backbone.View.extend({
 		var contexto = this;
 	  	var desubidita = $('#UploadImagen').upload({
 			name: 'imagenprincipali',
-            action: 'controllers/articulos_controller.php',
-            enctype: 'multipart/form-data',
-            autoSubmit: true,
-            params:{receiver:'imagenprinci',generado:contexto.iditemporalizador},
+		           action: 'controllers/articulos_controller.php',
+		           enctype: 'multipart/form-data',
+		           autoSubmit: true,
+		           params:{receiver:'imagenprinci',generado:contexto.iditemporalizador},
 			onComplete:function() {
 				var nombre = desubidita.filename();
 				var tipo = nombre.substr(nombre.length - 3);
@@ -196,10 +196,10 @@ var RegisterArticulo = Backbone.View.extend({
 
 	  	var mascharm = $('#yemn3upi').upload({
 			name: 'mascharmfile',
-            action: 'controllers/articulos_controller.php',
-            enctype: 'multipart/form-data',
-            autoSubmit: true,
-            params:{receiver:'mascharm',generado:contexto.iditemporalizador},
+		           action: 'controllers/articulos_controller.php',
+		           enctype: 'multipart/form-data',
+		           autoSubmit: true,
+		           params:{receiver:'mascharm',generado:contexto.iditemporalizador},
 			onComplete:function() {
 				var nombre = mascharm.filename();
 				var tipo = nombre.substr(nombre.length - 3);
@@ -260,42 +260,42 @@ var EditarArticulo = Backbone.View.extend({
 			CharmRouter.navigate("articulos", {trigger:true});
 	  });
 	},loadColabs:function  () {
-	  $('#fechagaleriaeventoedit').datepicker();
-	  var contexto = this;
-	  var $colaboradoresDOM = $("<select name='colaboradores'></select>");
-	    $.post('controllers/colaboradores_controller.php',{receiver:true},function(response) {
-		  	for (var i = 0; i < response.length; i++) {
-		  		var nombre = response[i]['nombrec'];
-		  		var id = response[i]['id'];
-		  		if (contexto.model.get("colaborador_id") == nombre) {
-		  			$colaboradoresDOM.append('<option value="'+id+'" selected="selected">'+nombre+'</option>');
-		  		}else{
-		  			$colaboradoresDOM.append('<option value="'+id+'">'+nombre+'</option>');		
-		  		}
-		  	};
-		  	$('#colaboradoreselectedit').html($colaboradoresDOM);
-		  	$('select').chosen();
-		  },'json').fail(function(e) { console.log(e); });
-	    var $seccionesDOM = $('<select name="secciones"></select>');
-	    $.post('controllers/secciones_controller.php',{receiver:true},function(response) {
-	    	for (var i = 0; i < response.length; i++) {
-		    	var secnombre = response[i]['nombre'];
-		    	var secid = response[i]['id'];
-		    	if (contexto.model.get("seccion_id") == secnombre) {
-		    		$seccionesDOM.append("<option value='"+secid+"' selected='selected'>"+secnombre+"</option>");
-		    	}else{
-		    		$seccionesDOM.append("<option value='"+secid+"'>"+secnombre+"</option>");
-		    	}
-	    	};
-	    	$('#seccioneselectedit').html($seccionesDOM);
-	    	$('select').chosen();
-	    },'json');
+		  $('#fechagaleriaeventoedit').datepicker();
+		  var contexto = this;
+		  var $colaboradoresDOM = $("<select name='colaboradores'></select>");
+		    $.post('controllers/colaboradores_controller.php',{receiver:true},function(response) {
+			  	for (var i = 0; i < response.length; i++) {
+			  		var nombre = response[i]['nombrec'];
+			  		var id = response[i]['id'];
+			  		if (contexto.model.get("colaborador_id") == nombre) {
+			  			$colaboradoresDOM.append('<option value="'+id+'" selected="selected">'+nombre+'</option>');
+			  		}else{
+			  			$colaboradoresDOM.append('<option value="'+id+'">'+nombre+'</option>');		
+			  		}
+			  	};
+			  	$('#colaboradoreselectedit').html($colaboradoresDOM);
+			  	$('select').chosen();
+			  },'json').fail(function(e) { console.log(e); });
+		    var $seccionesDOM = $('<select name="secciones"></select>');
+		    $.post('controllers/secciones_controller.php',{receiver:true},function(response) {
+		    	for (var i = 0; i < response.length; i++) {
+			    	var secnombre = response[i]['nombre'];
+			    	var secid = response[i]['id'];
+			    	if (contexto.model.get("seccion_id") == secnombre) {
+			    		$seccionesDOM.append("<option value='"+secid+"' selected='selected'>"+secnombre+"</option>");
+			    	}else{
+			    		$seccionesDOM.append("<option value='"+secid+"'>"+secnombre+"</option>");
+			    	}
+		    	};
+		    	$('#seccioneselectedit').html($seccionesDOM);
+		    	$('select').chosen();
+		    },'json');
 	},
 	loadStuff:function(){
 		var contexto = this;
 		$.post("controllers/articulos_controller.php",{receiver:"contenido",articulo:this.model.get("articulo_id")},function  (response) {
 			console.log(response);
-			$('#yeyeyei').hide();
+			$('#contenedoreditar').hide();
 			$('select').chosen();
 			var protegido = contexto.model.get("contenido");
 			$('#areaupdate').html(unescape(protegido));
@@ -325,11 +325,9 @@ var EditarArticulo = Backbone.View.extend({
 
 			switch(contexto.model.get("tipo")){
 				case 1:
-					console.log("Activar la galeria aca toda chidi");
-					ActivarGaleria(contexto.model.get("articulo_id"));
+					$('#contenedoreditar').css("display","block");
+					ActivarVinculacionEdicion(contexto.model.get("articulo_id"));
 					ActivarSubidaEdicion();
-					ActivarSubidaEdicion();
-					$('#yeyeyei').css("display","block");
 					break;
 				case 2:
 					$('#videitoedit').css("display","block");
@@ -361,18 +359,18 @@ var EditarArticulo = Backbone.View.extend({
 					var tipo = nombre.substr(nombre.length - 3);
 					$('#tomupdate').attr('src','Thumbnails/'+contexto.model.get('articulo_id')+'/'+contexto.model.get('articulo_id')+"."+tipo+"?timestamp=" + new Date().getTime());
 				}
-			});
+			});		
 
-		  	var UpdateMasCherm = $('#UpdateMasCharm').upload({
-				name: 'mascharmupdate',
-			           action: 'controllers/articulos_controller.php',
-			           enctype: 'multipart/form-data',
-			           autoSubmit: true,
-			           params:{receiver:'updatemascharm',generado:contexto.model.get('articulo_id')},
+		  	var updatemascharm = $('#UpdateMasCharm').upload({
+				name: 'mascharmupdatefile',
+			            action: 'controllers/articulos_controller.php',
+			            enctype: 'multipart/form-data',
+			            autoSubmit: true,
+			            params:{receiver:'updatecharm',generado:contexto.model.get('articulo_id')},
 				onComplete:function() {
-					var nombre = UpdateMasCherm.filename();
+					var nombre = updatemascharm.filename();
 					var tipo = nombre.substr(nombre.length - 3);
-					$('#mascharmupdate').attr('src','MasCharm/'+contexto.model.get('articulo_id')+'/'+contexto.model.get('articulo_id')+"."+tipo);
+				$('#mascharmupdate').attr('src','MasCharm/'+contexto.model.get('articulo_id')+'/'+contexto.model.get('articulo_id')+"."+tipo);
 				}
 			});
 			nicEditors.allTextAreas();
@@ -383,7 +381,7 @@ var EditarArticulo = Backbone.View.extend({
 	render:function  () {
 		Handlebars.registerHelper('ifeq', function (a, b, options) {
       			if (a == b) { return options.fn(this); }
-	    	});
+    		});
 		var contextin = this;
 		$.get('templates/EditarArticulo.handlebars',function(data) {
 			var template = Handlebars.compile(data);
@@ -404,43 +402,29 @@ function generaidtexto () {
     return text;
 }
 
-function ActivarGaleria(id) {
-	$.post("Galerias/Recibidor.php",{temporaral:id},function (response) {
-		console.log(response);
-	}).fail(function  (e) {
-		console.log(e);
-	});
-	$.post("Galerias/Recibidor.php",{temporaral:id},function (response) {
-	  console.log(response);
-	}).fail(function  (e) {
-		console.log(e);
-	});
-}
 
-function ActivarVinculacion(jojojo) {	
-   $.post('TemporalGalerias/Recibidor.php',{temporaral:jojojo},function(searmochido) {
+function ActivarVinculacionEdicion(idarticulo) {	
+   $.post('Galerias/Recibidor.php',{temporaral:idarticulo},function(searmochido) {
   	 	console.log(searmochido);
-  	 	console.log("lo mande aca chido");
     }).fail(function(e) {
        console.log(e);
      });
-     $.post('TemporalGalerias/Recibidor.php',{temporaral:jojojo},function(searmochido) {
+     $.post('Galerias/Recibidor.php',{temporaral:idarticulo},function(searmochido) {
   	 	console.log(searmochido);
-  	 	console.log("lo mande aca chido");
     }).fail(function(e) {
        console.log(e);
      });
 }
 
 function ActivarSubidaEdicion () {
-    $('#wopo').fileupload({
+    $('#formaeditar').fileupload({
         // Uncomment the following to send cross-domain cookies:
         //xhrFields: {withCredentials: true},
         url: 'Galerias/index.php'
     });
 
     // Enable iframe cross-domain access via redirect option:
-    $('#wopo').fileupload(
+    $('#formaeditar').fileupload(
         'option',
         'redirect',
         window.location.href.replace(
@@ -451,7 +435,7 @@ function ActivarSubidaEdicion () {
 
     if (window.location.hostname === 'blueimp.github.com') {
         // Demo settings:
-        $('#wopo').fileupload('option', {
+        $('#formaeditar').fileupload('option', {
             url: '//jquery-file-upload.appspot.com/',
             maxFileSize: 5000000,
             acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
@@ -480,7 +464,7 @@ function ActivarSubidaEdicion () {
                 $('<span class="alert alert-error"/>')
                     .text('Upload server currently unavailable - ' +
                             new Date())
-                    .appendTo('#wopo');
+                    .appendTo('#formaeditar');
             });
         }
     } else {
@@ -488,14 +472,27 @@ function ActivarSubidaEdicion () {
         $.ajax({
             // Uncomment the following to send cross-domain cookies:
             //xhrFields: {withCredentials: true},
-            url: $('#wopo').fileupload('option', 'url'),
+            url: $('#formaeditar').fileupload('option', 'url'),
             dataType: 'json',
-            context: $('#wopo')[0]
+            context: $('#formaeditar')[0]
         }).done(function (result) {
             $(this).fileupload('option', 'done')
                 .call(this, null, {result: result});
         });
     }
+};	
+
+function ActivarVinculacion(jojojo) {	
+   $.post('TemporalGalerias/Recibidor.php',{temporaral:jojojo},function(searmochido) {
+  	 console.log(searmochido);
+    }).fail(function(e) {
+       console.log(e);
+     });
+     $.post('TemporalGalerias/Recibidor.php',{temporaral:jojojo},function(searmochido) {
+  	 console.log(searmochido);
+    }).fail(function(e) {
+       console.log(e);
+     });
 }
 
 function ActivarSubida () {
