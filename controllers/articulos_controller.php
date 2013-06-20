@@ -116,6 +116,9 @@ if (isset($_POST['registro'])) {
 	if (is_dir("../Thumbnails/".$id)) {
 		rmdir_recurse("../Thumbnails/".$id);
 	}
+	if (is_dir("../MasCharm".$id)) {
+		rmdir_recurse("../MasCharm".$id);
+	}
 	$articleDao->deleteArticulo($id);
 	$articleDao->deleteArticuloTags($id);
 }elseif (isset($receiver) && $receiver == "dameimagenes") {
@@ -254,6 +257,25 @@ if (isset($_POST['registro'])) {
 				move_uploaded_file($_FILES['mascharmfile']['tmp_name'],'../TemporalMasCharm/'.$generado.'/'.$generado.'.jpg');
 			}else{
 				move_uploaded_file($_FILES['mascharmfile']['tmp_name'],'../TemporalMasCharm/'.$generado.'/'.$generado.'.png');
+			}
+		}
+}elseif (isset($_POST['receiver']) && $_POST['receiver'] == "updatemascharm") {
+	$generado = $_POST['generado'];
+		print_r($_FILES['mascharmupdate']["type"]);
+		if (is_dir('../MasCharm/'.$generado)) {
+			rmdir_recurse('../MasCharm/'.$generado);
+			mkdir('../MasCharm/'.$generado);
+			if ($_FILES['mascharmupdate']['type'] ==='image/jpeg') {
+				move_uploaded_file($_FILES['mascharmupdate']['tmp_name'],'../MasCharm/'.$generado.'/'.$generado.'.jpg');
+			}else{
+				move_uploaded_file($_FILES['mascharmupdate']['tmp_name'],'../MasCharm/'.$generado.'/'.$generado.'.png');
+			}		
+		}else{
+			mkdir('../MasCharm/'.$generado);
+			if ($_FILES['mascharmupdate']['type'] ==='image/jpeg') {
+				move_uploaded_file($_FILES['mascharmupdate']['tmp_name'],'../MasCharm/'.$generado.'/'.$generado.'.jpg');
+			}else{
+				move_uploaded_file($_FILES['mascharmupdate']['tmp_name'],'../MasCharm/'.$generado.'/'.$generado.'.png');
 			}
 		}
 }

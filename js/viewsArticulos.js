@@ -325,7 +325,9 @@ var EditarArticulo = Backbone.View.extend({
 
 			switch(contexto.model.get("tipo")){
 				case 1:
+					console.log("Activar la galeria aca toda chidi");
 					ActivarGaleria(contexto.model.get("articulo_id"));
+					ActivarSubidaEdicion();
 					ActivarSubidaEdicion();
 					$('#yeyeyei').css("display","block");
 					break;
@@ -359,7 +361,20 @@ var EditarArticulo = Backbone.View.extend({
 					var tipo = nombre.substr(nombre.length - 3);
 					$('#tomupdate').attr('src','Thumbnails/'+contexto.model.get('articulo_id')+'/'+contexto.model.get('articulo_id')+"."+tipo+"?timestamp=" + new Date().getTime());
 				}
-			});			
+			});
+
+		  	var UpdateMasCherm = $('#UpdateMasCharm').upload({
+				name: 'mascharmupdate',
+			           action: 'controllers/articulos_controller.php',
+			           enctype: 'multipart/form-data',
+			           autoSubmit: true,
+			           params:{receiver:'updatemascharm',generado:contexto.model.get('articulo_id')},
+				onComplete:function() {
+					var nombre = UpdateMasCherm.filename();
+					var tipo = nombre.substr(nombre.length - 3);
+					$('#mascharmupdate').attr('src','MasCharm/'+contexto.model.get('articulo_id')+'/'+contexto.model.get('articulo_id')+"."+tipo);
+				}
+			});
 			nicEditors.allTextAreas();
 		},'json').fail(function  (e) {
 			console.log(e);
@@ -367,9 +382,8 @@ var EditarArticulo = Backbone.View.extend({
 	},
 	render:function  () {
 		Handlebars.registerHelper('ifeq', function (a, b, options) {
-      		if (a == b) { return options.fn(this); }
-    	});
-
+      			if (a == b) { return options.fn(this); }
+	    	});
 		var contextin = this;
 		$.get('templates/EditarArticulo.handlebars',function(data) {
 			var template = Handlebars.compile(data);
@@ -393,10 +407,13 @@ function generaidtexto () {
 function ActivarGaleria(id) {
 	$.post("Galerias/Recibidor.php",{temporaral:id},function (response) {
 		console.log(response);
+	}).fail(function  (e) {
+		console.log(e);
 	});
-
 	$.post("Galerias/Recibidor.php",{temporaral:id},function (response) {
 	  console.log(response);
+	}).fail(function  (e) {
+		console.log(e);
 	});
 }
 
