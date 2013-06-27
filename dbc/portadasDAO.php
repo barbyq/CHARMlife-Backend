@@ -59,7 +59,7 @@ class portadasDAO{
 		$q = "INSERT INTO portadas (mes, year, img, img_thumb,edicion) VALUES (?, ?, ?, ?, ?)";
 		$stmt = $this->dbc->stmt_init();
  		if($stmt->prepare($q)) {
- 			$stmt->bind_param('ssssi', $obj->mes, $obj->year, $obj->img, $obj->img_thumb,$edicion);
+ 			$stmt->bind_param('ssssi', $obj->mes, $obj->year, $obj->img, $obj->img_thumb, $edicion);
  			$stmt->execute();
  		}
  		$id = $this->dbc->insert_id;
@@ -70,7 +70,7 @@ class portadasDAO{
 		$q = "UPDATE portadas SET plaza_id = ?, mes = ?, year = ?, img = ?, img_thumb = ? WHERE portadas_id = ?";
 		$stmt = $this->dbc->stmt_init();
 		if($stmt->prepare($q)) {
-			$stmt->bind_param('ssssss', $obj->mes, $obj->year, $obj->img, $obj->img_thumb, $obj->id);
+			$stmt->bind_param('ssssss', $obj->plaza_id, $obj->mes, $obj->year, $obj->img, $obj->img_thumb, $obj->id);
 			$stmt->execute();
 		}
 		$stmt->close();
