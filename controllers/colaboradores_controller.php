@@ -5,10 +5,11 @@
 	include '../dbc/dbconnect.php';
 	include 'utilities.php';
 	include '../dbc/colaboradoresDAO.php';
+	include '../dbc/articulosDAO.php';
 	$dbconnect = new dbconnect('charm_charmlifec536978');
 	$dbc = $dbconnect->getConnection();
 	$colaboradoresDAO = new colaboradoresDAO($dbc);
-	
+	$articlesDAO = new articulosDAO($dbc);	
 
 	if (isset($_POST['receiver']) && $_POST['receiver'] == "subirprofile") {
 		$generado = $_POST['generado'];
@@ -114,13 +115,45 @@ if (isset($_POST['receiver']) && $_POST['receiver'] == "registro") {
 		if (is_dir($dir)){	
 			rmdir_recurse($dir);
 		}
-
+	}elseif (isset($_POST['receiver']) && $_POST['receiver'] == "showcolab") {
+		$id = $_POST['showcolab'];
+		$elmono = $colaboradoresDAO->getColaborador($id);
+		$elmono->secciones = $colaboradoresDAO->getSeccionesColaborador($id);
+		echo json_encode($elmono);
+	}elseif (isset($_POST['receiver']) && $_POST['receiver'] == "showarticles") {
+		$id = $_POST['showcolab'];
+		$articulos = $articlesDAO->getArticulosMinByColaborador($id);
+		foreach ($articulos as $articulo) {
+			if (is_dir("../Thumbnails/".$articulo->articulo_id)) {
+				$scaneo = scandir("../Thumbnails/".$articulo->articulo_id);
+				$articulo->thumbnail = $scaneo[2];
+			}else{
+				$articulo->thumbnail = "";
+			}
+		}
+		echo json_encode($articulos);
+	}elseif (isset($_POST['receiver']) && $_POST['receiver'] == "givemedapages") {
+		$id = $_POST['colab'];
+		$ble = $articlesDAO->getArticulosMinByColaborador($id);
+		echo json_encode($ble);
+	}elseif (isset($_POST['receiver']) && $_POST['receiver'] == "giveyouinterval") {
+		$id = $_POST['colab'];
+		$interval = $_POST['interval'];
+		$kepo  =$articlesDAO->getArticulosByColaboradorByInterval($id,$interval);
+		foreach ($kepo as $kepi) {
+			if (is_dir("../Thumbnails/".$kepi->articulo_id)) {
+				$scaneo = scandir("../Thumbnails/".$kepi->articulo_id);
+				$kepi->thumbnail = $scaneo[2];
+			}else{
+				$kepi->thumbnail = "";
+			}
+		}
+		echo json_encode($kepo);
 	}else{
-		$colaboradores = $colaboradoresDAO->getColaboradores();	
+		$colaboradores = $colaboradoresDAO->getColaboradores();
 		foreach ($colaboradores as $colaborador) {
 			$colaborador->secciones = $colaboradoresDAO->getSeccionesColaborador($colaborador->id);
 		}
 		echo json_encode($colaboradores);
 	}
 ?>
-

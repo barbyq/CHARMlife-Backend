@@ -40,6 +40,33 @@ class articulosDAO
 		return $articulo;
 	}
 
+	public function getArticuloForReal($id)
+	{
+		$busq = "SELECT articulo_id,titulo,subtitulo,dia,mes,year,status,tipo,contenido,colaborador_id,usuario_id,seccion_id from articulos where articulo_id = ?";
+		$ye = $this->dbc->stmt_init();
+		$articulo = new stdClass;
+		if ($ye->prepare($busq)) {
+			$ye->bind_param('i',$id);
+			$ye->execute();
+			$ye->bind_result($articulo_id,$titulo,$subtitulo,$dia,$mes,$year,$status,$tipo,$contenido,$colaborador,$usuario_id,$seccion_id);
+			while ($ye->fetch()) {
+				$articulo->articulo_id = $articulo_id;
+				$articulo->titulo = $titulo;
+				$articulo->subtitulo = $subtitulo;
+				$articulo->dia = $dia;
+				$articulo->mes = $mes;
+				$articulo->year = $year;
+				$articulo->status = $status;
+				$articulo->tipo = $tipo;
+				$articulo->contenido = $contenido;
+				$articulo->colaborador_id = $colaborador;
+				$articulo->usuario_id = $usuario_id;
+				$articulo->seccion_id = $seccion_id;
+			}
+		}
+		return $articulo;	
+	}
+
 	public function getArticulos()
 	{
 		$articulos = array();
@@ -199,6 +226,46 @@ class articulosDAO
 			$ti->bind_param("si",$arti->video,$arti->articulo_id);
 			$ti->execute();
 		}
+	}
+
+	public function getArticulosMinByColaborador($idcolab)
+	{
+		$articulos = array();
+		$busqueda = "SELECT articulo_id,titulo, subtitulo from articulos where colaborador_id = ?";
+		$es = $this->dbc->stmt_init();
+		if ($es->prepare($busqueda)) {
+			$es->bind_param("i",$idcolab);
+			$es->execute();
+			$es->bind_result($articulo_id,$titulo,$subtitulo);
+			while ($es->fetch()) {
+				$articulo = new stdClass;
+				$articulo->articulo_id = $articulo_id;
+				$articulo->titulo = $titulo;
+				$articulo->subtitulo = $subtitulo;
+				$articulos[] = $articulo;
+			}
+		}
+		return $articulos;
+	}
+
+	public function getArticulosByColaboradorByInterval($colaborador,$interval)
+	{
+		$yepmn = array();
+		$ble = "SELECT articulo_id,titulo, subtitulo from articulos where colaborador_id = ? order by articulo_id asc limit ?,8";
+		$estta = $this->dbc->stmt_init();
+		if ($estta->prepare($ble)) {
+			$estta->bind_param("ii",$colaborador,$interval);
+			$estta->execute();
+			$estta->bind_result($articulo_id,$titulo,$subtitulo);
+			while ($estta->fetch()) {
+				$artip = new stdClass;
+				$artip->articulo_id = $articulo_id;
+				$artip->titulo = $titulo;
+				$artip->substitulo = $subtitulo;
+				$yepmn[] = $artip;
+			}
+		}
+		return $yepmn;
 	}
 
 }

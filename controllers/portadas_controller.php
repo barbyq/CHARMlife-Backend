@@ -106,7 +106,7 @@
 		}
 	}	
 	
-	header("Location: /charmAdmin/administrator.php#portadas/". $id);
+	header("Location: /charmadmin/administrator.php#portadas/". $id);
 
 	}else if(isset($_POST['delete'])){
 		$id = $_POST['delete'];

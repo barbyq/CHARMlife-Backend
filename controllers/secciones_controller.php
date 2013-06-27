@@ -23,11 +23,11 @@
 	}else if ($action == 'edit'){
 		$seccionesDAO->updateSeccion($obj);
 	}
-		header("Location: /charmAdmin/administrator.php#secciones");
+		header("Location: /charmadmin/administrator.php#secciones");
 	}else if(isset($_POST['delete'])){
 		$id = $_POST['delete'];
 		$seccionesDAO->deleteSeccion($id);
-		header("Location: /charmAdmin/administrator.php#secciones");
+		header("Location: /charmadmin/administrator.php#secciones");
 	}else{
 		$secciones = $seccionesDAO->getSecciones();
 		echo json_encode($secciones);	

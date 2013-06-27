@@ -20,27 +20,26 @@ class colaboradoresDAO{
 	}
 	
 	public function getColaborador($id){
-		$q = "SELECT colaborador_id, colaboradores.nombre, colaboradores.apellido, giro, twitter, tipo, medio, imagen, descripcion, link_extra, plaza_id  FROM colaboradores WHERE colaborador_id = ?";
+		$q = "SELECT colaborador_id, CONCAT(colaboradores.nombre, ' ' ,colaboradores.apellido) as 'nombrec', colaboradores.nombre, colaboradores.apellido, giro, twitter, tipo, medio, imagen, descripcion, link_extra, plaza_id  FROM colaboradores WHERE colaborador_id = ?";
 		$stmt = $this->dbc->stmt_init();
 		$obj = new stdClass;
 		if($stmt->prepare($q)) {
  			$stmt->bind_param('i', $id);
  			$stmt->execute();
- 			$stmt->bind_result($colaborador_id, $nombre, $apellido, $giro, $twitter, $tipo, $medio, $imagen, $descripcion, $link_extra, $plaza_id);
+ 			$stmt->bind_result($colaborador_id,$nombrec, $nombre, $apellido, $giro, $twitter, $tipo, $medio, $imagen, $descripcion, $link_extra, $plaza_id);
  			while($stmt->fetch()){
  				$obj->colaborador_id = $colaborador_id;
  				$obj->nombre = $nombre;
+ 				$obj->nombrec = $nombrec;
  				$obj->apellido = $apellido;
  				$obj->giro = $giro;
  				$obj->twitter = $twitter;
  				$obj->tipo = $tipo;
  				$obj->medio = $medio;
  				$obj->plaza_id = $plaza_id;
- 				$obj->plaza = getPlaza($obj->plaza_id);
  				$obj->imagen = $imagen;
  				$obj->descripcion = $descripcion;
  				$obj->link_extra = $link_extra;
-
  			}
  			$stmt->close();
  		}
@@ -75,8 +74,7 @@ class colaboradoresDAO{
  		}
  		return $array;
 	}
-	
-	
+
 	public function getSeccionesColaborador($id){
 		$array = array();
 		$q = "SELECT colaboradores_secciones.seccion_id, secciones.nombre as 'seccion'FROM colaboradores_secciones JOIN secciones ON secciones.seccion_id =  colaboradores_secciones.seccion_id WHERE colaboradores_secciones.colaborador_id = ?";
@@ -160,9 +158,6 @@ class colaboradoresDAO{
 			$stmt->execute();
 		}
 		$stmt->close();
-	}
- 		
+	}	
 		
-}
-
-?>
+} ?>

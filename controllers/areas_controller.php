@@ -23,11 +23,11 @@ if (isset($_POST['action'])){
 	}else if ($action == 'edit'){
 		$areasDAO->updateArea($obj);
 	}
-	header("Location: /charmAdmin/administrator.php#areas");
+	header("Location: /charmadmin/administrator.php#areas");
 }else if(isset($_POST['delete'])){
 	$id = $_POST['delete'];
 	$areasDAO->deleteArea($id);
-	header("Location: /charmAdmin/administrator.php#areas");
+	header("Location: /charmadmin/administrator.php#areas");
 }else{
 	$areas = $areasDAO->getAreas();
 	echo json_encode($areas);	
