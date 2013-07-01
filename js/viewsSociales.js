@@ -66,7 +66,33 @@ var RegisterSocialView = Backbone.View.extend({
 		$('#fechita').datepicker();
 		ActivarVinculacionSocial(this.iditemporalizador);
 		ActivarSubidaSocial();
-	},
+
+    	       var subirprincipal = $('#principalupload').upload({
+                   name: 'temporalsocialprincipal',
+                   action: 'controllers/sociales_controller.php',
+                   enctype: 'multipart/form-data',
+                   autoSubmit: true,
+                   params:{receiver:'subirprincipal',generado:contexto.iditemporalizador},
+                   onComplete:function() {
+                   var nombre = subirprincipal.filename();
+                   var tipo = nombre.substr(nombre.length - 3);
+                   $('#Showprincipal').attr('src','TempSocPrincipal/'+contexto.iditemporalizador+'/'+contexto.iditemporalizador+"."+tipo);
+                   }
+               });
+
+               var subirthumb = $('#thumbupload').upload({
+                   name: 'thumbnailupload',
+                   action: 'controllers/sociales_controller.php',
+                   enctype: 'multipart/form-data',
+                   autoSubmit: true,
+                   params:{receiver:'subirthumb',generado:contexto.iditemporalizador},
+                   onComplete:function() {
+                   var nombre = subirthumb.filename();
+                   var tipo = nombre.substr(nombre.length - 3);
+                   $('#Showthumb').attr('src','TempThumbSoc/'+contexto.iditemporalizador+'/'+contexto.iditemporalizador+"."+tipo);
+                   }
+               });
+        },
 	render:function  () {
 		var contexto = this;
 		$.get("templates/RegisterSocialView.handlebars",function  (response) {
@@ -137,6 +163,38 @@ var EditDataSocialView = Backbone.View.extend({
 		$('#fechita').datepicker();
 		ActivarVinculacionDataEdit(this.model.get("sociales_id"));
 		ActivarSubidaDataEdit(this.model.get("sociales_id"));
+                $.post("controllers/sociales_controller.php",{receiver:"damedatos",socialesid:this.model.get("sociales_id")},function(response) {
+                    console.log(response);
+                    $('#Showprincipaledit').attr("src",response['principal']);
+                    $('#Showthumbedit').attr("src",response['thumbnail']);
+
+                    var princiedit = $('#principaluploadedit').upload({
+                        name: 'principaledit',
+                        action: 'controllers/sociales_controller.php',
+                        enctype: 'multipart/form-data',
+                        autoSubmit: true,
+                        params:{receiver:'editarprinci',generado:contexto.model.get("sociales_id")},
+                        onComplete:function() {
+                        var nombre = princiedit.filename();
+                        var tipo = nombre.substr(nombre.length - 3);
+                        $('#Showprincipaledit').attr('src','SocPrincipal/'+contexto.model.get("sociales_id")+'/'+contexto.model.get("sociales_id")+"."+tipo);
+                        }
+                    });
+
+                    var thumbedit = $('#thumbuploadedit').upload({
+                        name: 'thumbedit',
+                        action: 'controllers/sociales_controller.php',
+                        enctype: 'multipart/form-data',
+                        autoSubmit: true,
+                        params:{receiver:'editarthumb',generado:contexto.model.get("sociales_id")},
+                        onComplete:function() {
+                        var nombre = thumbedit.filename();
+                        var tipo = nombre.substr(nombre.length - 3);
+                        $('#Showthumbedit').attr('src','SocThumb/'+contexto.model.get("sociales_id")+'/'+contexto.model.get("sociales_id")+"."+tipo);
+                        }
+                    });
+
+                },'json');
 	},
 	render:function  () {
 		var contexto = this;

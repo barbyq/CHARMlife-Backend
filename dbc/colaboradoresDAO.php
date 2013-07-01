@@ -28,7 +28,7 @@ class colaboradoresDAO{
  			$stmt->execute();
  			$stmt->bind_result($colaborador_id,$nombrec, $nombre, $apellido, $giro, $twitter, $tipo, $medio, $imagen, $descripcion, $link_extra, $plaza_id);
  			while($stmt->fetch()){
- 				$obj->colaborador_id = $colaborador_id;
+ 				$obj->id = $colaborador_id;
  				$obj->nombre = $nombre;
  				$obj->nombrec = $nombrec;
  				$obj->apellido = $apellido;

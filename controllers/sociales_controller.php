@@ -43,7 +43,27 @@ if (isset($_POST['receiver']) && $_POST['receiver'] == "registro") {
 			}
 		}
 	}
-	
+	if (is_dir("../TempSocPrincipal/".$_POST["temporal"])) {
+  		mkdir("../SocPrincipal/".$idgenerado."/");
+  		$idgenerado = $idigen;
+		$fuente = "../TempSocPrincipal/".$_POST["temporal"]."/";
+		$destino = "../SocPrincipal/".$idgenerado."/";
+		recurse_copy($fuente,$destino);
+		if (is_dir("../TempSocPrincipal/".$_POST["temporal"])) {
+			rmdir_recurse("../TempSocPrincipal/".$_POST["temporal"]);
+		}
+	}
+
+	if (is_dir("../TempThumbSoc/".$_POST["temporal"])) {
+		mkdir("../SocThumb/".$idgenerado."/");
+  		$idgenerado = $idigen;
+		$fuente = "../TempThumbSoc/".$_POST["temporal"]."/";
+		$destino = "../SocThumb/".$idgenerado."/";
+		recurse_copy($fuente,$destino);
+		if (is_dir("../TempThumbSoc/".$_POST["temporal"])) {
+			rmdir_recurse("../TempThumbSoc/".$_POST["temporal"]);
+		}
+	}
 	print_r($idigen);
 }elseif (isset($_POST['receiver']) && $_POST['receiver'] == "socialcontinue") {
 	$social = $socialesdao->getSocialById($_POST['idsocial']);
@@ -103,8 +123,97 @@ if (isset($_POST['receiver']) && $_POST['receiver'] == "registro") {
 	if (is_dir("../Sociales/".$id."/")) {
 		rmdir_recurse("../Sociales/".$id."/");
 	}
-}
-else{
+}elseif (isset($_POST['receiver']) && $_POST['receiver'] == "subirprincipal") {
+	$generado = $_POST['generado'];
+			print_r($_FILES['temporalsocialprincipal']["type"]);
+			if (is_dir('../TempSocPrincipal/'.$generado)) {
+				rmdir_recurse('../TempSocPrincipal/'.$generado);
+				mkdir('../TempSocPrincipal/'.$generado);
+				if ($_FILES['temporalsocialprincipal']['type'] ==='image/jpeg') {
+					move_uploaded_file($_FILES['temporalsocialprincipal']['tmp_name'],'../TempSocPrincipal/'.$generado.'/'.$generado.'.jpg');
+				}else{
+					move_uploaded_file($_FILES['temporalsocialprincipal']['tmp_name'],'../TempSocPrincipal/'.$generado.'/'.$generado.'.png');
+				}		
+			}else{
+				mkdir('../TempSocPrincipal/'.$generado);
+				if ($_FILES['temporalsocialprincipal']['type'] ==='image/jpeg') {
+					move_uploaded_file($_FILES['temporalsocialprincipal']['tmp_name'],'../TempSocPrincipal/'.$generado.'/'.$generado.'.jpg');
+				}else{
+					move_uploaded_file($_FILES['temporalsocialprincipal']['tmp_name'],'../TempSocPrincipal/'.$generado.'/'.$generado.'.png');
+				}
+			}	
+}elseif (isset($_POST['receiver']) && $_POST['receiver'] == "subirthumb") {
+	$generado = $_POST['generado'];
+		print_r($_FILES['thumbnailupload']["type"]);
+		if (is_dir('../TempThumbSoc/'.$generado)) {
+			rmdir_recurse('../TempThumbSoc/'.$generado);
+			mkdir('../TempThumbSoc/'.$generado);
+			if ($_FILES['thumbnailupload']['type'] ==='image/jpeg') {
+				move_uploaded_file($_FILES['thumbnailupload']['tmp_name'],'../TempThumbSoc/'.$generado.'/'.$generado.'.jpg');
+			}else{
+				move_uploaded_file($_FILES['thumbnailupload']['tmp_name'],'../TempThumbSoc/'.$generado.'/'.$generado.'.png');
+			}		
+		}else{
+			mkdir('../TempThumbSoc/'.$generado);
+			if ($_FILES['thumbnailupload']['type'] ==='image/jpeg') {
+				move_uploaded_file($_FILES['thumbnailupload']['tmp_name'],'../TempThumbSoc/'.$generado.'/'.$generado.'.jpg');
+			}else{
+				move_uploaded_file($_FILES['thumbnailupload']['tmp_name'],'../TempThumbSoc/'.$generado.'/'.$generado.'.png');
+			}
+		}
+}elseif (isset($_POST['receiver']) && $_POST['receiver'] == "damedatos") {
+	$id = $_POST['socialesid'];
+	$imagenes = new stdClass;
+
+	if (is_dir("../SocThumb/".$id)) {
+		$scaneo =scandir("../SocThumb/".$id);
+		$imagenes->thumbnail = "SocThumb/".$id."/".$scaneo[2];
+	}
+
+	if (is_dir("../SocPrincipal/".$id)) {
+		$scaneo = scandir("../SocPrincipal/".$id);
+		$imagenes->principal = "SocPrincipal/".$id."/".$scaneo[2];
+	}
+	echo json_encode($imagenes);
+}elseif (isset($_POST['receiver']) && $_POST['receiver'] == "editarprinci") {
+	$generado = $_POST['generado'];
+		print_r($_FILES['principaledit']["type"]);
+		if (is_dir('../SocPrincipal/'.$generado)) {
+			rmdir_recurse('../SocPrincipal/'.$generado);
+			mkdir('../SocPrincipal/'.$generado);
+			if ($_FILES['principaledit']['type'] ==='image/jpeg') {
+				move_uploaded_file($_FILES['principaledit']['tmp_name'],'../SocPrincipal/'.$generado.'/'.$generado.'.jpg');
+			}else{
+				move_uploaded_file($_FILES['principaledit']['tmp_name'],'../SocPrincipal/'.$generado.'/'.$generado.'.png');
+			}		
+		}else{
+			mkdir('../SocPrincipal/'.$generado);
+			if ($_FILES['principaledit']['type'] ==='image/jpeg') {
+				move_uploaded_file($_FILES['principaledit']['tmp_name'],'../SocPrincipal/'.$generado.'/'.$generado.'.jpg');
+			}else{
+				move_uploaded_file($_FILES['principaledit']['tmp_name'],'../SocPrincipal/'.$generado.'/'.$generado.'.png');
+			}
+		}
+}elseif (isset($_POST['receiver']) && $_POST['receiver'] == "editarthumb") {
+	$generado = $_POST['generado'];
+		print_r($_FILES['thumbedit']["type"]);
+		if (is_dir('../SocThumb/'.$generado)) {
+			rmdir_recurse('../SocThumb/'.$generado);
+			mkdir('../SocThumb/'.$generado);
+			if ($_FILES['thumbedit']['type'] ==='image/jpeg') {
+				move_uploaded_file($_FILES['thumbedit']['tmp_name'],'../SocThumb/'.$generado.'/'.$generado.'.jpg');
+			}else{
+				move_uploaded_file($_FILES['thumbedit']['tmp_name'],'../SocThumb/'.$generado.'/'.$generado.'.png');
+			}		
+		}else{
+			mkdir('../SocThumb/'.$generado);
+			if ($_FILES['thumbedit']['type'] ==='image/jpeg') {
+				move_uploaded_file($_FILES['thumbedit']['tmp_name'],'../SocThumb/'.$generado.'/'.$generado.'.jpg');
+			}else{
+				move_uploaded_file($_FILES['thumbedit']['tmp_name'],'../SocThumb/'.$generado.'/'.$generado.'.png');
+			}
+		}
+}else{
 	echo json_encode($socialesdao->getSociales());
 } 
 ?>
