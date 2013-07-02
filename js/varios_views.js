@@ -6,7 +6,7 @@ var OutfitView = Backbone.View.extend({
 	initialize:function  () {
 		this.iditemporalizador = generaidtexto();
 	},confirmaroutfit:function  () {
-		$.post("controllers/outfit_controller",{receiver:"confirmaroutfit",generado:this.iditemporalizador},function  (response) {
+		$.post("controllers/outfit_controller.php",{receiver:"confirmaroutfit",generado:this.iditemporalizador},function  (response) {
 			alert("Guardado Con exito");
 			CharmRouter.navigate("outfit",{trigger:true});
 		});	

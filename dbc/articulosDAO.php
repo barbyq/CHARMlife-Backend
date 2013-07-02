@@ -296,6 +296,7 @@ class articulosDAO
 		return $yepmn;
 	}
 
+
 	public function getArticulosByArea($area, $limit){
 		$q = "SELECT articulos.articulo_id, articulos.titulo, articulos.subtitulo, mes, dia, year, articulos.colaborador_id, colaboradores.nombre as 'colaboradores', articulos.seccion_id, secciones.nombre as 'secciones' FROM articulos JOIN colaboradores ON articulos.colaborador_id = colaboradores.colaborador_id JOIN secciones ON secciones.seccion_id = articulos.seccion_id JOIN areas ON areas.area_id = secciones.area_id WHERE areas.nombre = ? AND articulos.tipo != 2 ORDER BY year DESC, mes DESC, dia DESC LIMIT ?";
 		$array = array();
@@ -379,5 +380,28 @@ class articulosDAO
 
 		return $array;
 	}
+
+	public function getRandomOfTheMonth()
+	{
+		$mes = date('n');
+		$busqueda = "SELECT articulo_id,titulo, subtitulo from articulos where mes = ? and status = 0 ORDER BY rand() LIMIT 12";
+		$kepo = $this->dbc->stmt_init();
+		$rreiglo = array();
+		if ($kepo->prepare($busqueda)) {
+			$kepo->bind_param("i", $mes);
+			$kepo->execute();
+			$kepo->bind_result($articulo_id,$titulo,$subtitulo)	;
+			while ($kepo->fetch()) {
+				$art = new stdClass;
+				$art->articulo_id = $articulo_id;
+				$art->titulo = $articulo_id;		
+				$art->subtitulo = $subtitulo;
+				$rreiglo[] = $art;
+			}		
+		}
+		return $rreiglo;		
+	}
+
+
 }
  ?>
