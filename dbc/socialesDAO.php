@@ -132,6 +132,95 @@ public function deleteFotosBySocialId($id)
 	}
 }
 
+public function getLoMasNuevo($limit){
+	$q = "SELECT sociales_id, titulo, subtitulo FROM sociales WHERE status = 0 ORDER BY fecha DESC LIMIT ?";
+	$array = array();
+	$stmt = $this->dbc->stmt_init();
+	if($stmt->prepare($q)) {
+		$stmt->bind_param('i', $limit);
+		$stmt->execute();
+		$stmt->bind_result($sociales_id, $titulo, $subtitulo);
+		while($stmt->fetch()){
+			$obj = new stdClass;
+			$obj->sociales_id = $sociales_id;
+			$obj->titulo = $titulo;
+			$obj->subtitulo = $subtitulo;
+			$array[] = $obj;
+		}
+		$stmt->close();
+	}
+	return $array;
 }
+
+public function getLoMasVisto($limit){
+	$q = "SELECT sociales_id, titulo, subtitulo FROM sociales WHERE status = 0 ORDER BY visto DESC, fecha DESC LIMIT ?";
+	$array = array();
+	$stmt = $this->dbc->stmt_init();
+	if($stmt->prepare($q)) {
+		$stmt->bind_param('i', $limit);
+		$stmt->execute();
+		$stmt->bind_result($sociales_id, $titulo, $subtitulo);
+		while($stmt->fetch()){
+			$obj = new stdClass;
+			$obj->sociales_id = $sociales_id;
+			$obj->titulo = $titulo;
+			$obj->subtitulo = $subtitulo;
+			$array[] = $obj;
+		}
+		$stmt->close();
+	}
+	return $array;
+}
+
+public function getLoMasVistoEsteMes($limit){
+	$q = "SELECT sociales_id, titulo, subtitulo FROM sociales WHERE status = 0 AND MONTH(fecha) = MONTH(CURDATE()) AND YEAR(fecha) = YEAR(CURDATE()) ORDER BY visto DESC, fecha DESC LIMIT ?";
+	$array = array();
+	$stmt = $this->dbc->stmt_init();
+	if($stmt->prepare($q)) {
+		$stmt->bind_param('i', $limit);
+		$stmt->execute();
+		$stmt->bind_result($sociales_id, $titulo, $subtitulo);
+		while($stmt->fetch()){
+			$obj = new stdClass;
+			$obj->sociales_id = $sociales_id;
+			$obj->titulo = $titulo;
+			$obj->subtitulo = $subtitulo;
+			$array[] = $obj;
+		}
+		$stmt->close();
+	}
+	return $array;
+}
+
+public function getLoMasRecomendado($limit){
+	$q = "SELECT sociales_id, titulo, subtitulo FROM sociales WHERE status = 0 ORDER BY recomendado DESC, fecha DESC LIMIT ?";
+	$array = array();
+	$stmt = $this->dbc->stmt_init();
+	if($stmt->prepare($q)) {
+		$stmt->bind_param('i', $limit);
+		$stmt->execute();
+		$stmt->bind_result($sociales_id, $titulo, $subtitulo);
+		while($stmt->fetch()){
+			$obj = new stdClass;
+			$obj->sociales_id = $sociales_id;
+			$obj->titulo = $titulo;
+			$obj->subtitulo = $subtitulo;
+			$array[] = $obj;
+		}
+		$stmt->close();
+	}
+	return $array;
+}
+
+
+
+
+		
+		
+
+
+
+
+}//socialesDAO
 
 ?>
