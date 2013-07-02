@@ -296,5 +296,26 @@ class articulosDAO
 		return $yepmn;
 	}
 
+	public function getRandomOfTheMonth()
+	{
+		$mes = date('n');
+		$busqueda = "SELECT articulo_id,titulo, subtitulo from articulos where mes = ? and status = 0 ORDER BY rand() LIMIT 12";
+		$kepo = $this->dbc->stmt_init();
+		$rreiglo = array();
+		if ($kepo->prepare($busqueda)) {
+			$kepo->bind_param("i", $mes);
+			$kepo->execute();
+			$kepo->bind_result($articulo_id,$titulo,$subtitulo)	;
+			while ($kepo->fetch()) {
+				$art = new stdClass;
+				$art->articulo_id = $articulo_id;
+				$art->titulo = $articulo_id;		
+				$art->subtitulo = $subtitulo;
+				$rreiglo[] = $art;
+			}		
+		}
+		return $rreiglo;		
+	}
+
 }
  ?>

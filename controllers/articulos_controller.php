@@ -309,6 +309,9 @@ if (isset($_POST['registro'])) {
 	}
 	$articleDao->updateArticulo($art);
 	$articleDao->updateTags($art);
+}elseif (isset($_POST['receiver']) && $_POST['receiver'] == "damedelmes") {
+	$delmes = $articleDao->getRandomOfTheMonth();
+	echo json_encode($delmes);
 }else{
 	echo json_encode($articleDao->getArticulos());
 }
