@@ -309,7 +309,7 @@ class articulosDAO
 			while ($kepo->fetch()) {
 				$art = new stdClass;
 				$art->articulo_id = $articulo_id;
-				$art->titulo = $articulo_id;		
+				$art->titulo = $titulo;		
 				$art->subtitulo = $subtitulo;
 				$rreiglo[] = $art;
 			}		
@@ -317,5 +317,9 @@ class articulosDAO
 		return $rreiglo;		
 	}
 
+	public function getRandomOftheSemaine()
+	{
+		# code...
+	}
 }
  ?>

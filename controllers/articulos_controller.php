@@ -97,7 +97,6 @@ if (isset($_POST['registro'])) {
 		}
 	}
 
-
 }elseif (isset($receiver) && $receiver == "borrar") {
 	$id = $_POST['idarticulo'];
 	$articulo = $articleDao->getArticulo($id);
@@ -312,6 +311,9 @@ if (isset($_POST['registro'])) {
 }elseif (isset($_POST['receiver']) && $_POST['receiver'] == "damedelmes") {
 	$delmes = $articleDao->getRandomOfTheMonth();
 	echo json_encode($delmes);
+}elseif (isset($_POST['receiver']) && $_POST['receiver'] == "damedelasemana") {
+	$delasemana = $articleDao->getRandomOfTheSemaine();
+	echo json_encode($delasemana);
 }else{
 	echo json_encode($articleDao->getArticulos());
 }
