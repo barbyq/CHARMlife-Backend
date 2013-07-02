@@ -69,5 +69,15 @@ class chismesDAO{
 		}
 		$stmt->close();
 	}
+
+	public function getQueEstaPasando(){
+		$q = "SELECT id, fecha, titulo, texto, link, foto FROM chismes ORDER BY fecha DESC LIMIT 15";
+		$array = array();
+		$r = $this->dbc-> query($q);
+		while ($obj = $r->fetch_object()) {
+			$array[] = $obj;
+		}
+		return $array;
+	}
 }
 ?>

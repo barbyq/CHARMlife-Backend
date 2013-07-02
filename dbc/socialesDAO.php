@@ -193,7 +193,7 @@ public function getLoMasVistoEsteMes($limit){
 }
 
 public function getLoMasRecomendado($limit){
-	$q = "SELECT sociales_id, titulo, subtitulo FROM sociales WHERE status = 0 ORDER BY recomendado DESC, fecha DESC LIMIT ?";
+	$q = "SELECT sociales_id, titulo, subtitulo FROM sociales WHERE status = 0 AND recomendado = 1 ORDER BY fecha DESC LIMIT ?";
 	$array = array();
 	$stmt = $this->dbc->stmt_init();
 	if($stmt->prepare($q)) {

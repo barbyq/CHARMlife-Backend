@@ -268,5 +268,88 @@ class articulosDAO
 		return $yepmn;
 	}
 
+	public function getArticulosByArea($area, $limit){
+		$q = "SELECT articulos.articulo_id, articulos.titulo, articulos.subtitulo, mes, dia, year, articulos.colaborador_id, colaboradores.nombre as 'colaboradores', articulos.seccion_id, secciones.nombre as 'secciones' FROM articulos JOIN colaboradores ON articulos.colaborador_id = colaboradores.colaborador_id JOIN secciones ON secciones.seccion_id = articulos.seccion_id JOIN areas ON areas.area_id = secciones.area_id WHERE areas.nombre = ? AND articulos.tipo != 2 ORDER BY year DESC, mes DESC, dia DESC LIMIT ?";
+		$array = array();
+		$stmt = $this->dbc->stmt_init();
+		if($stmt->prepare($q)) {
+			$stmt->bind_param('si', $area,$limit);
+			$stmt->execute();
+			$stmt->bind_result($articulo_id, $titulo, $subtitulo, $mes, $dia, $year, $colaborador_id, $colaborador, $seccion_id, $seccion);
+			while($stmt->fetch()){
+				$obj = new stdClass;
+				$obj->articulo_id = $articulo_id;
+				$obj->titulo = $titulo;
+				$obj->subtitulo = $subtitulo;
+				$obj->mes = $mes;
+				$obj->dia = $dia;
+				$obj->year = $year;
+				$obj->colaborador_id = $colaborador_id;
+				$obj->colaborador = $colaborador;
+				$obj->seccion_id = $seccion_id;
+				$obj->seccion = $seccion;
+				$array[] = $obj;
+			}
+			$stmt->close();
+		}
+
+		return $array;
+	}
+
+
+	public function getVideosByArea($area, $limit){
+		$q = "SELECT articulos.articulo_id, articulos.titulo, articulos.subtitulo, mes, dia, year, articulos.colaborador_id, colaboradores.nombre as 'colaboradores', articulos.seccion_id, secciones.nombre as 'secciones' FROM articulos JOIN colaboradores ON articulos.colaborador_id = colaboradores.colaborador_id JOIN secciones ON secciones.seccion_id = articulos.seccion_id JOIN areas ON areas.area_id = secciones.area_id WHERE areas.nombre = ? AND articulos.tipo = 2 ORDER BY year DESC, mes DESC, dia DESC LIMIT ?";
+		$array = array();
+		$stmt = $this->dbc->stmt_init();
+		if($stmt->prepare($q)) {
+			$stmt->bind_param('si', $area,$limit);
+			$stmt->execute();
+			$stmt->bind_result($articulo_id, $titulo, $subtitulo, $mes, $dia, $year, $colaborador_id, $colaborador, $seccion_id, $seccion);
+			while($stmt->fetch()){
+				$obj = new stdClass;
+				$obj->articulo_id = $articulo_id;
+				$obj->titulo = $titulo;
+				$obj->subtitulo = $subtitulo;
+				$obj->mes = $mes;
+				$obj->dia = $dia;
+				$obj->year = $year;
+				$obj->colaborador_id = $colaborador_id;
+				$obj->colaborador = $colaborador;
+				$obj->seccion_id = $seccion_id;
+				$obj->seccion = $seccion;
+				$array[] = $obj;
+			}
+			$stmt->close();
+		}
+
+		return $array;
+	}
+	public function getMasCharm($limit, $limit2){
+		$q = "SELECT articulos.articulo_id, articulos.titulo, articulos.subtitulo, mes, dia, year, articulos.colaborador_id, colaboradores.nombre as 'colaboradores', articulos.seccion_id, secciones.nombre as 'secciones' FROM articulos JOIN colaboradores ON articulos.colaborador_id = colaboradores.colaborador_id JOIN secciones ON secciones.seccion_id = articulos.seccion_id JOIN areas ON areas.area_id = secciones.area_id WHERE areas.nombre != 'Personalidades' ORDER BY year DESC, mes DESC, dia DESC LIMIT ?, ?";
+		$array = array();
+		$stmt = $this->dbc->stmt_init();
+		if($stmt->prepare($q)) {
+			$stmt->bind_param('ii', $limit,$limit2);
+			$stmt->execute();
+			$stmt->bind_result($articulo_id, $titulo, $subtitulo, $mes, $dia, $year, $colaborador_id, $colaborador, $seccion_id, $seccion);
+			while($stmt->fetch()){
+				$obj = new stdClass;
+				$obj->articulo_id = $articulo_id;
+				$obj->titulo = $titulo;
+				$obj->subtitulo = $subtitulo;
+				$obj->mes = $mes;
+				$obj->dia = $dia;
+				$obj->year = $year;
+				$obj->colaborador_id = $colaborador_id;
+				$obj->colaborador = $colaborador;
+				$obj->seccion_id = $seccion_id;
+				$obj->seccion = $seccion;
+				$array[] = $obj;
+			}
+			$stmt->close();
+		}
+
+		return $array;
+	}
 }
  ?>
