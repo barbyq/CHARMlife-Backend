@@ -23,10 +23,18 @@
 <p>Fecha</p>
 <input type="text" name="fecha" id="fechita" value="{{mes}}/{{dia}}/{{year}}">
 <p>Descripción</p>
-<input type="text" name="descripcion" value="{{descripcion}}">
+<textarea name="descripcion" id="" cols="50" rows="5">{{descripcion}}</textarea>
+<p>Status</p>
+<select name="status">
+    <option value="2"  {{#ifeq status 2}} selected="selected" {{/ifeq}}>Borrador</option>
+    <option value="1"  {{#ifeq status 1}} selected="selected" {{/ifeq}}>En Espera</option>
+    <option value="0" {{#ifeq status 0}} selected="selected" {{/ifeq}}>Publicado</option>
+</select>
+<p>Recomendado</p>
+<input type="checkbox" name="recomendado" value="1" {{#ifeq recomendado 1}} checked {{/ifeq}}>
+<br/>
 <br/>
 <p>Imagenes</p>
-<br/>
 <br/>
 <div class="container" id="imagenes">
     <!-- The file upload form used as target for the file upload widget -->

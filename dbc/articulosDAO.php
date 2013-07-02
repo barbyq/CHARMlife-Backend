@@ -40,9 +40,37 @@ class articulosDAO
 		return $articulo;
 	}
 
+	public function getLastArticulos()
+	{
+		$s = "SELECT articulo_id,titulo,subtitulo,dia,mes,year,status,tipo,contenido,colaborador_id,usuario_id,seccion_id from articulos where status = 0 order by articulo_id desc limit 12; ";
+		$blepo = $this->dbc->stmt_init();
+		$a = array();
+		if ($blepo->prepare($s)) {
+			$blepo->execute();
+			$blepo->bind_result($articulo_id,$titulo,$subtitulo,$dia,$mes,$year,$status,$tipo,$contenido,$colaborador,$usuario_id,$seccion_id);
+			while ($blepo->fetch()) {
+				$nuevo = new stdClass;
+				$nuevo->articulo_id = $articulo_id;
+				$nuevo->titulo = $titulo;
+				$nuevo->subtitulo = $subtitulo;
+				$nuevo->dia = $dia;
+				$nuevo->mes = $mes;
+				$nuevo->year = $year;
+				$nuevo->status = $status;
+				$nuevo->tipo = $tipo;
+				$nuevo->contenido = $contenido;
+				$nuevo->colaborador_id = $colaborador;
+				$nuevo->usuario_id = $usuario_id;
+				$nuevo->seccion_id = $seccion_id;
+				$a[] = $nuevo;
+			}
+		}
+		return $a;
+	}
+
 	public function getArticuloForReal($id)
 	{
-		$busq = "SELECT articulo_id,titulo,subtitulo,dia,mes,year,status,tipo,contenido,colaborador_id,usuario_id,seccion_id from articulos where articulo_id = ?";
+		$busq = "SELECT articulo_id,titulo,subtitulo,dia,mes,year,status,tipo,contenido,colaborador_id,usuario_id,seccion_id from articulos where articulo_id = ? and status = 0";
 		$ye = $this->dbc->stmt_init();
 		$articulo = new stdClass;
 		if ($ye->prepare($busq)) {
@@ -231,7 +259,7 @@ class articulosDAO
 	public function getArticulosMinByColaborador($idcolab)
 	{
 		$articulos = array();
-		$busqueda = "SELECT articulo_id,titulo, subtitulo from articulos where colaborador_id = ?";
+		$busqueda = "SELECT articulo_id,titulo, subtitulo from articulos where colaborador_id = ? and status = 0";
 		$es = $this->dbc->stmt_init();
 		if ($es->prepare($busqueda)) {
 			$es->bind_param("i",$idcolab);
@@ -251,7 +279,7 @@ class articulosDAO
 	public function getArticulosByColaboradorByInterval($colaborador,$interval)
 	{
 		$yepmn = array();
-		$ble = "SELECT articulo_id,titulo, subtitulo from articulos where colaborador_id = ? order by articulo_id asc limit ?,8";
+		$ble = "SELECT articulo_id,titulo, subtitulo from articulos where colaborador_id = ? and status = 0 order by articulo_id asc limit ?,8";
 		$estta = $this->dbc->stmt_init();
 		if ($estta->prepare($ble)) {
 			$estta->bind_param("ii",$colaborador,$interval);

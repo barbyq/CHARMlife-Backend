@@ -6,7 +6,7 @@ public function __construct($connection){
 }
 
 public function getSociales(){
-	$q = "SELECT sociales_id, titulo, subtitulo, fecha, descripcion, compartido, recomendado, visto  FROM sociales ORDER BY fecha DESC";
+	$q = "SELECT sociales_id, titulo, subtitulo, fecha, descripcion, compartido, recomendado, visto,status FROM sociales ORDER BY fecha DESC";
 	$array = array();
 	$r = $this->dbc->query($q);
 	while ($obj = $r->fetch_object()) {
@@ -16,13 +16,13 @@ public function getSociales(){
 }
 
 public function getSocialById($id){
-	$q = "SELECT sociales_id, titulo, subtitulo, fecha, descripcion, compartido, recomendado, visto  FROM sociales WHERE sociales_id = ? ORDER BY fecha DESC ";
+	$q = "SELECT sociales_id, titulo, subtitulo, fecha, descripcion, compartido, recomendado, visto,status  FROM sociales WHERE sociales_id = ?";
 	$stmt = $this->dbc->stmt_init();
 		$obj = new stdClass;
 		if($stmt->prepare($q)) {
  			$stmt->bind_param('s', $id);
  			$stmt->execute();
- 			$stmt->bind_result($sociales_id, $titulo, $subtitulo, $fecha, $descripcion, $compartido, $recomendado, $visto);
+ 			$stmt->bind_result($sociales_id, $titulo, $subtitulo, $fecha, $descripcion, $compartido, $recomendado, $visto,$status);
  			while($stmt->fetch()){
  				$obj->sociales_id = $sociales_id;
  				$obj->titulo = $titulo;
@@ -32,6 +32,7 @@ public function getSocialById($id){
  				$obj->compartido = $compartido;
  				$obj->recomendado = $recomendado;
  				$obj->visto = $visto;
+ 				$obj->status = $status;
  			}
  			$stmt->close();
  		}
@@ -40,10 +41,13 @@ public function getSocialById($id){
 
 
 public function insertSocial($obj){
-	$q = "INSERT INTO sociales (titulo, subtitulo, fecha, descripcion, usuario_id) VALUES(?,?,?,?,?)";
+	if (!isset($obj->recomendado)) {
+		$obj->recomendado = 0;
+	}
+	$q = "INSERT INTO sociales (titulo, subtitulo, fecha, descripcion, usuario_id,status,recomendado) VALUES(?,?,?,?,?,?,?)";
 	$stmt = $this->dbc->stmt_init();
 		if($stmt->prepare($q)) {
-			$stmt->bind_param('sssss', $obj->titulo, $obj->subtitulo, $obj->fecha, $obj->descripcion, $obj->usuario_id);
+			$stmt->bind_param('sssssii', $obj->titulo, $obj->subtitulo, $obj->fecha, $obj->descripcion, $obj->usuario_id,$obj->status,$obj->recomendado);
 			$stmt->execute();
 		}
 		$id = $this->dbc->insert_id;
@@ -52,10 +56,13 @@ public function insertSocial($obj){
 }
 
 public function updateSocial($obj){
-	$q = "UPDATE sociales SET titulo = ? , subtitulo = ?, fecha = ?, descripcion = ?, usuario_id = ? WHERE sociales_id = ?";
+	if (!isset($obj->recomendado)) {
+		$obj->recomendado = 0;
+	}
+	$q = "UPDATE sociales SET titulo = ? , subtitulo = ?, fecha = ?, descripcion = ?, usuario_id = ?,status = ?,recomendado = ? WHERE sociales_id = ?";
 		$stmt = $this->dbc->stmt_init();
 		if($stmt->prepare($q)) {
-			$stmt->bind_param('ssssii', $obj->titulo, $obj->subtitulo, $obj->fecha, $obj->descripcion, $obj->usuario_id,$obj->sociales_id);
+			$stmt->bind_param('ssssiiii', $obj->titulo, $obj->subtitulo, $obj->fecha, $obj->descripcion, $obj->usuario_id,$obj->status,$obj->recomendado,$obj->sociales_id);
 			$stmt->execute();
 		}
 		$stmt->close();
