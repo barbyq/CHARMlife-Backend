@@ -66,7 +66,7 @@ var RegisterSocialView = Backbone.View.extend({
 		$('#fechita').datepicker();
 		ActivarVinculacionSocial(this.iditemporalizador);
 		ActivarSubidaSocial();
-
+                $('select').chosen();
     	       var subirprincipal = $('#principalupload').upload({
                    name: 'temporalsocialprincipal',
                    action: 'controllers/sociales_controller.php',
@@ -163,6 +163,7 @@ var EditDataSocialView = Backbone.View.extend({
 		$('#fechita').datepicker();
 		ActivarVinculacionDataEdit(this.model.get("sociales_id"));
 		ActivarSubidaDataEdit(this.model.get("sociales_id"));
+                $('select').chosen();
                 $.post("controllers/sociales_controller.php",{receiver:"damedatos",socialesid:this.model.get("sociales_id")},function(response) {
                     console.log(response);
                     $('#Showprincipaledit').attr("src",response['principal']);
@@ -175,9 +176,9 @@ var EditDataSocialView = Backbone.View.extend({
                         autoSubmit: true,
                         params:{receiver:'editarprinci',generado:contexto.model.get("sociales_id")},
                         onComplete:function() {
-                        var nombre = princiedit.filename();
-                        var tipo = nombre.substr(nombre.length - 3);
-                        $('#Showprincipaledit').attr('src','SocPrincipal/'+contexto.model.get("sociales_id")+'/'+contexto.model.get("sociales_id")+"."+tipo);
+                            var nombre = princiedit.filename();
+                            var tipo = nombre.substr(nombre.length - 3);
+                            $('#Showprincipaledit').attr('src','SocPrincipal/'+contexto.model.get("sociales_id")+'/'+contexto.model.get("sociales_id")+"."+tipo);
                         }
                     });
 
@@ -188,9 +189,9 @@ var EditDataSocialView = Backbone.View.extend({
                         autoSubmit: true,
                         params:{receiver:'editarthumb',generado:contexto.model.get("sociales_id")},
                         onComplete:function() {
-                        var nombre = thumbedit.filename();
-                        var tipo = nombre.substr(nombre.length - 3);
-                        $('#Showthumbedit').attr('src','SocThumb/'+contexto.model.get("sociales_id")+'/'+contexto.model.get("sociales_id")+"."+tipo);
+                            var nombre = thumbedit.filename();
+                            var tipo = nombre.substr(nombre.length - 3);
+                            $('#Showthumbedit').attr('src','SocThumb/'+contexto.model.get("sociales_id")+'/'+contexto.model.get("sociales_id")+"."+tipo);
                         }
                     });
 
@@ -198,6 +199,9 @@ var EditDataSocialView = Backbone.View.extend({
 	},
 	render:function  () {
 		var contexto = this;
+                Handlebars.registerHelper('ifeq', function (a, b, options) {
+                    if (a == b) { return options.fn(this); }
+                });
 		$.get("templates/EditSocialData.handlebars",function  (response) {
 		  var cn = Handlebars.compile(response);
 		  var eichtiemel = cn(contexto.model.toJSON());
