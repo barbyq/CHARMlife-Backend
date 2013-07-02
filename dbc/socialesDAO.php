@@ -6,7 +6,7 @@ public function __construct($connection){
 }
 
 public function getSociales(){
-	$q = "SELECT sociales_id, titulo, subtitulo, fecha, descripcion, compartido, recomendado, visto  FROM sociales ORDER BY fecha DESC";
+	$q = "SELECT sociales_id, titulo, subtitulo, fecha, descripcion, compartido, recomendado, visto,status FROM sociales ORDER BY fecha DESC";
 	$array = array();
 	$r = $this->dbc->query($q);
 	while ($obj = $r->fetch_object()) {
@@ -16,7 +16,7 @@ public function getSociales(){
 }
 
 public function getSocialById($id){
-	$q = "SELECT sociales_id, titulo, subtitulo, fecha, descripcion, compartido, recomendado, visto,status  FROM sociales WHERE sociales_id = ? ORDER BY fecha DESC ";
+	$q = "SELECT sociales_id, titulo, subtitulo, fecha, descripcion, compartido, recomendado, visto,status  FROM sociales WHERE sociales_id = ?";
 	$stmt = $this->dbc->stmt_init();
 		$obj = new stdClass;
 		if($stmt->prepare($q)) {

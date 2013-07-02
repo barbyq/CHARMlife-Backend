@@ -123,6 +123,12 @@ if (isset($_POST['receiver']) && $_POST['receiver'] == "registro") {
 	if (is_dir("../Sociales/".$id."/")) {
 		rmdir_recurse("../Sociales/".$id."/");
 	}
+	if (is_dir("../SocThumb/".$id)) {
+		rmdir_recurse("../SocThumb/".$id);
+	}
+	if (is_dir("../SocPrincipal/".$id)) {
+		rmdir_recurse("../SocPrincipal/".$id);
+	}
 }elseif (isset($_POST['receiver']) && $_POST['receiver'] == "subirprincipal") {
 	$generado = $_POST['generado'];
 			print_r($_FILES['temporalsocialprincipal']["type"]);
