@@ -153,7 +153,7 @@ var EditDataSocialView = Backbone.View.extend({
 	  valores.push({name:"usuario_id",value:UserId});
 	  valores.push({name:"sociales_id",value:this.model.get("sociales_id")});
 	  console.log(valores);
-	  $.post("controllers/sociales_controller.php",valores,function  (response) {
+	  $.post("controllers/sociales_controller.php",valores,function (response) {
 	     alert("Guardado con exito!");
 	     CharmRouter.navigate("social/"+contexto.model.get("sociales_id")+"/edit",{trigger:true});
 	  });
