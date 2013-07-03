@@ -43,7 +43,10 @@ var RouterCharm = Backbone.Router.extend({
 		"areas/:id/delete": "deleteAreas",
 		"outfit": "showOutfit",
 		"amigosenlasnetworks":"friendsintheredes",
-		"banner":"banner"
+		"banner":"banner",
+		"tags":"tagsshow",
+		"tags/add":"tagsregister",
+		"tags/:id/edit":"tagsedit"
 	}, index:function  () {
 	  $('#main').empty();
 	},initialize: function(){
@@ -354,8 +357,25 @@ var RouterCharm = Backbone.Router.extend({
 				bannerView.loader();
 			}, 1000);
 		},'json');
-	},
-	start: function() {
+	},tagsshow:function() {
+		$('#main').empty();
+		var tags = new Tags();
+		var viewTablaTags = new ViewTablaTags({collection: tags});
+		$('#main').append(addBar('tags'));
+		$('#main').append(viewTablaTags.render().el);
+		tags.fetch();
+	},tagsregister:function() {
+		var vista = new RegisterTagView();
+		$('#main').html(vista.render().el);
+	},tagsedit:function(id) {
+		$('#main').empty();
+		$.post("controllers/tags_controller.php",{giveme:id},function(response) {
+			console.log(response);
+			var tag = new Tag(response);
+			var vista = new EditTagView({model:tag});
+			$('#main').html(vista.render().el);	
+		},'json');
+	},start: function() {
 		Backbone.history.start();
 	}
 });

@@ -38,6 +38,7 @@
 	<script type="text/javascript" src="js/viewsArticulos.js"></script>
 	<script type="text/javascript" src="js/viewsUsuarios.js"></script>
 	<script type="text/javascript" src="js/viewsChismes.js"></script>
+	<script type="text/javascript" src="js/viewsTags.js"></script>
 	<script type="text/javascript" src="js/portadas_views.js"></script>
 	<script type="text/javascript" src="js/colaboradores_views.js"></script>
 	<script type="text/javascript" src="js/areas_secciones_views.js"></script>
@@ -80,6 +81,7 @@
 			<li><a href="#banner">Banner Principal</a></li>
 			<li><a href="#secciones">Secciones</a></li>
 			<li><a href="#areas">Areas</a></li>
+			<li><a href="#tags">Tags</a></li>
 			<?php if ($_SESSION['adminlevel'] == 1) {	?>
 			<li><a href="#usuarios">Usuarios</a></li>
 				<? } ?>
