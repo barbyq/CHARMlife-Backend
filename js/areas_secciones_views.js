@@ -94,7 +94,7 @@ var SeccionAddView = Backbone.View.extend({
 		var areaList = new AreaList();
 		areaList.fetch({async: false});
 
-		$.get('/templates/seccionEdit.handlebars', function(data){
+		$.get('templates/seccionEdit.handlebars', function(data){
 			template = Handlebars.compile(data);
 			context.$el.html(template);
 
@@ -117,7 +117,7 @@ var SeccionEditView = Backbone.View.extend({
 		areaList.fetch({async: false});
 
 
-		$.get('/templates/seccionEdit.handlebars', function(data){
+		$.get('templates/seccionEdit.handlebars', function(data){
 			template = Handlebars.compile(data);
 			context.$el.html(template(attributes));
 

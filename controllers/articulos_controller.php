@@ -314,6 +314,9 @@ if (isset($_POST['registro'])) {
 }elseif (isset($_POST['receiver']) && $_POST['receiver'] == "damedelasemana") {
 	$delasemana = $articleDao->getRandomOfTheSemaine();
 	echo json_encode($delasemana);
+}elseif (isset($_POST['receiver']) && $_POST['receiver'] == "damedelaprevios") {
+	$delaprevious = $articleDao->getRandomPrevious();
+	echo json_encode($delaprevious);
 }else{
 	echo json_encode($articleDao->getArticulos());
 }
