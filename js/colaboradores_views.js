@@ -89,14 +89,14 @@ var ColaboradorEditView = Backbone.View.extend({
 
 	  	var editupload = $('input.uploadImg').upload({
 			name: 'imagen',
-            action: 'controllers/colaboradores_controller.php',
-            enctype: 'multipart/form-data',
-            autoSubmit: true,
-            params:{receiver:'editupload',generado:contexto.model.get("id")},
+		        action: 'controllers/colaboradores_controller.php',
+		        enctype: 'multipart/form-data',
+		        autoSubmit: true,
+		        params:{receiver:'editupload',generado:contexto.model.get("id")},
 			onComplete:function() {
 				var nombre = editupload.filename();
 				var tipo = nombre.substr(nombre.length - 3);
-			$('img.uploadImg').attr('src','Profiles/'+contexto.model.get("id")+'/'+contexto.model.get("id")+"."+tipo+"?timestamp=" + new Date().getTime());
+				$('img.uploadImg').attr('src','Profiles/'+contexto.model.get("id")+'/'+contexto.model.get("id")+"."+tipo+"?timestamp=" + new Date().getTime());
 			}
 		});
 
@@ -109,9 +109,8 @@ var ColaboradorEditView = Backbone.View.extend({
 			var seccion = seccionList.toJSON();
 
 			Handlebars.registerHelper('ifeq', function (a, b, options) {
-     
-      			if (a == b) { return options.fn(this); }
-    		});
+      				if (a == b) { return options.fn(this); }
+    			});
 		  var coni = Handlebars.compile(response);
 		  var eichtiemel = coni(contexto.model.toJSON());
 		  contexto.$el.html(eichtiemel);

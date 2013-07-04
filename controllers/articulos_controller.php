@@ -52,7 +52,7 @@ if (isset($_POST['registro'])) {
 
 	print_r($articulo);
 	$idgenerado = $articleDao->insertArticulo($articulo);
-	$articleDao->insertArticuloTags(strtolower($tags),$idgenerado);
+	$articleDao->insertArticuloTags($tags,$idgenerado);
 
 	if ($tipo=="1") {
 		$fuente = "../TemporalGalerias/".$temporaldir."/files/";

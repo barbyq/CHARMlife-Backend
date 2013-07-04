@@ -64,6 +64,7 @@
 		CharmRouter = new RouterCharm();
 		CharmRouter.start();
 		$('#gifi').hide();
+				$.ajaxSetup({ cache: false });
         $('#gifi').ajaxStart(function() { $(this).show(); }); 
         $('#gifi').ajaxComplete(function() { $(this).hide(); });
 	});

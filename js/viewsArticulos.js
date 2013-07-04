@@ -1,3 +1,4 @@
+
 var FilaArticulo = Backbone.View.extend({
 	tagName:'tr',
 	events:{
@@ -207,27 +208,35 @@ var RegisterArticulo = Backbone.View.extend({
 			}
 		});
 	},loadColadsandSections:function() {
-		$('#fechagaleriaevento').datepicker();
-	  var $colaboradoresDOM = $("<select name='colaboradores' id='colabs'></select>");
-	    $.post('controllers/colaboradores_controller.php',{receiver:true},function(response) {
-		  	for (var i = 0; i < response.length; i++) {
-		  		var nombre = response[i]['nombrec'];
-		  		var id = response[i]['id'];
-		  		$colaboradoresDOM.append('<option value="'+id+'">'+nombre+'</option>');
-		  	};
-		  	$('#colaboradoreselect').html($colaboradoresDOM);
-		  	$('select').chosen();
-		  },'json').fail(function(e) { console.log(e); });
-	    var $seccionesDOM = $('<select name="secciones" id="seccions"></select>');
-	    $.post('controllers/secciones_controller.php',{receiver:true},function(response) {
-	    	for (var i = 0; i < response.length; i++) {
-		    	var secnombre = response[i]['nombre'];
-		    	var secid = response[i]['id'];
-		    	$seccionesDOM.append("<option value='"+secid+"'>"+secnombre+"</option>");
-	    	};
-	    	$('#seccioneselect').html($seccionesDOM);
-	    	$('select').chosen();
+	    $('#fechagaleriaevento').datepicker();
+	    $.get("controllers/tags_controller.php",function(response) {
+	    	console.log(response);
+	    	for (var i = 0; i < response.length; i++) {	
+	    		$('#tagSelect').append("<option value='"+response[i]['tag_id']+"'>"+response[i]['nombre']+"</option>");
+	    	}
 	    },'json');
+	    setTimeout(function() {
+		  var $colaboradoresDOM = $("<select name='colaboradores' id='colabs'></select>");
+		    $.post('controllers/colaboradores_controller.php',{receiver:true},function(response) {
+			  	for (var i = 0; i < response.length; i++) {
+			  		var nombre = response[i]['nombrec'];
+			  		var id = response[i]['id'];
+			  		$colaboradoresDOM.append('<option value="'+id+'">'+nombre+'</option>');
+			  	};
+			  	$('#colaboradoreselect').html($colaboradoresDOM);
+			  	$('select').chosen();
+			  },'json').fail(function(e) { console.log(e); });
+		    var $seccionesDOM = $('<select name="secciones" id="seccions"></select>');
+		    $.post('controllers/secciones_controller.php',{receiver:true},function(response) {
+		    	for (var i = 0; i < response.length; i++) {
+			    	var secnombre = response[i]['nombre'];
+			    	var secid = response[i]['id'];
+			    	$seccionesDOM.append("<option value='"+secid+"'>"+secnombre+"</option>");
+		    	};
+		    	$('#seccioneselect').html($seccionesDOM);
+		    	$('select').chosen();
+		    },'json');
+	    },500);
 	},
 	render:function() {
 		var contexto = this;
@@ -263,6 +272,7 @@ var EditarArticulo = Backbone.View.extend({
 		  $('#fechagaleriaeventoedit').datepicker();
 		  var contexto = this;
 		  var $colaboradoresDOM = $("<select name='colaboradores'></select>");
+		setTimeout(function() {
 		    $.post('controllers/colaboradores_controller.php',{receiver:true},function(response) {
 			  	for (var i = 0; i < response.length; i++) {
 			  		var nombre = response[i]['nombrec'];
@@ -290,26 +300,29 @@ var EditarArticulo = Backbone.View.extend({
 		    	$('#seccioneselectedit').html($seccionesDOM);
 		    	$('select').chosen();
 		    },'json');
+		}, 1000);
 	},
 	loadStuff:function(){
 		var contexto = this;
 		$.post("controllers/articulos_controller.php",{receiver:"contenido",articulo:this.model.get("articulo_id")},function  (response) {
 			console.log(response);
 			$('#contenedoreditar').hide();
-			$('select').chosen();
 			var protegido = contexto.model.get("contenido");
 			$('#areaupdate').html(unescape(protegido));
 
-			var todos = "";
-			for (var i = 0; i < response['tags'].length; i++) {
-				var tag = response['tags'][i];
-				if (todos == "") {
-					todos = tag;	
-				}else{
-					todos = todos + ", " + tag; 
-				}
-			};
-			$('#tagsedit').val(todos);
+			$.get("controllers/tags_controller.php",function(resi) {
+			    	console.log(resi);
+			    	for (var i = 0; i < resi.length; i++) {	
+			    		$('#tagSelectedit').append("<option value='"+resi[i]['tag_id']+"'>"+resi[i]['nombre']+"</option>");
+			    	}
+			    	var todos = [];
+				for (var i = 0; i < response['tags'].length; i++) {
+					var tag = parseInt(response['tags'][i]);
+					todos.push(tag);
+				};
+				console.log(todos);
+				$('#tagSelectedit').val(todos);
+			},'json');	
 
 			if (typeof response['imagenes']['imagen'] != "undefined") {
 				$('#imagenprinciedit').attr("src","Imagenes/"+contexto.model.get("articulo_id")+"/"+response['imagenes']['imagen']+"?timestamp=" + new Date().getTime());

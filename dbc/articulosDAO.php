@@ -158,19 +158,13 @@ class articulosDAO
 
 	public function insertArticuloTags($tags,$articuloidi)
 	{
-		$arregloidsinsertados = array();
-		$busqueda = "INSERT into tags(tag,articulo_id) values(?,?)";
-		$estatutote = $this->dbc->stmt_init();	
-		$arreglodetags = explode(',', $tags);
-		foreach ($arreglodetags as $tag) {
-			$trimeado = trim($tag);
-			if (strlen($trimeado) != 0){
-				if ($estatutote->prepare($busqueda)) {
-					$estatutote->bind_param('si', $trimeado,$articuloidi);
-					$estatutote->execute();
-					$arregloidsinsertados[] = mysqli_insert_id($this->dbc);
-				}
-			}	
+		foreach ($tags as $tag) {
+			$in = "INSERT into tags(articulo_id, tag) values(?,?)";
+			$t = $this->dbc->stmt_init();
+			if ($t->prepare($in)) {
+				$t->bind_param("ii", $articuloidi,$tag);
+				$t->execute();
+			}
 		}
 	}
 
@@ -186,17 +180,14 @@ class articulosDAO
 		$yep->close();
 
 		$aidi = $articulo->articulo_id;
-		$busqueda = "INSERT into tags(tag,articulo_id) values(?,?)";
-		$estatutote = $this->dbc->stmt_init();	
-		$arreglodetags = explode(',', $articulo->tags);
-		foreach ($arreglodetags as $tag) {
-			$trimeado = trim($tag);
-			if (strlen($trimeado) != 0){
-				if ($estatutote->prepare($busqueda)) {
-					$estatutote->bind_param('si', $trimeado,$aidi);
-					$estatutote->execute();
-				}
-			}	
+		foreach ($articulo->tags as $tag) {
+			$blepo = "INSERT into tags(tag, articulo_id) values(?,?)";
+			$st = $this->dbc->stmt_init();
+			if ($st->prepare($blepo)) {
+				$st->bind_param("ii", $tag,$aidi);
+				$st->execute();
+			}
+			$st->close();
 		}
 	}
 

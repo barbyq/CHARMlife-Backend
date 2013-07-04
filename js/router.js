@@ -180,7 +180,6 @@ var RouterCharm = Backbone.Router.extend({
 	    registro.loadColadsandSections();
 	    registro.initUploaders();
 	    registro.cambiosListener();
-	    $('select').chosen();
 	  }, 1000);
 	},editarArticulo:function  (id) {
 	 	$.post("controllers/articulos_controller.php",{receiver:"damearticulo",idarticulo:id},function  (response) {
@@ -189,8 +188,8 @@ var RouterCharm = Backbone.Router.extend({
 	 		var editarVista = new EditarArticulo({model:articuloeditable});
 	 		$('#main').html(editarVista.render().el);
 	 		setTimeout(function() {
-	 			editarVista.loadColabs();
 	 			editarVista.loadStuff();
+	 			editarVista.loadColabs();
 	 		},500);
 	 	},'json');
 	},usuarios:function() {
