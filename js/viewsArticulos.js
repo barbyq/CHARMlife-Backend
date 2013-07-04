@@ -236,6 +236,7 @@ var RegisterArticulo = Backbone.View.extend({
 		    	$('#seccioneselect').html($seccionesDOM);
 		    	$('select').chosen();
 		    },'json');
+
 	    },500);
 	},
 	render:function() {
@@ -300,6 +301,7 @@ var EditarArticulo = Backbone.View.extend({
 		    	$('#seccioneselectedit').html($seccionesDOM);
 		    	$('select').chosen();
 		    },'json');
+    		nicEditors.allTextAreas();
 		}, 1000);
 	},
 	loadStuff:function(){

@@ -5,7 +5,6 @@ ini_set('display_errors', '1');
 include '../dbc/dbconnect.php';
 include 'utilities.php';
 
-
 if (isset($_POST['receiver']) && $_POST['receiver'] == "subirbanner") {
 	$generado = $_POST['generado'];
 		print_r($_FILES['banner']["type"]);

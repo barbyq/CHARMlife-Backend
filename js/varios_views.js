@@ -145,7 +145,7 @@ var AmigosView = Backbone.View.extend({
 
 var BannerView = Backbone.View.extend({
 	id:"bannerregistro",
-	className:"colab_chisme",
+	className:"colab_edit",
 	events:{
 		"click .rbannerregistro":"rbannerregistro"
 	},
@@ -153,8 +153,6 @@ var BannerView = Backbone.View.extend({
 	  this.iditemporalizador = generaidtexto();
 	},rbannerregistro:function  () {
 	  $.post("controllers/banner_controller.php",{receiver:"confirmarbanner",generado:this.iditemporalizador},function  (response) {
-	    // alert("Guardado con exito!");
-	    // CharmRouter.navigate("banner",{trigger:true});
 	  });
 	},
 	loader:function() {	  
