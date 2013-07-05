@@ -80,7 +80,7 @@ class articulosDAO
 			while ($kepo->fetch()) {
 				$nuevacosa = new stdClass;
 				$nuevacosa->id = $id;
-				$nuevacosa->titutlo = $titulo;
+				$nuevacosa->titulo = $titulo;
 				$nuevacosa->subtitulo = $subtitulo;
 				$nuevacosa->tipo = $tipo;
 				$arreglin[] = $nuevacosa;
