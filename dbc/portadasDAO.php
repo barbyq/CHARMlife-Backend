@@ -89,14 +89,14 @@ class portadasDAO{
 
 	public function PortadasByYear($year)
 	{
-		$busqueda = "SELECT portadas_id,mes,year,img,img_thumb,edicion from portadas where year = ?";
+		$busqueda = "SELECT portadas_id,mes,year,img,img_thumb,edicion from portadas where year = ? order by mes asc";
 		$esta = $this->dbc->stmt_init();
 		$arreglo = array();
 		if ($esta->prepare($busqueda)) {
 			$esta->bind_param("i",$year);
 			$esta->execute();
 			$esta->bind_result($id,$mes,$year,$img,$img_thumb,$edicion);
-			if ($esta->fetch()) {
+			while ($esta->fetch()) {
 				$portada = new stdClass;
 				$portada->id = $id;
 				$portada->mes = $mes;
