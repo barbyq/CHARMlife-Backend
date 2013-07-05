@@ -15,6 +15,17 @@ public function getSociales(){
 	return $array;
 }
 
+public function getSocialesNuevos()
+{
+	$este = "SELECT sociales_id, titulo from sociales order by sociales_id desc";
+	$qu = $this->dbc->query($este);
+	$arro = array();
+	while ($moo = $qu->fetch_object()) {
+		$arro[] = $moo;
+	}
+	return $arro;
+}
+
 public function getSocialById($id){
 	$q = "SELECT sociales_id, titulo, subtitulo, fecha, descripcion, compartido, recomendado, visto,status  FROM sociales WHERE sociales_id = ?";
 	$stmt = $this->dbc->stmt_init();

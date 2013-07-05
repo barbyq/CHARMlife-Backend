@@ -288,6 +288,17 @@ class articulosDAO
 		return $articulos;
 	}
 
+	public function getArticulosTematicaMensual()
+	{
+		$st = "SELECT articulo_id, titulo,tipo from articulos where seccion_id in (select seccion_id from secciones where area_id = 7) order by articulo_id desc";
+		$mc = $this->dbc->query($st);
+		$arreng = array();
+		while ($mono = $mc->fetch_object()) {
+			$arreng[] = $mono;
+		}
+		return $arreng;
+	}
+
 	public function getArticulosByColaboradorByInterval($colaborador,$interval)
 	{
 		$yepmn = array();
@@ -338,6 +349,16 @@ class articulosDAO
 		return $array;
 	}
 
+	public function getRandomArticulosAndSections()
+	{
+		$estati = "SELECT articulos.articulo_id, articulos.titulo, articulos.subtitulo, secciones.nombre as 'seccion', articulos.tipo from articulos join secciones on articulos.seccion_id = secciones.seccion_id where status = 0 order by rand() limit 4";
+		$ble = $this->dbc->query($estati);
+		$arr = array();
+		while ($mono = $ble->fetch_object()) {
+			$arr[] = $mono;
+		}
+		return $arr;
+	}
 
 	public function getVideosByArea($area, $limit){
 		$q = "SELECT articulos.articulo_id, articulos.titulo, articulos.subtitulo, mes, dia, year, articulos.colaborador_id, colaboradores.nombre as 'colaboradores', articulos.seccion_id, secciones.nombre as 'secciones' FROM articulos JOIN colaboradores ON articulos.colaborador_id = colaboradores.colaborador_id JOIN secciones ON secciones.seccion_id = articulos.seccion_id JOIN areas ON areas.area_id = secciones.area_id WHERE areas.nombre = ? AND articulos.tipo = 2 AND status = 0 ORDER BY year DESC, mes DESC, dia DESC LIMIT ?";

@@ -113,7 +113,7 @@ class portadasDAO{
 
 	public function getUltimaPortada()
 	{
-		$blis = "SELECT portadas_id,mes,year,img,img_thumb,edicion from portadas order by portadas_id desc limit 1;";
+		$blis = "SELECT portadas_id,mes,year,img,img_thumb,edicion from portadas order by year desc, mes desc limit 1;";
 		$ing = $this->dbc->query($blis);
 		$returnboy = 0;
 		while ($b = $ing->fetch_object()) {
