@@ -200,7 +200,28 @@ public function getLoMasVistoEsteMes($limit){
 }
 
 public function getLoMasRecomendado($limit){
-	$q = "SELECT sociales_id, titulo, subtitulo FROM sociales WHERE status = 0 AND recomendado = 1 ORDER BY fecha DESC LIMIT ?";
+	 /*AND recomendado = 1*/
+	$q = "SELECT sociales_id, titulo, subtitulo FROM sociales WHERE status = 0 ORDER BY recomendado DESC, fecha DESC LIMIT ?";
+	$array = array();
+	$stmt = $this->dbc->stmt_init();
+	if($stmt->prepare($q)) {
+		$stmt->bind_param('i', $limit);
+		$stmt->execute();
+		$stmt->bind_result($sociales_id, $titulo, $subtitulo);
+		while($stmt->fetch()){
+			$obj = new stdClass;
+			$obj->sociales_id = $sociales_id;
+			$obj->titulo = $titulo;
+			$obj->subtitulo = $subtitulo;
+			$array[] = $obj;
+		}
+		$stmt->close();
+	}
+	return $array;
+}
+
+public function getLoMasCompartido($limit){
+	$q = "SELECT sociales_id, titulo, subtitulo FROM sociales WHERE status = 0 ORDER BY compartido DESC, fecha DESC LIMIT ?";
 	$array = array();
 	$stmt = $this->dbc->stmt_init();
 	if($stmt->prepare($q)) {
@@ -249,7 +270,7 @@ public function getFotoMasCharm(){
 	$foto = new stdClass;
 	$r = $this->dbc->query($q);
 	while ($obj = $r->fetch_object()) {
-			$foto[] = $obj;
+			$foto = $obj;
 		}
 	return $foto;
 }
