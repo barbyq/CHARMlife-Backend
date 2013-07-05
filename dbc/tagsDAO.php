@@ -69,4 +69,16 @@
 		}
 		return $bli;
  	}
+
+ 	public function getTags(){
+ 		$busqueda = "SELECT * FROM tags_main ORDER BY nombre";
+ 		$st = $this->dbc->stmt_init();
+ 		$arr = array();
+ 		$quer = $this->dbc->query($busqueda);
+ 		while ($mono = $quer->fetch_object()) {
+ 			$arr[] = $mono;
+ 		}
+ 		return $arr;
+ 	}
+
  } ?>

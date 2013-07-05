@@ -219,6 +219,41 @@ public function getLoMasRecomendado($limit){
 	return $array;
 }
 
+public function votarMasCharm($id){
+	$q = "SELECT voto FROM fotos WHERE fotos_id = ?";
+	$stmt = $this->dbc->stmt_init();
+	$votoVal = "";
+	if($stmt->prepare($q)){
+		$stmt->bind_param('i', $id);
+		$stmt->execute();
+		$stmt->bind_result($voto);
+		while($stmt->fetch()){
+			$votoVal = $voto;
+		}
+		$stmt->close();
+	}
+	$votoVal = intval($votoVal);
+	$votoVal++;	
+
+	$q = "UPDATE fotos SET voto = ? WHERE fotos_id = ?";
+	$stmt = $this->dbc->stmt_init();
+	if($stmt->prepare($q)) {
+		$stmt->bind_param('ii', $votoVal, $id);
+		$stmt->execute();
+	}
+	$stmt->close();
+}
+
+public function getFotoMasCharm(){
+	$q = "SELECT fotos_id, sociales_id, img, voto FROM fotos ORDER BY voto DESC LIMIT 1";
+	$foto = new stdClass;
+	$r = $this->dbc->query($q);
+	while ($obj = $r->fetch_object()) {
+			$foto[] = $obj;
+		}
+	return $foto;
+}
+
 
 
 

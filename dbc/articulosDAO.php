@@ -289,18 +289,19 @@ class articulosDAO
 
 
 	public function getArticulosByArea($area, $limit){
-		$q = "SELECT articulos.articulo_id, articulos.titulo, articulos.subtitulo, mes, dia, year, articulos.colaborador_id, colaboradores.nombre as 'colaboradores', articulos.seccion_id, secciones.nombre as 'secciones' FROM articulos JOIN colaboradores ON articulos.colaborador_id = colaboradores.colaborador_id JOIN secciones ON secciones.seccion_id = articulos.seccion_id JOIN areas ON areas.area_id = secciones.area_id WHERE areas.nombre = ? AND articulos.tipo != 2 ORDER BY year DESC, mes DESC, dia DESC LIMIT ?";
+		$q = "SELECT articulos.articulo_id, articulos.titulo, articulos.subtitulo, articulos.tipo, mes, dia, year, articulos.colaborador_id, colaboradores.nombre as 'colaboradores', articulos.seccion_id, secciones.nombre as 'secciones' FROM articulos JOIN colaboradores ON articulos.colaborador_id = colaboradores.colaborador_id JOIN secciones ON secciones.seccion_id = articulos.seccion_id JOIN areas ON areas.area_id = secciones.area_id WHERE areas.nombre = ? AND articulos.tipo != 2 AND status = 0 ORDER BY year DESC, mes DESC, dia DESC LIMIT ?";
 		$array = array();
 		$stmt = $this->dbc->stmt_init();
 		if($stmt->prepare($q)) {
 			$stmt->bind_param('si', $area,$limit);
 			$stmt->execute();
-			$stmt->bind_result($articulo_id, $titulo, $subtitulo, $mes, $dia, $year, $colaborador_id, $colaborador, $seccion_id, $seccion);
+			$stmt->bind_result($articulo_id, $titulo, $subtitulo, $tipo, $mes, $dia, $year, $colaborador_id, $colaborador, $seccion_id, $seccion);
 			while($stmt->fetch()){
 				$obj = new stdClass;
 				$obj->articulo_id = $articulo_id;
 				$obj->titulo = $titulo;
 				$obj->subtitulo = $subtitulo;
+				$obj->tipo = $tipo;
 				$obj->mes = $mes;
 				$obj->dia = $dia;
 				$obj->year = $year;
@@ -318,7 +319,7 @@ class articulosDAO
 
 
 	public function getVideosByArea($area, $limit){
-		$q = "SELECT articulos.articulo_id, articulos.titulo, articulos.subtitulo, mes, dia, year, articulos.colaborador_id, colaboradores.nombre as 'colaboradores', articulos.seccion_id, secciones.nombre as 'secciones' FROM articulos JOIN colaboradores ON articulos.colaborador_id = colaboradores.colaborador_id JOIN secciones ON secciones.seccion_id = articulos.seccion_id JOIN areas ON areas.area_id = secciones.area_id WHERE areas.nombre = ? AND articulos.tipo = 2 ORDER BY year DESC, mes DESC, dia DESC LIMIT ?";
+		$q = "SELECT articulos.articulo_id, articulos.titulo, articulos.subtitulo, mes, dia, year, articulos.colaborador_id, colaboradores.nombre as 'colaboradores', articulos.seccion_id, secciones.nombre as 'secciones' FROM articulos JOIN colaboradores ON articulos.colaborador_id = colaboradores.colaborador_id JOIN secciones ON secciones.seccion_id = articulos.seccion_id JOIN areas ON areas.area_id = secciones.area_id WHERE areas.nombre = ? AND articulos.tipo = 2 AND status = 0 ORDER BY year DESC, mes DESC, dia DESC LIMIT ?";
 		$array = array();
 		$stmt = $this->dbc->stmt_init();
 		if($stmt->prepare($q)) {
@@ -345,18 +346,19 @@ class articulosDAO
 		return $array;
 	}
 	public function getMasCharm($limit, $limit2){
-		$q = "SELECT articulos.articulo_id, articulos.titulo, articulos.subtitulo, mes, dia, year, articulos.colaborador_id, colaboradores.nombre as 'colaboradores', articulos.seccion_id, secciones.nombre as 'secciones' FROM articulos JOIN colaboradores ON articulos.colaborador_id = colaboradores.colaborador_id JOIN secciones ON secciones.seccion_id = articulos.seccion_id JOIN areas ON areas.area_id = secciones.area_id WHERE areas.nombre != 'Personalidades' ORDER BY year DESC, mes DESC, dia DESC LIMIT ?, ?";
+		$q = "SELECT articulos.articulo_id, articulos.titulo, articulos.subtitulo, articulos.tipo, mes, dia, year, articulos.colaborador_id, colaboradores.nombre as 'colaboradores', articulos.seccion_id, secciones.nombre as 'secciones' FROM articulos JOIN colaboradores ON articulos.colaborador_id = colaboradores.colaborador_id JOIN secciones ON secciones.seccion_id = articulos.seccion_id JOIN areas ON areas.area_id = secciones.area_id WHERE areas.nombre != 'Personalidades' AND status = 0 ORDER BY year DESC, mes DESC, dia DESC LIMIT ?, ?";
 		$array = array();
 		$stmt = $this->dbc->stmt_init();
 		if($stmt->prepare($q)) {
 			$stmt->bind_param('ii', $limit,$limit2);
 			$stmt->execute();
-			$stmt->bind_result($articulo_id, $titulo, $subtitulo, $mes, $dia, $year, $colaborador_id, $colaborador, $seccion_id, $seccion);
+			$stmt->bind_result($articulo_id, $titulo, $subtitulo, $tipo, $mes, $dia, $year, $colaborador_id, $colaborador, $seccion_id, $seccion);
 			while($stmt->fetch()){
 				$obj = new stdClass;
 				$obj->articulo_id = $articulo_id;
 				$obj->titulo = $titulo;
 				$obj->subtitulo = $subtitulo;
+				$obj->tipo = $tipo;
 				$obj->mes = $mes;
 				$obj->dia = $dia;
 				$obj->year = $year;
@@ -433,6 +435,53 @@ class articulosDAO
 			}		
 		}
 		return $rreiglo;
+	}
+
+	public function getTheArticulo($id, $tipo){
+		$q = "SELECT articulos.articulo_id, articulos.titulo, articulos.subtitulo, articulos.tipo, contenido,  mes, dia, year, articulos.colaborador_id, CONCAT(colaboradores.nombre, ' ' ,colaboradores.apellido) as 'colaboradores', articulos.seccion_id, secciones.nombre as 'secciones' FROM articulos JOIN colaboradores ON articulos.colaborador_id = colaboradores.colaborador_id JOIN secciones ON secciones.seccion_id = articulos.seccion_id WHERE status = 0 AND articulo_id = ? AND articulos.tipo = ? ";
+		$obj = new stdClass;
+		$stmt = $this->dbc->stmt_init();
+		if($stmt->prepare($q)) {
+			$stmt->bind_param('ss', $id, $tipo);
+			$stmt->execute();
+			$stmt->bind_result($articulo_id, $titulo, $subtitulo, $tipo, $contenido, $mes, $dia, $year, $colaborador_id, $colaborador, $seccion_id, $seccion);
+			while($stmt->fetch()){
+				$obj->articulo_id = $articulo_id;
+				$obj->titulo = $titulo;
+				$obj->subtitulo = $subtitulo;
+				$obj->tipo = $tipo;
+				$obj->contenido = $contenido;
+				$obj->mes = $mes;
+				$obj->dia = $dia;
+				$obj->year = $year;
+				$obj->colaborador_id = $colaborador_id;
+				$obj->colaborador = $colaborador;
+				$obj->seccion_id = $seccion_id;
+				$obj->seccion = $seccion;
+				$array[] = $obj;
+			}
+			$stmt->close();
+		}
+
+		return $obj;
+	}
+
+	public function getVideoByArticuloId($id){
+		$q = "SELECT media_id, video_url, articulo_id FROM articulo_media WHERE articulo_id = ?";
+		$stmt = $this->dbc->stmt_init();
+		$obj = new stdClass;
+		if($stmt->prepare($q)) {
+ 			$stmt->bind_param('i', $id);
+ 			$stmt->execute();
+ 			$stmt->bind_result($articulo_media_id, $url, $articulo_id);
+ 			while($stmt->fetch()){
+ 				$obj->articulo_media_id = $articulo_media_id;
+ 				$obj->url = $url;
+ 				$obj->articulo_id = $articulo_id;
+ 			}
+ 			$stmt->close();
+ 		}
+ 		return $obj;
 	}
 }
  ?>
