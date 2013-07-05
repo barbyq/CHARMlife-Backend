@@ -111,6 +111,17 @@ class portadasDAO{
 		return $arreglo;
 	}
 
+	public function getUltimaPortada()
+	{
+		$blis = "SELECT portadas_id,mes,year,img,img_thumb,edicion from portadas order by portadas_id desc limit 1;";
+		$ing = $this->dbc->query($blis);
+		$returnboy = 0;
+		while ($b = $ing->fetch_object()) {
+			$returnboy = $b;
+		}
+		return $returnboy;
+	}
+
 /*
 	public function showyears($plaza)
 	{

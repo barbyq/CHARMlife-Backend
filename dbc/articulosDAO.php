@@ -68,6 +68,27 @@ class articulosDAO
 		return $a;
 	}
 
+	public function getArticulosByInterval($int)
+	{
+		$estata = "SELECT articulo_id,titulo,subtitulo,tipo from articulos where status = 0 order by articulo_id desc limit ?,4;";
+		$kepo = $this->dbc->stmt_init();
+		$arreglin = array();
+		if ($kepo->prepare($estata)) {
+			$kepo->bind_param("i", $int);
+			$kepo->execute();
+			$kepo->bind_result($id,$titulo,$subtitulo,$tipo);
+			while ($kepo->fetch()) {
+				$nuevacosa = new stdClass;
+				$nuevacosa->id = $id;
+				$nuevacosa->titutlo = $titulo;
+				$nuevacosa->subtitulo = $subtitulo;
+				$nuevacosa->tipo = $tipo;
+				$arreglin[] = $nuevacosa;
+			}
+		}
+		return $arreglin;
+	}
+
 	public function getArticuloForReal($id)
 	{
 		$busq = "SELECT articulo_id,titulo,subtitulo,dia,mes,year,status,tipo,contenido,colaborador_id,usuario_id,seccion_id from articulos where articulo_id = ? and status = 0";
