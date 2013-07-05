@@ -20,13 +20,13 @@ class colaboradoresDAO{
 	}
 	
 	public function getColaborador($id){
-		$q = "SELECT colaborador_id, CONCAT(colaboradores.nombre, ' ' ,colaboradores.apellido) as 'nombrec', colaboradores.nombre, colaboradores.apellido, giro, twitter, tipo, medio, imagen, descripcion, link_extra, plaza_id  FROM colaboradores WHERE colaborador_id = ?";
+		$q = "SELECT colaborador_id, colaboradores.nombre,CONCAT(colaboradores.nombre, ' ' ,colaboradores.apellido) as 'nombrec', colaboradores.apellido, giro, twitter, tipo, medio, imagen, descripcion, link_extra, plaza_id  FROM colaboradores WHERE colaborador_id = ?";
 		$stmt = $this->dbc->stmt_init();
 		$obj = new stdClass;
 		if($stmt->prepare($q)) {
  			$stmt->bind_param('i', $id);
  			$stmt->execute();
- 			$stmt->bind_result($colaborador_id,$nombrec, $nombre, $apellido, $giro, $twitter, $tipo, $medio, $imagen, $descripcion, $link_extra, $plaza_id);
+ 			$stmt->bind_result($colaborador_id, $nombre, $nombrec,$apellido, $giro, $twitter, $tipo, $medio, $imagen, $descripcion, $link_extra, $plaza_id);
  			while($stmt->fetch()){
  				$obj->id = $colaborador_id;
  				$obj->nombre = $nombre;
