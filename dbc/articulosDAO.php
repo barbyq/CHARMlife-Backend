@@ -416,6 +416,25 @@ class articulosDAO
 		return $array;
 	}
 
+	public function getMasCharmIntereses($tags, $index, $perPage){
+		$query_array = array();
+		foreach ($tags as $value) {
+			$query_array[] = 'tags.tag = ' . $value; 
+		}
+		$base = "SELECT DISTINCT(articulos.articulo_id), articulos.titulo, articulos.subtitulo, articulos.tipo, mes, dia, year, articulos.colaborador_id, colaboradores.nombre as 'colaboradores', articulos.seccion_id, secciones.nombre as 'secciones' FROM articulos JOIN colaboradores ON articulos.colaborador_id = colaboradores.colaborador_id JOIN secciones ON secciones.seccion_id = articulos.seccion_id JOIN areas ON areas.area_id = secciones.area_id JOIN tags ON articulos.articulo_id = tags.articulo_id WHERE areas.nombre != 'Personalidades' AND areas.nombre != 'Temática Mensual' AND status = 0 AND ( ";
+		$q = $base .implode(' OR ', $query_array);
+		$end = " ) ORDER BY year DESC, mes DESC, dia DESC LIMIT " . $index . "," . $perPage;
+		$q.= $end;
+		
+	
+		$array = array();
+		$r = $this->dbc->query($q);
+		while ($obj = $r->fetch_object()) {
+				$array[] = $obj;
+			}
+		return $array;
+	}
+
 	public function getRandomOfTheMonth()
 	{
 		$mes = date('n');
