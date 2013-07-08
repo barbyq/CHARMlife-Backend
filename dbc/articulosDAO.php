@@ -312,7 +312,7 @@ class articulosDAO
 				$artip = new stdClass;
 				$artip->articulo_id = $articulo_id;
 				$artip->titulo = $titulo;
-				$artip->substitulo = $subtitulo;
+				$artip->subtitulo = $subtitulo;
 				$yepmn[] = $artip;
 			}
 		}

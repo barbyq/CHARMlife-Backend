@@ -1,6 +1,4 @@
 <?php 
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
 
 include '../dbc/dbconnect.php';
 include '../dbc/articulosDAO.php';
@@ -144,16 +142,28 @@ if (isset($_POST['registro'])) {
 
 	if (is_dir('../Imagenes/'.$id)) {
 		$imagenprincipal = scandir('../Imagenes/'.$id);
-		$imagenes->imagen = $imagenprincipal[2];
+		if (isset($imagenprincipal[2])) {
+			$imagenes->imagen = $imagenprincipal[2];
+		}else{
+			$imagenes->imagen = "img/ImagenPrinciDefault.png";
+		}
 	}
 	if (is_dir('../Thumbnails/'.$id)) {
 		$tomneil = scandir('../Thumbnails/'.$id);
-		$imagenes->thumbnail = $tomneil[2];
+		if (isset($tomneil[2])) {
+		 	$imagenes->thumbnail = $tomneil[2];
+		}else{
+			$imagenes->thumbnail = "img/Tomneil.png";
+		}
 	}
 
 	if (is_dir('../MasCharm/'.$id)) {
 		$mascharm = scandir('../MasCharm/'.$id);
-		$imagenes->mascharm = $mascharm[2];
+		if (isset($mascharm[2])) {
+			$imagenes->mascharm = $mascharm[2];
+		}else{
+			$imagenes->mascharm = "img/Tomneil.png";
+		}
 	}
 	
 	$video = $articleDao->dameurlvid($id);

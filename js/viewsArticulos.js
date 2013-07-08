@@ -1,4 +1,3 @@
-
 var FilaArticulo = Backbone.View.extend({
 	tagName:'tr',
 	events:{
@@ -301,8 +300,7 @@ var EditarArticulo = Backbone.View.extend({
 		    	$('#seccioneselectedit').html($seccionesDOM);
 		    	$('select').chosen();
 		    },'json');
-    		nicEditors.allTextAreas();
-		}, 1000);
+    		}, 1000);
 	},
 	loadStuff:function(){
 		var contexto = this;
@@ -329,13 +327,23 @@ var EditarArticulo = Backbone.View.extend({
 			if (typeof response['imagenes']['imagen'] != "undefined") {
 				$('#imagenprinciedit').attr("src","Imagenes/"+contexto.model.get("articulo_id")+"/"+response['imagenes']['imagen']+"?timestamp=" + new Date().getTime());
 			}
+			if (response['imagenes']['imagen'] == "img/ImagenPrinciDefault.png") {
+				console.log("jump");
+				$('#imagenprinciedit').attr("src",response['imagenes']['imagen']);	
+			};
 			
 			if (typeof response['imagenes']['thumbnail'] != "undefined") {
 				$('#tomupdate').attr("src","Thumbnails/"+contexto.model.get("articulo_id")+"/"+response['imagenes']['thumbnail']+"?timestamp=" + new Date().getTime());
-			}		
+			}	
+			if (response['imagenes']['thumbnail'] == "img/Tomneil.png") {
+				$('#tomupdate').attr("src",response['imagenes']['thumbnail']);	
+			};	
 
 			if (typeof response['imagenes']['mascharm'] != "undefined") {
 				$('#mascharmupdate').attr("src","MasCharm/"+contexto.model.get("articulo_id")+"/"+response['imagenes']['mascharm']+"?timestamp"+new Date().getTime());
+			}
+			if (response['imagenes']['mascharm'] == "img/Tomneil.png") {
+				$('#mascharmupdate').attr("src",response['imagenes']['mascharm']);	
 			};
 
 			switch(contexto.model.get("tipo")){
@@ -385,8 +393,7 @@ var EditarArticulo = Backbone.View.extend({
 				onComplete:function() {
 					var nombre = updatemascharm.filename();
 					var tipo = nombre.substr(nombre.length - 3);
-				$('#mascharmupdate').attr('src','MasCharm/'+contexto.model.get('articulo_id')+'/'+contexto.model.get('articulo_id')+"."+tipo);
-				}
+				$('#mascharmupdate').attr('src','MasCharm/'+contexto.model.get('articulo_id')+'/'+contexto.model.get('articulo_id')+"."+tipo);				}
 			});
 			nicEditors.allTextAreas();
 		},'json').fail(function  (e) {
