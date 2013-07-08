@@ -17,7 +17,7 @@ public function getSociales(){
 
 public function getSocialesNuevos()
 {
-	$este = "SELECT sociales_id, titulo from sociales order by sociales_id desc";
+	$este = "SELECT sociales_id, titulo from sociales order by fecha desc";
 	$qu = $this->dbc->query($este);
 	$arro = array();
 	while ($moo = $qu->fetch_object()) {
@@ -286,7 +286,25 @@ public function getFotoMasCharm(){
 	return $foto;
 }
 
-
+public function getEventosAnteriores($limit){
+	$q = "SELECT sociales_id, titulo, subtitulo FROM sociales WHERE status = 0 ORDER BY fecha ASC LIMIT ?";
+	$array = array();
+	$stmt = $this->dbc->stmt_init();
+	if($stmt->prepare($q)) {
+		$stmt->bind_param('i', $limit);
+		$stmt->execute();
+		$stmt->bind_result($sociales_id, $titulo, $subtitulo);
+		while($stmt->fetch()){
+			$obj = new stdClass;
+			$obj->sociales_id = $sociales_id;
+			$obj->titulo = $titulo;
+			$obj->subtitulo = $subtitulo;
+			$array[] = $obj;
+		}
+		$stmt->close();
+	}
+	return $array;
+}
 
 
 		
