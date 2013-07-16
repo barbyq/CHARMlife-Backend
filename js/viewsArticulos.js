@@ -39,8 +39,10 @@ var FilaArticulo = Backbone.View.extend({
 		taip = "Articulo";
 	}else if(this.model.get('tipo') == 1){
 		taip = "Galeria";
-	}else{
+	}else if(this.model.get("tipo") == 2){
 		taip = "Video";
+	}else{
+		taip = "Tematica"
 	}
 	 var eichi = '<td>'+this.model.get('articulo_id')+'</td><td>'+this.model.get('titulo')+'</td><td>'+this.model.get('dia')+'</td><td>'+this.model.get('mes')+'</td><td>'+this.model.get('year')+'</td><td>'+stete+'</td><td>'+taip+'</td><td>'+this.model.get('colaborador_id')+'</td><td>'+this.model.get('usuario_id')+'</td><td>'+this.model.get('seccion_id')+'</td><td><a id="'+this.model.get('articulo_id')+'" class="ver">Ver</a></td><td><a id="'+this.model.get('articulo_id')+'" class="editar">Editar</a></td><td><a id="'+this.model.get('articulo_id')+'" class="borrar">Borrar</a></td>';
 	 this.$el.html(eichi);
