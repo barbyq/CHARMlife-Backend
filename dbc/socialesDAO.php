@@ -276,6 +276,58 @@ public function votarMasCharm($id){
 	$stmt->close();
 }
 
+public function votarMasCompartido($id){
+	$q = "SELECT compartido FROM sociales WHERE sociales_id = ?";
+	$stmt = $this->dbc->stmt_init();
+	$votoVal = "";
+	if($stmt->prepare($q)){
+		$stmt->bind_param('i', $id);
+		$stmt->execute();
+		$stmt->bind_result($voto);
+		while($stmt->fetch()){
+			$votoVal = $voto;
+		}
+		$stmt->close();
+	}
+	$votoVal = intval($votoVal);
+	$votoVal++;	
+
+	$q = "UPDATE sociales SET compartido = ? WHERE sociales_id = ?";
+	$stmt = $this->dbc->stmt_init();
+	if($stmt->prepare($q)) {
+		$stmt->bind_param('ii', $votoVal, $id);
+		$stmt->execute();
+	}
+	$stmt->close();
+}
+
+public function votarMasVisto($id){
+	$q = "SELECT visto FROM sociales WHERE sociales_id = ?";
+	$stmt = $this->dbc->stmt_init();
+	$votoVal = "";
+	if($stmt->prepare($q)){
+		$stmt->bind_param('i', $id);
+		$stmt->execute();
+		$stmt->bind_result($voto);
+		while($stmt->fetch()){
+			$votoVal = $voto;
+		}
+		$stmt->close();
+	}
+	$votoVal = intval($votoVal);
+	$votoVal++;	
+
+	$q = "UPDATE sociales SET visto = ? WHERE sociales_id = ?";
+	$stmt = $this->dbc->stmt_init();
+	if($stmt->prepare($q)) {
+		$stmt->bind_param('ii', $votoVal, $id);
+		$stmt->execute();
+	}
+	$stmt->close();
+}
+
+
+
 public function getFotoMasCharm(){
 	$q = "SELECT fotos_id, sociales_id, img, voto FROM fotos ORDER BY voto DESC LIMIT 1";
 	$foto = new stdClass;
