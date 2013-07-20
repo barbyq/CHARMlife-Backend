@@ -358,6 +358,42 @@ public function getEventosAnteriores($limit){
 	return $array;
 }
 
+public function getEventosByMes($mes, $year, $limit, $perpage){
+	$q = "SELECT sociales_id, titulo, subtitulo FROM sociales WHERE MONTH(fecha) = ? and YEAR(fecha) = ? AND status = 0 ORDER BY fecha ASC, sociales_id ASC LIMIT ?, ?";
+	$array = array();
+	$stmt = $this->dbc->stmt_init();
+	if($stmt->prepare($q)) {
+		$stmt->bind_param('iiii', $mes, $year, $limit, $perpage);
+		$stmt->execute();
+		$stmt->bind_result($sociales_id, $titulo, $subtitulo);
+		while($stmt->fetch()){
+			$obj = new stdClass;
+			$obj->sociales_id = $sociales_id;
+			$obj->titulo = $titulo;
+			$obj->subtitulo = $subtitulo;
+			$array[] = $obj;
+		}
+		$stmt->close();
+	}
+	return $array;
+}
+
+public function getEventosByMesTotal($mes, $year){
+	$q = "SELECT COUNT(*) as 'total' FROM sociales WHERE MONTH(fecha) = ? and YEAR(fecha) = ? AND status = 0 ORDER BY fecha ASC, sociales_id ASC";
+	$array = array();
+	$stmt = $this->dbc->stmt_init();
+	$total = 0;
+	if($stmt->prepare($q)) {
+		$stmt->bind_param('ii', $mes, $year);
+		$stmt->execute();
+		$stmt->bind_result($total);
+		while($stmt->fetch()){
+		}
+		$stmt->close();
+	}
+	return $total;
+}
+
 
 		
 		
