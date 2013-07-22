@@ -269,17 +269,18 @@ class articulosDAO
 	public function getArticulosMinByColaborador($idcolab)
 	{
 		$articulos = array();
-		$busqueda = "SELECT articulo_id,titulo, subtitulo from articulos where colaborador_id = ? and status = 0";
+		$busqueda = "SELECT articulo_id,titulo, subtitulo,tipo from articulos where colaborador_id = ? and status = 0";
 		$es = $this->dbc->stmt_init();
 		if ($es->prepare($busqueda)) {
 			$es->bind_param("i",$idcolab);
 			$es->execute();
-			$es->bind_result($articulo_id,$titulo,$subtitulo);
+			$es->bind_result($articulo_id,$titulo,$subtitulo,$tipo);
 			while ($es->fetch()) {
 				$articulo = new stdClass;
 				$articulo->articulo_id = $articulo_id;
 				$articulo->titulo = $titulo;
 				$articulo->subtitulo = $subtitulo;
+				$articulo->tipo = $tipo;
 				$articulos[] = $articulo;
 			}
 		}
@@ -497,18 +498,19 @@ class articulosDAO
 	public function getRandomOftheSemaine()
 	{
 		$mes = date('n');
-		$busqueda = "SELECT articulo_id,titulo, subtitulo from articulos where mes = ? and status = 0 ORDER BY year DESC, mes DESC, dia DESC  LIMIT 12";
+		$busqueda = "SELECT articulo_id,titulo, subtitulo,tipo from articulos where mes = ? and status = 0 ORDER BY year DESC, mes DESC, dia DESC  LIMIT 12";
 		$kepo = $this->dbc->stmt_init();
 		$rreiglo = array();
 		if ($kepo->prepare($busqueda)) {
 			$kepo->bind_param("i", $mes);
 			$kepo->execute();
-			$kepo->bind_result($articulo_id,$titulo,$subtitulo)	;
+			$kepo->bind_result($articulo_id,$titulo,$subtitulo,$tipo);
 			while ($kepo->fetch()) {
 				$art = new stdClass;
 				$art->articulo_id = $articulo_id;
 				$art->titulo = $titulo;		
 				$art->subtitulo = $subtitulo;
+				$art->tipo = $tipo;
 				$rreiglo[] = $art;
 			}		
 		}
@@ -518,18 +520,19 @@ class articulosDAO
 	public function getRandomPrevious()
 	{
 		$mes = date('n');
-		$busqueda = "SELECT articulo_id,titulo, subtitulo from articulos where mes != ? and status = 0 ORDER BY rand() LIMIT 12";
+		$busqueda = "SELECT articulo_id,titulo, subtitulo,tipo from articulos where mes != ? and status = 0 ORDER BY rand() LIMIT 12";
 		$kepo = $this->dbc->stmt_init();
 		$rreiglo = array();
 		if ($kepo->prepare($busqueda)) {
 			$kepo->bind_param("i", $mes);
 			$kepo->execute();
-			$kepo->bind_result($articulo_id,$titulo,$subtitulo)	;
+			$kepo->bind_result($articulo_id,$titulo,$subtitulo,$tipo);
 			while ($kepo->fetch()) {
 				$art = new stdClass;
 				$art->articulo_id = $articulo_id;
 				$art->titulo = $titulo;		
 				$art->subtitulo = $subtitulo;
+				$art->tipo = $tipo;
 				$rreiglo[] = $art;
 			}		
 		}
