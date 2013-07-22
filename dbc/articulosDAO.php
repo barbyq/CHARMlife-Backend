@@ -358,12 +358,12 @@ class articulosDAO
 		return $men;
 	}
 
-	public function getArticulosByArea($area, $limit){
-		$q = "SELECT articulos.articulo_id, articulos.titulo, articulos.subtitulo, articulos.tipo, mes, dia, year, articulos.colaborador_id, colaboradores.nombre as 'colaboradores', articulos.seccion_id, secciones.nombre as 'secciones' FROM articulos JOIN colaboradores ON articulos.colaborador_id = colaboradores.colaborador_id JOIN secciones ON secciones.seccion_id = articulos.seccion_id JOIN areas ON areas.area_id = secciones.area_id WHERE areas.nombre = ? AND articulos.tipo != 2 AND status = 0 ORDER BY year DESC, mes DESC, dia DESC LIMIT ?";
+	public function getArticulosByArea($area, $limit, $perPage){
+		$q = "SELECT articulos.articulo_id, articulos.titulo, articulos.subtitulo, articulos.tipo, mes, dia, year, articulos.colaborador_id, colaboradores.nombre as 'colaboradores', articulos.seccion_id, secciones.nombre as 'secciones' FROM articulos JOIN colaboradores ON articulos.colaborador_id = colaboradores.colaborador_id JOIN secciones ON secciones.seccion_id = articulos.seccion_id JOIN areas ON areas.area_id = secciones.area_id WHERE areas.nombre = ? AND articulos.tipo != 2 AND status = 0 ORDER BY year DESC, mes DESC, dia DESC LIMIT ?, ?";
 		$array = array();
 		$stmt = $this->dbc->stmt_init();
 		if($stmt->prepare($q)) {
-			$stmt->bind_param('si', $area,$limit);
+			$stmt->bind_param('sii', $area,$limit, $perPage);
 			$stmt->execute();
 			$stmt->bind_result($articulo_id, $titulo, $subtitulo, $tipo, $mes, $dia, $year, $colaborador_id, $colaborador, $seccion_id, $seccion);
 			while($stmt->fetch()){
@@ -426,7 +426,7 @@ class articulosDAO
 		return $array;
 	}
 	public function getMasCharm($limit, $limit2){
-		$q = "SELECT articulos.articulo_id, articulos.titulo, articulos.subtitulo, articulos.tipo, mes, dia, year, articulos.colaborador_id, colaboradores.nombre as 'colaboradores', articulos.seccion_id, secciones.nombre as 'secciones' FROM articulos JOIN colaboradores ON articulos.colaborador_id = colaboradores.colaborador_id JOIN secciones ON secciones.seccion_id = articulos.seccion_id JOIN areas ON areas.area_id = secciones.area_id WHERE areas.nombre != 'Personalidades' AND areas.nombre != 'Temática Mensual' AND status = 0 ORDER BY year DESC, mes DESC, dia DESC LIMIT ?, ?";
+		$q = "SELECT articulos.articulo_id, articulos.titulo, articulos.subtitulo, articulos.tipo, mes, dia, year, articulos.colaborador_id, colaboradores.nombre as 'colaboradores', articulos.seccion_id, secciones.nombre as 'secciones' FROM articulos JOIN colaboradores ON articulos.colaborador_id = colaboradores.colaborador_id JOIN secciones ON secciones.seccion_id = articulos.seccion_id JOIN areas ON areas.area_id = secciones.area_id WHERE areas.nombre != 'Personalidades' AND areas.nombre != 'Temática Mensual' AND status = 0 ORDER BY year DESC, mes DESC, dia DESC, articulos.articulo_id DESC LIMIT ?, ?";
 		$array = array();
 		$stmt = $this->dbc->stmt_init();
 		if($stmt->prepare($q)) {
