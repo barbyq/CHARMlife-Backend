@@ -301,17 +301,18 @@ class articulosDAO
 	public function getArticulosByColaboradorByInterval($colaborador,$interval)
 	{
 		$yepmn = array();
-		$ble = "SELECT articulo_id,titulo, subtitulo from articulos where colaborador_id = ? and status = 0 order by articulo_id asc limit ?,8";
+		$ble = "SELECT articulo_id,titulo, subtitulo,tipo from articulos where colaborador_id = ? and status = 0 order by articulo_id asc limit ?,8";
 		$estta = $this->dbc->stmt_init();
 		if ($estta->prepare($ble)) {
 			$estta->bind_param("ii",$colaborador,$interval);
 			$estta->execute();
-			$estta->bind_result($articulo_id,$titulo,$subtitulo);
+			$estta->bind_result($articulo_id,$titulo,$subtitulo,$tipo);
 			while ($estta->fetch()) {
 				$artip = new stdClass;
 				$artip->articulo_id = $articulo_id;
 				$artip->titulo = $titulo;
 				$artip->subtitulo = $subtitulo;
+				$artip->tipo = $tipo;
 				$yepmn[] = $artip;
 			}
 		}
