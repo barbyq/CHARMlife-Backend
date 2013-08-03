@@ -29,7 +29,7 @@ var Outfit = Backbone.Model.extend({ });
 
 var Banner = Backbone.Model.extend({ });
 
-var Amigo = Backbone.Model.extend({	});
+var Amigo = Backbone.Model.extend({ });
 
 //Collections
 var SocialesList = Backbone.Collection.extend({
