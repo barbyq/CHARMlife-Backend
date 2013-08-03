@@ -34,7 +34,7 @@
 		  		return 'Julio';
 		  		break;
 		  	case 8:
-		  		return 'Aagosto';
+		  		return 'Agosto';
 		  		break;
 		  	case 9:
 		  		return 'Septiembre';
