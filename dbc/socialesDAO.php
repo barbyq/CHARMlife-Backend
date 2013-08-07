@@ -17,7 +17,7 @@ public function getSociales(){
 
 public function getSocialesNuevos()
 {
-	$este = "SELECT sociales_id, titulo from sociales order by fecha desc";
+	$este = "SELECT sociales_id, titulo from sociales WHERE status = 0 order by fecha desc";
 	$qu = $this->dbc->query($este);
 	$arro = array();
 	while ($moo = $qu->fetch_object()) {
