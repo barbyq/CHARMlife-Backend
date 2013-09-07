@@ -1,5 +1,6 @@
 <?php 
-
+// error_reporting(E_ALL);
+// ini_set('display_errors', '1');
 include '../dbc/dbconnect.php';
 include '../dbc/articulosDAO.php';
 include 'utilities.php';
@@ -327,6 +328,14 @@ if (isset($_POST['registro'])) {
 }elseif (isset($_POST['receiver']) && $_POST['receiver'] == "damedelaprevios") {
 	$delaprevious = $articleDao->getRandomPrevious();
 	echo json_encode($delaprevious);
+}elseif (isset($_POST['receiver']) && $_POST['receiver'] == "personalidades") {
+	$pagina = $_POST['page'];
+	$articuls = $articleDao->getArticulosByArea('Personalidades', $pagina, 6);
+	foreach ($articuls as $arti) {
+		$directorio = scandir('../Thumbnails/'.$arti->articulo_id . '/');
+		$arti->imagen = '/charmadmin/Thumbnails/'.$arti->articulo_id . '/'.$directorio[2];
+	}
+	echo json_encode($articuls);
 }else{
 	echo json_encode($articleDao->getArticulos());
 }
