@@ -336,6 +336,14 @@ if (isset($_POST['registro'])) {
 		$arti->imagen = '/charmadmin/Thumbnails/'.$arti->articulo_id . '/'.$directorio[2];
 	}
 	echo json_encode($articuls);
+}elseif (isset($_POST['receiver']) && $_POST['receiver'] == "videos") {
+	$pagina = $_POST['page'];
+	$videos = $articleDao->getVideosByArea("Personalidades",$pagina,4);	
+	foreach ($videos as $vid) {
+		$dir = scandir("../Thumbnails/".$vid->articulo_id."/");
+		$vid->imagen = '/charmadmin/Thumbnails/'.$vid->articulo_id . '/'.$dir[2];
+	}
+	echo json_encode($videos);
 }else{
 	echo json_encode($articleDao->getArticulos());
 }
