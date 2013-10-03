@@ -247,6 +247,7 @@ function ActivarSubidaDataEdit (socialid) {
     }).bind('fileuploaddestroyed', function (e, data) {
     	console.log(data);
         console.log("borrando");
+        console.log(data['url']);
     	var archivoborradin = data['url'].substring(50,data['url'].indexOf("&"));
     	$.post("controllers/sociales_controller.php",{receiver:"borrarfoto",social_id:socialid,foto:archivoborradin},function  (response) {
     	   console.log(response);

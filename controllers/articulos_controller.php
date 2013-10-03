@@ -5,9 +5,9 @@ include '../dbc/dbconnect.php';
 include '../dbc/articulosDAO.php';
 include 'utilities.php';
 
- $dbconnect = new dbconnect('charm_charmlifec536978');
- $dbc = $dbconnect->getConnection();
- $articleDao = new articulosDAO($dbc);
+$dbconnect = new dbconnect('charm_charmlifec536978');
+$dbc = $dbconnect->getConnection();
+$articleDao = new articulosDAO($dbc);
 
 if (isset($_POST['receiver'])) {
 	$receiver = $_POST['receiver'];
@@ -290,7 +290,6 @@ if (isset($_POST['registro'])) {
 			}	
 }elseif (isset($receiver) && $receiver == "update") {
 	$id = $_POST['articulo_id'];
-
 	$art = new stdClass;
 	$art->articulo_id = $id;
 	$art->titulo = $_POST['titulo'];
