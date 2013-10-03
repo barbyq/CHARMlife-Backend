@@ -38,6 +38,24 @@ class articulosDAO
 		return $articulo;
 	}
 
+	public function getArticuloNewsletter($id)
+	{
+		$busq = "SELECT articulos.articulo_id, articulos.titulo, articulos.subtitulo from articulos where articulo_id = ?";
+		$ye = $this->dbc->stmt_init();
+		$articulo = new stdClass;
+		if ($ye->prepare($busq)) {
+			$ye->bind_param('i',$id);
+			$ye->execute();
+			$ye->bind_result($articulo_id, $titulo, $subtitulo);
+			while ($ye->fetch()) {
+				$articulo->id = $articulo_id;
+				$articulo->titulo = $titulo;
+				$articulo->subtitulo = $subtitulo;
+			}
+		}
+		return $articulo;
+	}
+
 	public function getLastArticulos()
 	{
 		$s = "SELECT articulo_id,titulo,subtitulo,dia,mes,year,status,tipo,contenido,colaborador_id,usuario_id,seccion_id from articulos where status = 0 order by articulo_id desc limit 12; ";

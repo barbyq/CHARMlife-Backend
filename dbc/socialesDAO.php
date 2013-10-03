@@ -17,7 +17,7 @@ public function getSociales(){
 
 public function getSocialesNuevos()
 {
-	$este = "SELECT sociales_id, titulo from sociales WHERE status = 0 order by fecha desc";
+	$este = "SELECT sociales_id, titulo from sociales WHERE status = 0 order by fecha desc LIMIT 20";
 	$qu = $this->dbc->query($este);
 	$arro = array();
 	while ($moo = $qu->fetch_object()) {
@@ -48,6 +48,24 @@ public function getSocialById($id){
  			$stmt->close();
  		}
  		return $obj;
+}
+
+public function getSocialNewsletter($id){
+	$q = "SELECT sociales_id, titulo, subtitulo FROM sociales WHERE sociales_id = ?";
+	$stmt = $this->dbc->stmt_init();
+		$obj = new stdClass;
+		if($stmt->prepare($q)) {
+ 			$stmt->bind_param('s', $id);
+ 			$stmt->execute();
+ 			$stmt->bind_result($sociales_id, $titulo, $subtitulo);
+ 			while($stmt->fetch()){
+ 				$obj->id = $sociales_id;
+ 				$obj->titulo = $titulo;
+ 				$obj->subtitulo = $subtitulo;
+ 			}
+ 			$stmt->close();
+ 		}
+ 	return $obj;
 }
 
 
