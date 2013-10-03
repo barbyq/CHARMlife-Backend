@@ -122,7 +122,8 @@ if (isset($_POST['receiver']) && $_POST['receiver'] == "registro") {
 		echo json_encode($elmono);
 	}elseif (isset($_POST['receiver']) && $_POST['receiver'] == "showarticles") {
 		$id = $_POST['showcolab'];
-		$articulos = $articlesDAO->getArticulosMinByColaborador($id);
+		$intervalo = $_POST['interval'];
+		$articulos = $articlesDAO->getArticulosMinByColaborador($intervalo,$id);
 		foreach ($articulos as $articulo) {
 			if (is_dir("../Thumbnails/".$articulo->articulo_id)) {
 				$scaneo = scandir("../Thumbnails/".$articulo->articulo_id);
@@ -132,9 +133,9 @@ if (isset($_POST['receiver']) && $_POST['receiver'] == "registro") {
 			}
 		}
 		echo json_encode($articulos);
-	}elseif (isset($_POST['receiver']) && $_POST['receiver'] == "givemedapages") {
+	}elseif (isset($_POST['receiver']) && $_POST['receiver'] == "size") {
 		$id = $_POST['colab'];
-		$ble = $articlesDAO->getArticulosMinByColaborador($id);
+		$ble = $articlesDAO->getArticulosTotal($id);
 		echo json_encode($ble);
 	}elseif (isset($_POST['receiver']) && $_POST['receiver'] == "giveyouinterval") {
 		$id = $_POST['colab'];

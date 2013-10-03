@@ -284,13 +284,13 @@ class articulosDAO
 		}
 	}
 
-	public function getArticulosMinByColaborador($idcolab)
+	public function getArticulosMinByColaborador($intervalo,$idcolab)
 	{
 		$articulos = array();
-		$busqueda = "SELECT articulo_id,titulo, subtitulo,tipo from articulos where colaborador_id = ? and status = 0";
+		$busqueda = "SELECT articulo_id,titulo, subtitulo,tipo from articulos where colaborador_id = ? and status = 0 limit ?,8";
 		$es = $this->dbc->stmt_init();
 		if ($es->prepare($busqueda)) {
-			$es->bind_param("i",$idcolab);
+			$es->bind_param("ii",$idcolab,$intervalo);
 			$es->execute();
 			$es->bind_result($articulo_id,$titulo,$subtitulo,$tipo);
 			while ($es->fetch()) {
@@ -303,6 +303,22 @@ class articulosDAO
 			}
 		}
 		return $articulos;
+	}
+	public function getArticulosTotal($colab)
+	{
+		$arr = array();
+		$ajam = "SELECT articulo_id from articulos where colaborador_id = ?";
+		$sm = $this->dbc->stmt_init();
+		if ($sm->prepare($ajam)) {
+			$sm->bind_param("i", $colab);
+			$sm->execute();
+			$sm->bind_result($arti);
+			while ($sm->fetch()) {
+				$arr[] = $arti;
+			}
+			$sm->close();
+		}
+		return $arr;
 	}
 
 	public function getArticulosTematicaMensual()
